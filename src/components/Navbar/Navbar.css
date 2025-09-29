@@ -1,15 +1,6 @@
-/* Navbar.css */
-
-:root {
-  --primary-bg: #0d3b3b;   /* dark greenish blue */
-  --hover-bg: #145c5c;
-  --text-color: #e0f7f4;
-  --highlight: #20b2aa;    /* teal highlight */
-}
-
 .navbar {
-  background-color: var(--primary-bg);
-  padding: 0.8rem 2rem;
+  background-color: #2e8b57; 
+  padding: 1.2rem 2.5rem;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -22,88 +13,100 @@
   align-items: center;
 }
 
-/* Logo */
+/* logo */
 .nav-logo {
-  font-size: 1.6rem;
+  font-size: 2rem;
   font-weight: bold;
-  color: var(--text-color);
+  color: #ffffff; 
   letter-spacing: 1px;
 }
 
 .logo-highlight {
-  color: var(--highlight);
+  color: #20b2aa; 
 }
 
-/* Links */
+
 .nav-links {
   list-style: none;
   display: flex;
+  justify-content: center;
+  flex: 1;
   gap: 2rem;
 }
 
 .nav-links li a {
   text-decoration: none;
-  color: var(--text-color);
-  font-weight: 500;
-  transition: color 0.2s ease;
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding-bottom: 4px;
+  transition: color 0.2s ease, border-bottom 0.2s ease;
 }
 
 .nav-links li a:hover {
-  color: var(--highlight);
+  color: #20b2aa;
 }
 
-/* Icons */
-.nav-icons {
+.nav-links li a.active {
+  border-bottom: 2px solid #20b2aa;
+  color: #20b2aa;
+}
+
+/* Right Actions */
+.nav-actions {
   display: flex;
-  gap: 1rem;
+  align-items: center;
 }
 
-.icon {
-  font-size: 1.4rem;
-  color: var(--text-color);
+/* Sign Up Button */
+.btn {
+  background: transparent;
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px; /* squarish rounded */
   cursor: pointer;
-  transition: color 0.2s ease;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
-.icon:hover {
-  color: var(--highlight);
+.btn:hover {
+  background: #ffffff;
+  color: #2e8b57;
 }
 
-/* Hamburger */
+/* menu */
 .menu-toggle {
   display: none;
-  font-size: 1.6rem;
-  color: var(--text-color);
+  font-size: 1.8rem;
+  color: #ffffff;
   cursor: pointer;
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-  .nav-links {
-    position: absolute;
-    top: 64px;
-    left: 0;
+@media (max-width: 900px) {
+  .nav-links,
+  .nav-actions {
+    display: none;
     flex-direction: column;
-    background-color: var(--primary-bg);
+    background: #2e8b57;
     width: 100%;
     text-align: center;
-    padding: 1rem 0;
-    display: none;
+    padding: 1.2rem 0;
+    gap: 1.2rem;
   }
 
-  .nav-links.open {
+  .nav-links.open,
+  .nav-actions.open {
     display: flex;
-  }
-
-  .nav-links li {
-    margin: 1rem 0;
   }
 
   .menu-toggle {
     display: block;
   }
 
-  .nav-icons {
-    display: none; /* hide icons on mobile (optional) */
+  .btn {
+    width: 80%;
+    margin: 0 auto;
   }
 }

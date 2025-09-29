@@ -1,26 +1,28 @@
 import React from 'react'
+// import 'bootstrap/dist/css/bootstrap.min.css'
+
 import Navbar from "./components/Navbar/Navbar"
 import Home from "./components/Home/Home"
-// import Explore from "./components/Explore/Explore"
-// import PlanTrip from "./components/PlanTrip/PLanTrip"
-// import HealthHub from "./components/HealthHub/HealthHub"
-// import Assistant from "./components/Assistant/Assistant"
-// import Footer from "./components/Footer/Footer"
+import Explore from "./components/Explore/Explore"
+import Services from './components/Services/Services'
+import Blogs from './components/Blogs/Blogs'
+// import Contact from './components/Contact/Contact'
+import Footer from "./components/Footer/Footer"
+
 
 function App() {
   return (
     <div>
-      <div>
-        <Navbar />
-        <Home />
-        {/* <Explore />
-        <PlanTrip />
-        <HealthHub />
-        <Assistant />
-        <Footer /> */}
-      </div>
+      <Navbar />
+      <Home />
+      <Explore />
+      <Services />
+      <Blogs />
+      {/* <Contact /> */}
+      <Footer />
     </div>
   )
 }
 
 export default App
+
