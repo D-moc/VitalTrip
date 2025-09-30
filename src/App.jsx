@@ -6,8 +6,10 @@ import Home from "./components/Home/Home"
 import Explore from "./components/Explore/Explore"
 import Services from './components/Services/Services'
 import Blogs from './components/Blogs/Blogs'
-// import Contact from './components/Contact/Contact'
 import Footer from "./components/Footer/Footer"
+import Chatbot from './components/Assistant/Chatbot'
+
+
 
 
 function App() {
@@ -18,8 +20,8 @@ function App() {
       <Explore />
       <Services />
       <Blogs />
-      {/* <Contact /> */}
       <Footer />
+      <Chatbot />
     </div>
   )
 }
