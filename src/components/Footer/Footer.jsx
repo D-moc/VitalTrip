@@ -15,14 +15,14 @@ function Footer() {
 
     emailjs
       .send(
-        "service_al5yitk", // ✅ your EmailJS Service ID
-        "template_rp23wih", // ✅ your EmailJS Template ID
+        "service_al5yitk", //EmailJS Service ID
+        "template_rp23wih", //EmailJS Template ID
         {
           from_name: form.name,
           reply_to: form.email,
           message: form.message,
         },
-        "N3wkfGFUrmWRSm_AQ" // ✅ your EmailJS Public Key
+        "N3wkfGFUrmWRSm_AQ" //EmailJS Public Key
       )
       .then(
         () => {
