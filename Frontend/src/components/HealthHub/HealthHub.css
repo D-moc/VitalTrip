@@ -1,0 +1,122 @@
+:root {
+  --primary-bg: #0d3b3b;
+  --highlight: #20b2aa;
+  --text-light: #e0f7f4;
+}
+
+/* Section */
+.healthhub-section {
+  background: #f5fdfd;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.healthhub-container {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.healthhub-title {
+  font-size: 2.5rem;
+  color: var(--primary-bg);
+  margin-bottom: 0.5rem;
+}
+
+.healthhub-subtitle {
+  font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 2rem;
+}
+
+/* GPS Button */
+.gps-btn {
+  background: var(--highlight);
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-bottom: 2rem;
+}
+
+.gps-btn:hover {
+  background: #18a098;
+}
+
+/* Loading Text */
+.loading-text {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+/* Doctors List */
+.doctors-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+}
+
+.doctor-card {
+  background: var(--primary-bg);
+  color: var(--text-light);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+  text-align: left;
+}
+
+.doctor-card:hover {
+  transform: translateY(-5px);
+}
+
+.doctor-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.4rem;
+  color: var(--highlight);
+}
+
+.doctor-card p {
+  margin: 0.3rem 0;
+  font-size: 1rem;
+}
+
+/* Map Button */
+.map-btn {
+  margin-top: 1rem;
+  background: var(--highlight);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.map-btn:hover {
+  background: #18a098;
+}
+
+/* Empty State */
+.empty-msg {
+  font-size: 1.1rem;
+  color: #666;
+  margin-top: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .healthhub-title {
+    font-size: 2rem;
+  }
+
+  .doctor-card {
+    text-align: center;
+  }
+}

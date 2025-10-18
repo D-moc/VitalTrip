@@ -1,0 +1,271 @@
+.explore-section {
+  padding: 2rem;
+  background: #f9f9fb;
+}
+
+.explore-container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.explore-title {
+  text-align: center;
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #2e8b57;
+  margin: 0 0 0.25rem;
+}
+
+.explore-subtitle {
+  text-align: center;
+  color: #6b7280;
+  margin: 0 0 2rem;
+  font-size: 1.05rem;
+}
+
+.explore-section {
+  padding: 3rem 2rem;
+  background: #f9f9fb;
+  border-top: 6px solid #d1d5db; 
+}
+
+
+/* Grid 4x2 (8 cards per page) */
+.explore-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.6rem;
+  margin-bottom: 2rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card-img-wrap {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.card-img-wrap img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  display: block;
+}
+
+.title {
+  font-size: 1.1rem;
+  color: #1f2937;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.muted {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.read-btn {
+  background: #f59e0b;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background 0.25s ease;
+}
+
+.read-btn:hover {
+  background: #d97706;
+}
+
+/* ===== Pagination ===== */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 1.2rem;
+}
+
+.pagination button {
+  border: none;
+  background: #e5e7eb;
+  color: #374151;
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background 0.25s ease;
+}
+
+.pagination button:hover {
+  background: #cbd5e1;
+}
+
+.pagination button.active {
+  background: #2e8b57;
+  color: #fff;
+}
+
+/* ===== Details ===== */
+.details {
+  margin-top: 1.5rem;
+}
+
+.details-left .hero {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.about {
+  margin-top: 1rem;
+  background: #fff;
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.about h3 {
+  margin: 0 0 0.4rem;
+  color: #111827;
+}
+
+.about p {
+  margin: 0;
+  color: #374151;
+  line-height: 1.5;
+}
+
+/* Accordion */
+.accordion {
+  margin-top: 1rem;
+}
+
+.accordion-item {
+  margin-bottom: 0.6rem;
+}
+
+.accordion-header {
+  width: 100%;
+  text-align: left;
+  padding: 0.7rem 1rem;
+  background: #e5e7eb;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.accordion-header:hover {
+  background: #d1d5db;
+}
+
+.accordion-header.open {
+  background: #2e8b57;
+  color: #fff;
+}
+
+.accordion-body {
+  padding: 0.8rem 1rem;
+  background: #fff;
+  border-radius: 8px;
+  margin-top: 0.3rem;
+  color: #374151;
+  line-height: 1.4;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Map */
+.map-container {
+  margin-top: 1.2rem;
+  background: #fff;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.map-btn {
+  display: inline-block;
+  margin-top: 0.6rem;
+  background: #2e8b57;
+  color: #fff;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.25s ease;
+}
+
+.map-btn:hover {
+  background: #238a65;
+}
+
+/* Back */
+.back-btn {
+  width: 100%;
+  margin-top: 0.9rem;
+  background: #e11d48;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.7rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+.back-btn:hover {
+  background: #be123c;
+}
+
+.services-section {
+  padding: 3rem 2rem;
+  background: #f9f9fb;
+  border-top: 6px solid #d1d5db; /* 🔥 thick grey line */
+}
+
+@media (max-width: 1200px) {
+  .explore-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .explore-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .details-left .hero {
+    height: 320px;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .explore-cards {
+    grid-template-columns: 1fr;
+  }
+  .details-left .hero {
+    height: 240px;
+  }
+}
