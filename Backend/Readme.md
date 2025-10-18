@@ -110,7 +110,7 @@ The endpoint expects the following fields in the request body:
 ---
 
 ### Environment Variables:
-- `JWT_SECRET`: Secret key used to sign the JWT token.
+- `JWT_SECRET`: Secret key used to sign the JWT token
 
 ---
 
