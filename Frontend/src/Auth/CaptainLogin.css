@@ -1,0 +1,211 @@
+/* --- Page Background --- */
+.login-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 80px);
+  margin-top: 80px;
+  background: linear-gradient(135deg, #e0e4ee3a, #d5d8dc);
+  background-size: 300% 300%;
+  animation: gradientFlow 12s ease infinite;
+  font-family: "Poppins", sans-serif;
+  overflow: hidden;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* --- Main Container --- */
+.login-container {
+  display: flex;
+  width: 75%;
+  max-width: 950px;
+  height: 70vh;
+  border-radius: 22px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  border: 0.5px solid rgba(255, 255, 255, 0.3);
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Left Image --- */
+.login-left {
+  flex: 1.1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: #e0f2f1;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(180deg, #320620, #7b13ca);
+  z-index: 1;
+}
+
+.login-left img {
+  position: relative;
+  z-index: 2;
+  width: 90%;
+  max-width: 420px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 20px;
+}
+
+/* --- Right Form --- */
+.login-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem 3rem;
+}
+
+.login-right h2 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #004d40;
+  margin-bottom: 0.5rem;
+}
+
+.login-right h2 span {
+  color: #009688;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 1.8rem;
+}
+
+/* --- Inputs --- */
+.input-group {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+input {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1.5px solid #ccc;
+  font-size: 1rem;
+  outline: none;
+  background: #fafafa;
+  transition: all 0.3s ease;
+}
+
+input:focus {
+  border-color: #009688;
+  box-shadow: 0 0 6px rgba(0, 150, 136, 0.3);
+}
+
+/* --- Forgot Password --- */
+.forgot-link {
+  display: block;
+  text-align: right;
+  margin-top: -0.3rem;
+  margin-bottom: 1.2rem;
+  font-size: 0.9rem;
+  color: #009688;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.forgot-link:hover {
+  color: #2e8b57;
+  text-decoration: underline;
+}
+
+/* --- Button (Fixed) --- */
+.login-btn {
+  width: 100%;
+  background: linear-gradient(90deg, #2e8b57, #20b2aa);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-btn:hover:not(:disabled) {
+  background: linear-gradient(90deg, #319f5c, #27bfb6);
+  box-shadow: 0 6px 14px rgba(0, 150, 136, 0.25);
+  transform: none; /* ✅ No jump */
+}
+
+.login-btn:active {
+  background: linear-gradient(90deg, #2e8b57, #20b2aa);
+  transform: none;
+  box-shadow: none;
+}
+
+.login-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* --- Bottom Text --- */
+.switch-auth {
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  color: #333;
+  text-align: center;
+}
+
+.switch-auth span {
+  color: #009688;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.switch-auth span:hover {
+  text-decoration: underline;
+}
+
+/* --- Responsive --- */
+@media (max-width: 950px) {
+  .login-container {
+    flex-direction: column;
+    height: auto;
+    width: 90%;
+  }
+
+  .login-left {
+    height: 240px;
+  }
+
+  .login-right {
+    padding: 2rem 1.5rem;
+    text-align: center;
+    align-items: center;
+  }
+
+  .forgot-link {
+    text-align: center;
+    margin-top: 0.2rem;
+  }
+}

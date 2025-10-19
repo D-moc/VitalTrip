@@ -1,0 +1,125 @@
+/* --- Page Setup --- */
+.dashboard-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 80px);
+  margin-top: 80px;
+  background: linear-gradient(135deg, #e0e4ee3a, #d5d8dc);
+  background-size: 300% 300%;
+  animation: gradientFlow 12s ease infinite;
+  font-family: "Poppins", sans-serif;
+  padding: 2rem 1rem;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* --- Container --- */
+.dashboard-container {
+  width: 90%;
+  max-width: 1100px;
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  padding: 2.5rem 3rem;
+  text-align: center;
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dashboard-container h2 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #004d40;
+}
+
+.dashboard-container h2 span {
+  color: #009688;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+/* --- Grid Layout --- */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+  justify-content: center;
+  align-items: stretch;
+}
+
+/* --- Dashboard Cards --- */
+.dashboard-card {
+  background: white;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.dashboard-card img {
+  width: 100%;
+  max-width: 200px;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.dashboard-card h3 {
+  color: #004d40;
+  font-size: 1.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.dashboard-card p {
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 150, 136, 0.3);
+}
+
+/* --- Sign Out Card --- */
+.signout-card {
+  background: linear-gradient(90deg, #ff5a5f, #ff7b72);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.signout-card h3, .signout-card p {
+  color: white;
+}
+
+.signout-card:hover {
+  background: linear-gradient(90deg, #e44a4f, #ff646b);
+  box-shadow: 0 8px 25px rgba(255, 90, 95, 0.4);
+}
+
+/* --- Responsive --- */
+@media (max-width: 950px) {
+  .dashboard-container {
+    padding: 2rem;
+  }
+
+  .dashboard-card img {
+    max-width: 160px;
+  }
+}
