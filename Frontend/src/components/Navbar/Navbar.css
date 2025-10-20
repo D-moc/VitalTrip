@@ -1,6 +1,6 @@
 /* ---------- NAVBAR ---------- */
 .navbar {
-  background: linear-gradient(90deg, #2e8b57, #20b2aa);
+  background: linear-gradient(90deg, #2e8b57, #3d8af5);
   padding: 1.3rem 2.5rem;
   position: fixed;
   top: 0;
@@ -78,10 +78,8 @@ section {
   align-items: center;
   gap: 1rem;
   justify-content: flex-end;
-  min-width: 160px; /* ✅ Keeps layout stable after login/logout */
+  min-width: 170px;
 }
-
-
 
 .btn {
   background: transparent;
@@ -99,24 +97,23 @@ section {
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* ---------- FIXED SIGN UP BUTTON ---------- */
-.signup-btn {
-  background: #ff4747;
+/* ---------- SIGN UP BUTTON ---------- */
+.navbar .signup-btn {
+  background-color: #6e654e;
   color: #ffffff;
   border: none;
-  border-radius: 10px;
-  padding: 0.8rem 1.9rem;
-  font-weight: 700;
-  font-size: 1.1rem;
+  border-radius: 6px;
+  padding: 0.6rem 1.3rem;
+  font-weight: 600;
+  font-size: 1.5rem;
   cursor: pointer;
-  position: relative;
-  z-index: 2100;
-  transition: background 0.25s ease;
+  transition: background-color 0.25s ease, transform 0.15s ease;
+  box-shadow: 0 1px 3px rgba(210, 8, 8, 0.1);
 }
 
-.signup-btn:hover {
-  background: #e63946;
-  transform: none; /* ✅ No movement */
+.navbar .signup-btn:hover {
+  background-color: #3e5c4d;
+  transform: translateY(-1px);
 }
 
 /* ---------- SIGN UP DROPDOWN ---------- */
@@ -131,13 +128,13 @@ section {
   right: 0;
   background: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 16px rgba(193, 203, 192, 0.1);
   display: flex;
   flex-direction: column;
   overflow: visible;
   z-index: 3000;
   padding: 0.2rem 0;
-  animation: fadeIn 0.25s ease-in-out;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
 .signup-dropdown button {
@@ -156,7 +153,7 @@ section {
   background: rgba(62, 24, 174, 0.1);
 }
 
-/* ---------- PROFILE MENU (AFTER LOGIN) ---------- */
+/* ---------- PROFILE MENU ---------- */
 .profile-menu {
   position: relative;
   display: flex;
@@ -164,14 +161,13 @@ section {
   cursor: pointer;
   color: white;
   font-weight: 600;
-  min-width: 150px; /* ✅ Prevents shifting on switch */
+  min-width: 150px;
 }
 
 .profile-icon {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  transition: none; /* ✅ No movement on hover */
 }
 
 .profile-name {
@@ -214,7 +210,7 @@ section {
   color: #009688;
 }
 
-/* ---------- MOBILE MENU ---------- */
+/* ---------- MOBILE MENU (UPDATED) ---------- */
 .menu-toggle {
   display: none;
   font-size: 1.9rem;
@@ -227,21 +223,22 @@ section {
   top: 0;
   right: 0;
   width: 65%;
-  max-width: 350px;
+  max-width: 340px;
   height: 100vh;
-  background: rgba(13, 59, 59, 0.98);
-  backdrop-filter: blur(6px);
+  background: rgba(0, 40, 40, 0.35); /* translucent blur */
+  backdrop-filter: blur(12px);
   z-index: 1500;
   padding: 2.5rem 2rem;
   display: flex;
   flex-direction: column;
-  border-left: 2px solid rgba(255, 255, 255, 0.15);
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
   animation: slideIn 0.3s ease forwards;
+  box-shadow: -5px 0 25px rgba(0, 0, 0, 0.25);
 }
 
 @keyframes slideIn {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
 }
 
 .menu-content .close-btn {
@@ -253,21 +250,24 @@ section {
   border: none;
   color: white;
   cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
-/* ---------- MOBILE MENU LINKS ---------- */
+.menu-content .close-btn:hover {
+  transform: scale(1.15);
+}
+
 .menu-content ul {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 1.8rem;
-  margin-top: 4.5rem;
-  text-align: left;
+  gap: 1.6rem;
+  margin-top: 5rem;
   padding-left: 0.5rem;
 }
 
 .menu-content ul li a {
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: white;
   text-decoration: none;
@@ -278,28 +278,41 @@ section {
   color: #20b2aa;
 }
 
+/* ---------- MOBILE MENU BUTTON ---------- */
 .menu-actions {
-  margin-top: auto;
+  margin-top: 2.8rem;
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding-top: 2rem;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 2rem;
 }
 
-/* ---------- MOBILE SIGNUP ---------- */
-.mobile-signup button {
-  background: none;
-  border: 2px solid #fff;
-  color: white;
-  font-weight: 600;
-  border-radius: 10px;
-  padding: 0.8rem;
-  margin-bottom: 0.5rem;
-  transition: background 0.2s ease;
+.mobile-main-btn {
+  width: 150px;
+  max-width: 200px;
+  background: linear-gradient(90deg, #a4b6ac, #cdb9c5);
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  padding: 0.9rem 1.4rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(32, 178, 170, 0.25);
 }
 
-.mobile-signup button:hover {
-  background: rgba(255, 255, 255, 0.1);
+.mobile-main-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(32, 178, 170, 0.35);
+}
+
+.mobile-main-btn.signout {
+  background: linear-gradient(90deg, #b92b27, #1565c0);
+}
+
+.mobile-main-btn.signout:hover {
+  box-shadow: 0 6px 18px rgba(185, 43, 39, 0.4);
 }
 
 /* ---------- RESPONSIVE ---------- */
@@ -324,4 +337,53 @@ html {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-5px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- MODAL BASE ---------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2500;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-container {
+  position: relative;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.4s ease;
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #444;
+  transition: color 0.2s ease;
+  z-index: 10;
+}
+
+.close-modal:hover {
+  color: #e63946;
+}
+
+.blurred {
+  filter: blur(4px);
+  pointer-events: none;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
