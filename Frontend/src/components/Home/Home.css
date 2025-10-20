@@ -1,9 +1,11 @@
+/* ---------- RESET ---------- */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* ---------- HOME SECTION ---------- */
 .home {
   min-height: 100vh;
   display: flex;
@@ -31,6 +33,7 @@
   z-index: 2;
 }
 
+/* ---------- HEADINGS ---------- */
 .home-title {
   font-size: 2.5rem;
   margin-bottom: 1rem;
@@ -46,6 +49,7 @@
   opacity: 0.9;
 }
 
+/* ---------- SEARCH BAR ---------- */
 .search-bar {
   display: flex;
   align-items: center;
@@ -82,6 +86,7 @@
   background: #18a098;
 }
 
+/* ---------- PLAN BUTTON ---------- */
 .plan-btn {
   background: transparent;
   border: 2px solid #fff;
@@ -99,7 +104,7 @@
   color: #0d3b3b;
 }
 
-/* Planner Overlay */
+/* ---------- PLANNER MODAL ---------- */
 .planner-overlay {
   position: fixed;
   inset: 0;
@@ -193,6 +198,79 @@ input[type="range"] {
   cursor: pointer;
 }
 
+/* ---------- SEARCH RESULTS ---------- */
+.results-container {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  z-index: 5;
+  position: relative;
+}
+
+/* ---------- TEXT-ONLY RESULT CARDS ---------- */
+.destination-card.text-only {
+  display: flex;
+  flex-direction: column;
+  padding: 1.2rem;
+  border-radius: 15px;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: #222;
+  cursor: pointer;
+}
+
+.destination-card.text-only:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.destination-name {
+  color: #00796b;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.destination-location {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.destination-desc {
+  font-size: 0.95rem;
+  color: #333;
+  margin-bottom: 0.8rem;
+  line-height: 1.4;
+}
+
+.destination-meta {
+  margin-top: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  color: #444;
+}
+
+/* ---------- STATUS & ERRORS ---------- */
+.status-text {
+  margin-top: 1rem;
+  color: #20b2aa;
+  font-weight: 600;
+}
+
+.error-text {
+  color: #ff4b2b;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+/* ---------- RESPONSIVE ---------- */
 @media (max-width: 768px) {
   .home-title {
     font-size: 2.2rem;
@@ -216,6 +294,13 @@ input[type="range"] {
   .plan-btn {
     width: 100%;
     margin-top: 1rem;
+  }
+
+  .destination-card.text-only {
+    padding: 1rem;
+  }
+  .destination-name {
+    font-size: 1.2rem;
   }
 }
 

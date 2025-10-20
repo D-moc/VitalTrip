@@ -1,0 +1,167 @@
+/* ---------- BASE STYLES ---------- */
+.tripdetails-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e8fbf9, #ffffff);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  font-family: "Poppins", sans-serif;
+  padding: 3rem 1rem;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- CONTAINER ---------- */
+.tripdetails-container {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 2rem 2.5rem;
+  max-width: 750px;
+  width: 100%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  text-align: left;
+}
+
+/* ---------- TITLE ---------- */
+.tripdetails-title {
+  text-align: center;
+  color: #00796b;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  letter-spacing: 0.5px;
+}
+
+/* ---------- CARD ---------- */
+.tripdetails-card {
+  background: #f9fefc;
+  border: 1px solid #c6f1e7;
+  border-radius: 15px;
+  padding: 1.8rem;
+  margin-bottom: 2rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tripdetails-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.tripdetails-card h2 {
+  color: #20b2aa;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.tripdetails-card p {
+  font-size: 1rem;
+  margin: 0.4rem 0;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* ---------- NEARBY SECTION ---------- */
+.nearby-section {
+  background: #f8fffd;
+  border: 1px solid #c6f1e7;
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.nearby-section h2 {
+  color: #00796b;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.nearby-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.nearby-section li {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  color: #444;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* ---------- BUTTON ---------- */
+.back-btn {
+  display: block;
+  width: 100%;
+  background: linear-gradient(90deg, #20b2aa, #00796b);
+  color: #fff;
+  border: none;
+  padding: 0.9rem;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.back-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(32, 178, 170, 0.4);
+  background: linear-gradient(90deg, #1abc9c, #00897b);
+}
+
+/* ---------- LOADING & ERROR ---------- */
+.tripdetails-loading,
+.tripdetails-error {
+  text-align: center;
+  color: #00796b;
+  font-family: "Poppins", sans-serif;
+  padding-top: 5rem;
+}
+
+.tripdetails-error button {
+  background: #20b2aa;
+  border: none;
+  color: white;
+  padding: 0.7rem 1.5rem;
+  border-radius: 25px;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tripdetails-error button:hover {
+  background: #1abc9c;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+  .tripdetails-container {
+    padding: 1.5rem;
+  }
+
+  .tripdetails-title {
+    font-size: 1.6rem;
+  }
+
+  .tripdetails-card h2 {
+    font-size: 1.2rem;
+  }
+
+  .back-btn {
+    font-size: 0.95rem;
+  }
+}
