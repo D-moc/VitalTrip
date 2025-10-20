@@ -1,96 +1,164 @@
 .captain-dashboard {
   min-height: 100vh;
-  background: linear-gradient(135deg, #e0f2f1, #b2dfdb);
+  background: linear-gradient(to right, #e8f9f7, #f9ffff);
+  padding: 3rem 2rem;
   font-family: "Poppins", sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 4rem 1rem;
+  color: #033b3b;
 }
 
-.dashboard-container {
-  background: rgba(255, 255, 255, 0.96);
-  border-radius: 20px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-  width: 90%;
-  max-width: 1000px;
-  padding: 2.5rem;
-  animation: fadeIn 0.8s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(25px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.dashboard-header {
+/* ---------- HEADER ---------- */
+.captain-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid rgba(0, 150, 136, 0.3);
-  padding-bottom: 1rem;
   margin-bottom: 2rem;
 }
 
-.dashboard-header h1 {
+.captain-header h1 {
   font-size: 2rem;
-  color: #004d40;
-  font-weight: 800;
-}
-
-.dashboard-header h1 span {
-  color: #009688;
+  color: #00796b;
 }
 
 .logout-btn {
-  background: linear-gradient(90deg, #e53935, #ff7043);
+  background: #ff4b4b;
   border: none;
   color: white;
-  padding: 0.8rem 1.5rem;
-  border-radius: 10px;
-  font-weight: 700;
+  padding: 0.7rem 1.3rem;
+  border-radius: 6px;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: 0.3s;
+  font-weight: 600;
 }
 
 .logout-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(229, 57, 53, 0.3);
+  background: #e63946;
 }
 
-/* Dashboard Cards */
-.dashboard-content {
+/* ---------- FORM ---------- */
+.destination-form {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  max-width: 700px;
+  margin: 0 auto 3rem;
+}
+
+.destination-form h2 {
+  color: #00695c;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.destination-form input,
+.destination-form textarea {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.destination-form textarea {
+  height: 100px;
+  resize: none;
+}
+
+.submit-btn {
+  background: #20b2aa;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 100%;
+  font-weight: 600;
+}
+
+.submit-btn:hover {
+  background: #1aa198;
+}
+
+/* ---------- DESTINATION LIST ---------- */
+.destination-list {
+  text-align: center;
+}
+
+.destination-list h2 {
+  color: #00796b;
+  margin-bottom: 1.5rem;
+}
+
+.destination-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
   gap: 1.5rem;
 }
 
-.dashboard-card {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 150, 136, 0.15);
+.destination-card {
+  background: #ffffff;
+  border-radius: 12px;
   padding: 1.5rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  text-align: left;
 }
 
-.dashboard-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 150, 136, 0.25);
-}
-
-.dashboard-card h3 {
-  color: #009688;
-  font-weight: 700;
+.destination-card h3 {
+  color: #00796b;
   margin-bottom: 0.5rem;
 }
 
-.dashboard-card p {
+.destination-card p {
+  margin-bottom: 0.4rem;
   color: #333;
+}
+
+.desc {
+  color: #555;
   font-size: 0.95rem;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.edit-btn {
+  background: #1abc9c;
+  border: none;
+  padding: 0.5rem 1rem;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background: #ff4b4b;
+  border: none;
+  padding: 0.5rem 1rem;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  background: #16a085;
+}
+
+.delete-btn:hover {
+  background: #e63946;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+  .destination-form {
+    padding: 1.5rem;
+  }
+
+  .destination-grid {
+    grid-template-columns: 1fr;
+  }
 }

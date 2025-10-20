@@ -32,6 +32,10 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
 const connectDB = require("./db/db");
+const path = require("path");
+
+
+
 
 dotenv.config();
 connectDB();
@@ -47,6 +51,7 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Import routes
 const userRoutes = require("./routes/user.routes");

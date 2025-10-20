@@ -1,24 +1,3 @@
-// const mongoose = require("mongoose");
-
-// const tripSchema = new mongoose.Schema(
-//   {
-//     user: {
-//       type: mongoose.Schema.Types.ObjectId,
-//       ref: "User",
-//       required: true,
-//     },
-//     destination: { type: String, required: true },
-//     days: { type: Number, required: true },
-//     travellers: { type: Number, required: true },
-//     budget: { type: Number },
-//     transport: { type: String },
-//     stay: { type: String },
-//     itinerary: { type: String },
-//   },
-//   { timestamps: true }
-// );
-
-// module.exports = mongoose.model("Trip", tripSchema);
 
 
 // models/trip.model.js
