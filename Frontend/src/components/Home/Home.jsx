@@ -1,10 +1,10 @@
+// //1
+
 // import React, { useState } from "react";
 // import "./Home.css";
 // import { FaSearch, FaMapMarkerAlt, FaClock, FaRupeeSign } from "react-icons/fa";
-// import { ToastContainer, toast } from "react-toastify";
+// import { ToastContainer } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
-// import PlanTrip from "../Trip/PlanTrip";
-// import TripDetails from "../Trip/TripDetails";
 // import { useNavigate } from "react-router-dom";
 
 // function Home() {
@@ -12,13 +12,10 @@
 //   const [results, setResults] = useState([]);
 //   const [loading, setLoading] = useState(false);
 //   const [error, setError] = useState("");
-//   const [showPlanner, setShowPlanner] = useState(false);
-//   const [plannedTrip, setPlannedTrip] = useState(null);
 
 //   const navigate = useNavigate();
 //   const API_BASE = "http://localhost:4000/api/destinations";
 
-//   // 🔍 Handle search
 //   const handleSearch = async (e) => {
 //     e.preventDefault();
 //     setError("");
@@ -44,24 +41,20 @@
 //     }
 //   };
 
-//   // 🧭 Open destination
 //   const openDestinationPage = (id) => navigate(`/destination/${id}`);
 
 //   return (
-//     <section id="home" className={`home ${showPlanner ? "blurred" : ""}`}>
+//     <section id="home" className="home">
 //       <ToastContainer />
 //       <div className="overlay"></div>
 
 //       <div className="home-container">
 //         <h1 className="home-title">DISCOVER HIDDEN GEMS AND LOCAL SECRETS</h1>
 //         <p className="home-subtitle">
-//           <i>
-//             Plan your trips, explore destinations, and travel smarter with
-//             VitalTrip.
-//           </i>
+//           <i>Plan your trips, explore destinations, and travel smarter with VitalTrip.</i>
 //         </p>
 
-//         {/* 🔍 Search */}
+//         {/* 🔍 Search Bar */}
 //         <form className="search-bar" onSubmit={handleSearch}>
 //           <input
 //             type="text"
@@ -74,7 +67,6 @@
 //           </button>
 //         </form>
 
-//         {/* 🕓 Loading & Error */}
 //         {loading && <p className="status-text">Searching destinations...</p>}
 //         {error && <p className="error-text">{error}</p>}
 
@@ -111,34 +103,11 @@
 //           </div>
 //         )}
 
-//         {/* ✈️ Plan Trip */}
-//         <button className="plan-btn" onClick={() => setShowPlanner(true)}>
+//         {/* ✈️ Plan Trip Button */}
+//         <button className="plan-btn" onClick={() => navigate("/plan-trip")}>
 //           Plan Your Trip
 //         </button>
 //       </div>
-
-//       {/* 🔹 Modal Overlay */}
-//       {showPlanner && (
-//         plannedTrip ? (
-//           <TripDetails
-//             trip={plannedTrip}
-//             isModal
-//             onBack={() => {
-//               setPlannedTrip(null);
-//               setShowPlanner(false);
-//             }}
-//           />
-//         ) : (
-//           <PlanTrip
-//             isModal
-//             onSuccess={(trip) => {
-//               toast.success("🎉 Trip planned successfully!");
-//               setPlannedTrip(trip);
-//             }}
-//             onClose={() => setShowPlanner(false)}
-//           />
-//         )
-//       )}
 //     </section>
 //   );
 // }
@@ -149,7 +118,7 @@
 import React, { useState } from "react";
 import "./Home.css";
 import { FaSearch, FaMapMarkerAlt, FaClock, FaRupeeSign } from "react-icons/fa";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
@@ -157,18 +126,20 @@ function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const navigate = useNavigate();
   const API_BASE = "http://localhost:4000/api/destinations";
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    setError("");
     setResults([]);
 
     if (!searchQuery.trim()) {
-      setError("Please enter a destination name.");
+      toast.warn("Please enter a destination name..", {
+        position: "top-center",
+        autoClose: 500,
+        theme: "colored",
+      });
       return;
     }
 
@@ -178,10 +149,21 @@ function Home() {
         `${API_BASE}/search?q=${encodeURIComponent(searchQuery)}`
       );
       const data = await response.json();
-      if (response.ok) setResults(data.results);
-      else setError(data.message || "No destinations found.");
+      if (response.ok && data.results.length > 0) {
+        setResults(data.results);
+      } else {
+        toast.error("No destinations found 😔", {
+          position: "top-center",
+          autoClose: 500,
+          theme: "colored",
+        });
+      }
     } catch (err) {
-      setError("Server error. Please try again later.");
+      toast.error("Server error! Please try again later ⚠️", {
+        position: "top-center",
+        autoClose: 500,
+        theme: "colored",
+      });
     } finally {
       setLoading(false);
     }
@@ -197,14 +179,17 @@ function Home() {
       <div className="home-container">
         <h1 className="home-title">DISCOVER HIDDEN GEMS AND LOCAL SECRETS</h1>
         <p className="home-subtitle">
-          <i>Plan your trips, explore destinations, and travel smarter with VitalTrip.</i>
+          <i>
+            Plan your trips, explore destinations, and travel smarter with{" "}
+            <b>VitalTrip</b>.
+          </i>
         </p>
 
         {/* 🔍 Search Bar */}
         <form className="search-bar" onSubmit={handleSearch}>
           <input
             type="text"
-            placeholder="Search destinations (e.g. Torna Fort, Kaas Plateau)..."
+            placeholder="Search destinations (e.g., Torna Fort, Kaas Plateau)..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -214,7 +199,6 @@ function Home() {
         </form>
 
         {loading && <p className="status-text">Searching destinations...</p>}
-        {error && <p className="error-text">{error}</p>}
 
         {/* 🗺️ Results */}
         {results.length > 0 && (

@@ -31,6 +31,7 @@
   width: 100%;
   position: relative;
   z-index: 2;
+  margin-top: 60px;
 }
 
 /* ---------- HEADINGS ---------- */
@@ -38,9 +39,9 @@
   font-size: 2.5rem;
   margin-bottom: 1rem;
   font-weight: 800;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
 }
 
 .home-subtitle {
@@ -53,55 +54,146 @@
 .search-bar {
   display: flex;
   align-items: center;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 15px;
-  padding: 0.4rem 0.6rem;
+  padding: 0.3rem 0.6rem;
   max-width: 600px;
   margin: 0 auto 2rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
 }
 
 .search-bar input {
   flex: 1;
   border: none;
   outline: none;
-  padding: 0.8rem 1rem;
+  padding: 1rem 0.9rem;
   font-size: 1rem;
   border-radius: 8px 0 0 8px;
+  background: transparent;
+  color: #333;
+}
+
+.search-bar input::placeholder {
+  color: #777;
 }
 
 .search-btn {
-  background: #20b2aa;
+  background: linear-gradient(90deg, #20b2aa, #00796b);
   border: none;
-  padding: 0.8rem 1.2rem;
+  padding: 1rem 1rem;
   border-radius: 0 8px 8px 0;
   cursor: pointer;
   color: white;
   font-size: 1.1rem;
-  justify-content: center;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .search-btn:hover {
-  background: #18a098;
+  background: linear-gradient(90deg, #1abc9c, #00897b);
+  transform: scale(1.05);
 }
 
 /* ---------- PLAN BUTTON ---------- */
 .plan-btn {
-  background: transparent;
+  background: white;
   border: 2px solid #fff;
   padding: 0.8rem 2rem;
-  border-radius: 6px;
+  border-radius: 9px;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  color: #fff;
+  color: green;
   transition: all 0.3s ease;
+  margin-top: 2rem;
 }
 
 .plan-btn:hover {
   background: #fff;
   color: #0d3b3b;
+  transform: translateY(-3px);
+}
+
+/* ---------- SEARCH RESULTS ---------- */
+.results-container {
+  margin-top: 2.5rem;
+  margin-bottom: 6rem; /* ensures no overlap with Plan Trip button */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  z-index: 5;
+  position: relative;
+  padding: 0 1rem;
+}
+
+/* ---------- MINIMAL GOOGLE-LIKE RESULT CARDS ---------- */
+.destination-card.text-only {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 14px;
+  padding: 1.3rem 1.5rem;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(32, 178, 170, 0.15);
+  backdrop-filter: blur(6px);
+  transition: background 0.2s ease;
+  color: #222;
+  cursor: pointer;
+}
+
+.destination-card.text-only:hover {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* ---------- TEXT STYLES ---------- */
+.destination-name {
+  color: #00796b;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.destination-location {
+  font-size: 0.9rem;
+  color: #4f4f4f;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.destination-desc {
+  font-size: 0.95rem;
+  color: #333;
+  margin-bottom: 0.8rem;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+.destination-meta {
+  margin-top: 0.6rem;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  color: #00796b;
+  font-size: 0.95rem;
+}
+
+/* Add icon color accents */
+.destination-meta span svg {
+  color: #20b2aa;
+}
+
+/* ---------- STATUS & ERRORS ---------- */
+.status-text {
+  margin-top: 1.5rem;
+  color: #20b2aa;
+  font-weight: 600;
+}
+
+.error-text {
+  color: #ff4b2b;
+  font-weight: 600;
+  margin-top: 1rem;
 }
 
 /* ---------- PLANNER MODAL ---------- */
@@ -124,150 +216,6 @@
   text-align: left;
   position: relative;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-}
-
-.planner-card h2 {
-  margin-bottom: 1.2rem;
-  color: #1abc9c;
-  text-align: center;
-}
-
-.planner-card label {
-  display: block;
-  margin-top: 1rem;
-  margin-bottom: 0.3rem;
-  font-weight: 600;
-  font-size: 0.95rem;
-  color: #333;
-}
-
-.planner-card input,
-.planner-card select {
-  width: 100%;
-  padding: 0.7rem;
-  margin-bottom: 0.6rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-
-input[type="range"] {
-  width: 100%;
-  margin: 0.8rem 0;
-  accent-color: #1abc9c;
-}
-
-.auth-btn {
-  width: 100%;
-  margin-top: 1rem;
-  background: #1abc9c;
-  color: #ffffff;
-  border-radius: 25px;
-  padding: 0.8rem;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.auth-btn:hover {
-  background: #16a085;
-}
-
-.itinerary {
-  margin-top: 1.5rem;
-  color: #16a085;
-}
-
-.itinerary-day {
-  margin-bottom: 0.6rem;
-  padding: 0.6rem;
-  background: #f8fdfc;
-  border-radius: 6px;
-  border-left: 4px solid #1abc9c;
-}
-
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 1.5rem;
-  background: none;
-  border: none;
-  color: #333;
-  cursor: pointer;
-}
-
-/* ---------- SEARCH RESULTS ---------- */
-.results-container {
-  margin-top: 2rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  z-index: 5;
-  position: relative;
-}
-
-/* ---------- TEXT-ONLY RESULT CARDS ---------- */
-.destination-card.text-only {
-  display: flex;
-  flex-direction: column;
-  padding: 1.2rem;
-  border-radius: 15px;
-  background: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  color: #222;
-  cursor: pointer;
-}
-
-.destination-card.text-only:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-}
-
-.destination-name {
-  color: #00796b;
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-bottom: 0.4rem;
-}
-
-.destination-location {
-  font-size: 0.9rem;
-  color: #555;
-  margin-bottom: 0.6rem;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.destination-desc {
-  font-size: 0.95rem;
-  color: #333;
-  margin-bottom: 0.8rem;
-  line-height: 1.4;
-}
-
-.destination-meta {
-  margin-top: 0.8rem;
-  display: flex;
-  justify-content: space-between;
-  font-weight: 600;
-  color: #444;
-}
-
-/* ---------- STATUS & ERRORS ---------- */
-.status-text {
-  margin-top: 1rem;
-  color: #20b2aa;
-  font-weight: 600;
-}
-
-.error-text {
-  color: #ff4b2b;
-  font-weight: 600;
-  margin-top: 1rem;
 }
 
 /* ---------- RESPONSIVE ---------- */
@@ -293,15 +241,13 @@ input[type="range"] {
   }
   .plan-btn {
     width: 100%;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
   }
 
   .destination-card.text-only {
-    padding: 1rem;
+    padding: 1rem 1.2rem;
   }
   .destination-name {
     font-size: 1.2rem;
   }
 }
-
-
