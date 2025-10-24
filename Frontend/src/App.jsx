@@ -12,7 +12,7 @@ import Booking from "./pages/Booking";
 import AuthPage from "./pages/AuthPage";
 import CaptainDashboard from "./pages/CaptainDashboard";
 import UserDashboard from "./pages/UserDashboard";
-import Footer from "./components/footer";
+import Footer from "./components/Footer";
 import Guides from "./pages/Guides";
 import GuideDetails from "./pages/GuideDetails";
 import TripDetails from "./pages/TripDetails";
@@ -20,7 +20,6 @@ import TripDetails from "./pages/TripDetails";
 const App = () => {
   const location = useLocation();
 
-  // ✅ Hide Navbar only for single destination pages
   const hideNavbar = location.pathname.startsWith("/destination/");
 
   return (
@@ -41,21 +40,17 @@ const App = () => {
           }
         />
 
-        {/* ✅ Dynamic TripDetails route */}
         <Route path="/destinations/:id" element={<TripDetails />} />
 
-        {/* ✅ Static & Functional Pages */}
         <Route path="/plan-trip" element={<PlanTrip />} />
         <Route path="/booking" element={<Booking />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/captain/dashboard" element={<CaptainDashboard />} />
         <Route path="/user/dashboard" element={<UserDashboard />} />
 
-        {/* ✅ Blogs */}
         <Route path="/blogs" element={<AllBlogs />} />
         <Route path="/blogs/:id" element={<BlogDetails />} />
 
-        {/* ✅ Services & Guides */}
         <Route path="/services" element={<Services />} />
         <Route path="/guides" element={<Guides />} />
         <Route path="/guides/:id" element={<GuideDetails />} />
