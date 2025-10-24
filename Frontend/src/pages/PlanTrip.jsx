@@ -1,0 +1,409 @@
+import React, { useState, useContext } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Polyline,
+  Popup,
+} from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import {
+  FaRoute,
+  FaSave,
+  FaTimes,
+  FaMapMarkerAlt,
+  FaChevronDown,
+} from "react-icons/fa";
+import { toast } from "react-toastify";
+import api from "../utils/api";
+import { AuthContext } from "../context/AuthContext";
+
+const PlanTrip = () => {
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+  const { state } = useLocation();
+
+  const [tripData, setTripData] = useState({
+    destination: state?.name || "",
+    startLocation: "",
+    days: "",
+    travellers: "",
+    budget: "",
+    transport: "",
+    accommodation: "",
+    preferences: "",
+  });
+
+  const [routeData, setRouteData] = useState(null);
+  const [aiItinerary, setAiItinerary] = useState("");
+  const [parsedItinerary, setParsedItinerary] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [openDay, setOpenDay] = useState(null);
+
+  const handleChange = (e) => {
+    setTripData({ ...tripData, [e.target.name]: e.target.value });
+  };
+
+  const formatItinerary = (text) => {
+    const days = text
+      .split(/(?=Day\s\d+)/i)
+      .filter((d) => d.trim())
+      .map((d) => d.trim());
+    setParsedItinerary(days);
+  };
+
+  const handleAIGenerate = async (e) => {
+    e.preventDefault();
+
+    if (
+      !tripData.startLocation ||
+      !tripData.destination ||
+      !tripData.days ||
+      !tripData.travellers ||
+      !tripData.budget ||
+      !tripData.transport ||
+      !tripData.accommodation
+    ) {
+      toast.warn("Please fill in all fields for accurate itinerary generation!");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const prompt = `
+        Generate a detailed ${tripData.days}-day itinerary for a trip in Maharashtra.
+        Starting point: ${tripData.startLocation}.
+        Destination: ${tripData.destination}.
+        Number of travellers: ${tripData.travellers}.
+        Budget: ₹${tripData.budget}.
+        Transport mode: ${tripData.transport}.
+        Accommodation type: ${tripData.accommodation}.
+        Interests: ${tripData.preferences || "general sightseeing"}.
+        Include:
+        - Day-wise itinerary with activity names and timings.
+        - Recommended attractions and restaurants.
+        - Nearby hospitals, hotels, and police stations (with approx distance).
+        - Route distance and travel time summary.
+        Format output neatly, no symbols like * or +.
+      `;
+
+      const res = await api.post("/ai/itinerary", { prompt });
+      const text = res.data.itinerary || "No itinerary generated.";
+      setAiItinerary(text);
+      formatItinerary(text);
+
+      toast.success("AI itinerary created successfully!");
+
+      setRouteData({
+        start: { lat: 19.076, lng: 72.8777, name: tripData.startLocation },
+        end: { lat: 18.5204, lng: 73.8567, name: tripData.destination },
+        path: [
+          [19.076, 72.8777],
+          [18.5204, 73.8567],
+        ],
+        distance: "150 km",
+        time: "3.5 hours",
+      });
+    } catch (err) {
+      console.error("AI itinerary error:", err);
+      toast.error("AI itinerary generation failed. Try again later!");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSaveTrip = async () => {
+    if (!user) {
+      toast.warn("Please log in or register before saving your trip!");
+      navigate("/auth");
+      return;
+    }
+
+    try {
+      setSaving(true);
+      const token =
+        localStorage.getItem("userToken") || localStorage.getItem("authToken");
+
+      await api.post(
+        "/trips/create",
+        { ...tripData, itinerary: aiItinerary },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      toast.success("Trip saved successfully! Check your dashboard.");
+    } catch (err) {
+      console.error("Error saving trip:", err);
+      toast.error("Failed to save trip!");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleCancelTrip = () => {
+    setTripData({
+      destination: "",
+      startLocation: "",
+      days: "",
+      travellers: "",
+      budget: "",
+      transport: "",
+      accommodation: "",
+      preferences: "",
+    });
+    setAiItinerary("");
+    setParsedItinerary([]);
+    setRouteData(null);
+    toast.info("Trip plan reset successfully.");
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-white to-orange-50 pt-32 pb-20 px-4 sm:px-6 lg:px-10">
+      <div className="max-w-6xl mx-auto bg-white shadow-2xl rounded-3xl p-6 sm:p-8 border border-gray-200">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-center text-gray-800 mb-3">
+          Plan Your Trip
+        </h1>
+        <p className="text-center text-gray-500 mb-10 text-sm sm:text-base">
+          Fill in your travel details and let AI design your perfect itinerary.
+        </p>
+
+        {/* Form + Map Layout */}
+        <div className="flex flex-col lg:flex-row gap-10 relative">
+          {/* Form Section */}
+          <form
+            onSubmit={handleAIGenerate}
+            className="flex-1 space-y-5 lg:pr-6 order-2 lg:order-1"
+          >
+            {/* Starting Point */}
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2 text-sm sm:text-base">
+                Starting Point
+              </label>
+              <input
+                type="text"
+                name="startLocation"
+                placeholder="e.g., Thane, Mumbai"
+                value={tripData.startLocation}
+                onChange={handleChange}
+                required
+                className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-orange-400 text-sm sm:text-base"
+              />
+            </div>
+
+            {/* Destination */}
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2 text-sm sm:text-base">
+                Destination
+              </label>
+              <input
+                type="text"
+                name="destination"
+                placeholder="e.g., Lonavla"
+                value={tripData.destination}
+                onChange={handleChange}
+                required
+                className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-orange-400 text-sm sm:text-base"
+              />
+            </div>
+
+            {/* Days & Travellers */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="w-full sm:w-1/2">
+                <label className="block text-gray-700 font-semibold mb-2 text-sm sm:text-base">
+                  Days
+                </label>
+                <input
+                  type="number"
+                  name="days"
+                  placeholder="Days"
+                  value={tripData.days}
+                  onChange={handleChange}
+                  required
+                  className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-orange-400 text-sm sm:text-base"
+                />
+              </div>
+              <div className="w-full sm:w-1/2">
+                <label className="block text-gray-700 font-semibold mb-2 text-sm sm:text-base">
+                  Travellers
+                </label>
+                <input
+                  type="number"
+                  name="travellers"
+                  placeholder="Travellers"
+                  value={tripData.travellers}
+                  onChange={handleChange}
+                  required
+                  className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-orange-400 text-sm sm:text-base"
+                />
+              </div>
+            </div>
+
+            {/* Budget */}
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2 text-sm sm:text-base">
+                Budget (₹)
+              </label>
+              <input
+                type="number"
+                name="budget"
+                placeholder="Enter total budget"
+                value={tripData.budget}
+                onChange={handleChange}
+                required
+                className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-orange-400 text-sm sm:text-base"
+              />
+            </div>
+
+            {/* Transport & Accommodation */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="w-full sm:w-1/2">
+                <label className="block text-gray-700 font-semibold mb-2 text-sm sm:text-base">
+                  Transport
+                </label>
+                <select
+                  name="transport"
+                  value={tripData.transport}
+                  onChange={handleChange}
+                  required
+                  className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-orange-400 text-sm sm:text-base"
+                >
+                  <option value="">Select</option>
+                  <option value="car">Car</option>
+                  <option value="bus">Bus</option>
+                  <option value="train">Train</option>
+                </select>
+              </div>
+              <div className="w-full sm:w-1/2">
+                <label className="block text-gray-700 font-semibold mb-2 text-sm sm:text-base">
+                  Accommodation
+                </label>
+                <select
+                  name="accommodation"
+                  value={tripData.accommodation}
+                  onChange={handleChange}
+                  required
+                  className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-orange-400 text-sm sm:text-base"
+                >
+                  <option value="">Select</option>
+                  <option value="hotel">Hotel</option>
+                  <option value="resort">Resort</option>
+                  <option value="homestay">Homestay</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Preferences */}
+            <div>
+              <label className="block text-gray-700 font-semibold mb-2 text-sm sm:text-base">
+                Travel Preferences
+              </label>
+              <textarea
+                name="preferences"
+                placeholder="e.g., nature, trekking, local food"
+                value={tripData.preferences}
+                onChange={handleChange}
+                rows="2"
+                className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-orange-400 text-sm sm:text-base"
+              />
+            </div>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-gradient-to-r from-orange-500 to-teal-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:scale-105 transition-transform text-sm sm:text-base"
+            >
+              {loading ? "Generating Itinerary..." : "Create Trip Plan"}
+            </button>
+          </form>
+
+          {/* Map Section */}
+          <div className="w-full lg:w-[50%] h-[350px] sm:h-[450px] lg:h-[630px] mt-4 lg:mt-6 rounded-2xl border border-gray-300 shadow-xl overflow-hidden bg-white z-10 order-1 lg:order-2">
+            {routeData ? (
+              <MapContainer
+                center={[routeData.start.lat, routeData.start.lng]}
+                zoom={8}
+                scrollWheelZoom={false}
+                className="h-full w-full rounded-2xl"
+                style={{ borderRadius: "1rem" }}
+              >
+                <TileLayer
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  attribution="&copy; OpenStreetMap contributors"
+                />
+                <Marker position={[routeData.start.lat, routeData.start.lng]}>
+                  <Popup>Start: {routeData.start.name}</Popup>
+                </Marker>
+                <Marker position={[routeData.end.lat, routeData.end.lng]}>
+                  <Popup>Destination: {routeData.end.name}</Popup>
+                </Marker>
+                <Polyline positions={routeData.path} color="orange" weight={4} />
+              </MapContainer>
+            ) : (
+              <div className="flex flex-col justify-center items-center h-full bg-gray-50 text-gray-500">
+                <FaRoute size={42} className="mb-3 text-orange-400" />
+                <p className="text-center text-gray-600 text-sm md:text-base px-4">
+                  Route will appear here after planning your trip!
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* AI Itinerary */}
+        {parsedItinerary.length > 0 && (
+          <div className="mt-12 bg-orange-50 border border-orange-200 rounded-2xl p-6 shadow-inner">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+              <FaMapMarkerAlt className="text-orange-500" /> Your AI-Generated Itinerary
+            </h2>
+
+            <div className="space-y-4">
+              {parsedItinerary.map((day, i) => (
+                <div
+                  key={i}
+                  className="bg-white rounded-xl shadow p-5 border border-gray-200 cursor-pointer transition-all hover:shadow-lg"
+                  onClick={() => setOpenDay(openDay === i ? null : i)}
+                >
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-800">
+                      {day.split("\n")[0]}
+                    </h3>
+                    <FaChevronDown
+                      className={`transition-transform ${openDay === i ? "rotate-180" : ""}`}
+                    />
+                  </div>
+
+                  {openDay === i && (
+                    <p className="mt-3 text-gray-700 whitespace-pre-wrap text-sm leading-relaxed">
+                      {day.replace(day.split("\n")[0], "").trim()}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Save & Cancel */}
+            <div className="flex flex-wrap justify-center gap-4 mt-8">
+              <button
+                onClick={handleSaveTrip}
+                disabled={saving}
+                className="bg-green-500 text-white px-6 py-3 rounded-full font-semibold shadow-md hover:bg-green-600 transition-all flex items-center gap-2 text-sm sm:text-base"
+              >
+                <FaSave /> {saving ? "Saving..." : "Save Trip"}
+              </button>
+              <button
+                onClick={handleCancelTrip}
+                className="bg-red-500 text-white px-6 py-3 rounded-full font-semibold shadow-md hover:bg-red-600 transition-all flex items-center gap-2 text-sm sm:text-base"
+              >
+                <FaTimes /> Cancel Trip
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default PlanTrip;
