@@ -28,8 +28,8 @@ export const sendResetEmail = async (email, link) => {
       `,
     });
 
-    console.log(`✅ Password reset email sent to ${email}`);
+    console.log(`Password reset email sent to ${email}`);
   } catch (err) {
-    console.error("❌ Error sending email:", err);
+    console.error("Error sending email:", err);
   }
 };

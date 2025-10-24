@@ -7,9 +7,7 @@ import crypto from "crypto";
 import { validationResult } from "express-validator";
 import { sendResetEmail } from "../utils/mailer.js";
 
-/* -------------------------------------------------------------------------- */
-/* 🧾 REGISTER USER */
-/* -------------------------------------------------------------------------- */
+
 export const registerUser = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty())
@@ -31,7 +29,7 @@ export const registerUser = async (req, res) => {
 
     const token = user.generateAuthToken();
     res.status(201).json({
-      message: "User registered successfully ✅",
+      message: "User registered successfully",
       token,
       role: "user",
       user,
@@ -42,9 +40,7 @@ export const registerUser = async (req, res) => {
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* 🔑 LOGIN USER */
-/* -------------------------------------------------------------------------- */
+
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -59,7 +55,7 @@ export const loginUser = async (req, res) => {
 
     const token = user.generateAuthToken();
     res.status(200).json({
-      message: "Login successful ✅",
+      message: "Login successful",
       token,
       role: "user",
       user,
@@ -70,9 +66,7 @@ export const loginUser = async (req, res) => {
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* 👤 GET USER PROFILE */
-/* -------------------------------------------------------------------------- */
+
 export const getUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select("-password");
@@ -84,14 +78,11 @@ export const getUserProfile = async (req, res) => {
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* ✏️ UPDATE USER PROFILE (Name, Bio, Email, Image) */
-/* -------------------------------------------------------------------------- */
+
 export const updateUserProfile = async (req, res) => {
   try {
     const updates = { ...req.body };
 
-    // Handle form-data formatted fullname
     if (req.body["fullname.firstname"] || req.body["fullname.lastname"]) {
       updates.fullname = {
         firstname: req.body["fullname.firstname"],
@@ -101,7 +92,6 @@ export const updateUserProfile = async (req, res) => {
       delete updates["fullname.lastname"];
     }
 
-    // Handle uploaded profile image
     if (req.file) {
       updates.profileImage = `uploads/${req.file.filename}`;
     }
@@ -112,16 +102,14 @@ export const updateUserProfile = async (req, res) => {
 
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    res.status(200).json({ message: "Profile updated successfully ✅", user });
+    res.status(200).json({ message: "Profile updated successfully", user });
   } catch (err) {
     console.error("Update profile error:", err);
     res.status(500).json({ message: "Error updating profile" });
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* 🖼️ UPLOAD PROFILE IMAGE (Optional Single Endpoint) */
-/* -------------------------------------------------------------------------- */
+
 export const uploadProfileImage = async (req, res) => {
   try {
     if (!req.file)
@@ -137,7 +125,7 @@ export const uploadProfileImage = async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
 
     res.status(200).json({
-      message: "Profile image uploaded successfully ✅",
+      message: "Profile image uploaded successfully",
       imageUrl,
       user,
     });
@@ -147,9 +135,7 @@ export const uploadProfileImage = async (req, res) => {
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* ✏️ UPDATE EMAIL OR PASSWORD */
-/* -------------------------------------------------------------------------- */
+
 export const updateUserCredentials = async (req, res) => {
   try {
     const { newEmail, currentPassword, newPassword } = req.body;
@@ -164,16 +150,14 @@ export const updateUserCredentials = async (req, res) => {
     if (newPassword) user.password = await User.hashPassword(newPassword);
     await user.save();
 
-    res.status(200).json({ message: "Credentials updated successfully ✅", user });
+    res.status(200).json({ message: "Credentials updated successfully", user });
   } catch (err) {
     console.error("Update credentials error:", err);
     res.status(500).json({ message: "Error updating user credentials" });
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* 📨 FORGOT PASSWORD (Email Token Flow) */
-/* -------------------------------------------------------------------------- */
+
 export const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
@@ -199,9 +183,7 @@ export const forgotPassword = async (req, res) => {
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* 🔒 RESET PASSWORD */
-/* -------------------------------------------------------------------------- */
+
 export const resetPassword = async (req, res) => {
   try {
     const { token, newPassword } = req.body;
@@ -219,21 +201,19 @@ export const resetPassword = async (req, res) => {
     await user.save();
     await resetToken.deleteOne();
 
-    res.status(200).json({ message: "Password reset successful ✅" });
+    res.status(200).json({ message: "Password reset successful" });
   } catch (err) {
     console.error("Reset password error:", err);
     res.status(500).json({ message: "Error resetting password" });
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* 🚪 LOGOUT USER */
-/* -------------------------------------------------------------------------- */
+
 export const logoutUser = async (req, res) => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
     if (token) await blacklistTokenModel.create({ token });
-    res.status(200).json({ message: "Logged out successfully ✅" });
+    res.status(200).json({ message: "Logged out successfully" });
   } catch (err) {
     console.error("Logout error:", err);
     res.status(500).json({ message: "Logout error" });

@@ -13,7 +13,7 @@ export const geocodeLocation = async (location) => {
       lng: parseFloat(res.data[0].lon),
     };
   } catch (err) {
-    console.warn("⚠️ Geocode failed for", location, ":", err.message);
+    console.warn("Geocode failed for", location, ":", err.message);
     return null;
   }
 };

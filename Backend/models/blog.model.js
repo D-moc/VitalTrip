@@ -2,15 +2,29 @@ import mongoose from "mongoose";
 
 const blogSchema = new mongoose.Schema(
   {
-    title: { type: String, required: true },
-    content: { type: String, required: true },
+    title: { 
+      type: String, 
+      required: true 
+    },
+    
+    content: { 
+      type: String,
+      required: true 
+    },
+
     category: {
       type: String,
       enum: ["Culture", "Nature", "Adventure", "Food", "Travel"],
       required: true,
     },
-    image: { type: String },
-    isApproved: { type: Boolean, default: false },
+
+    image: { 
+      type: String 
+    },
+    isApproved: { 
+      type: Boolean, 
+      default: false 
+    },
     author: {
       type: mongoose.Schema.Types.ObjectId,
       refPath: "authorModelType",

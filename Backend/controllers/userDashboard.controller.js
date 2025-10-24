@@ -1,24 +1,19 @@
 import User from "../models/user.model.js";
 import Trip from "../models/trip.model.js";
 
-/* -------------------------------------------------------------------------- */
-/* 🧭 USER DASHBOARD OVERVIEW */
-/* -------------------------------------------------------------------------- */
 export const getUserDashboard = async (req, res) => {
   try {
     const userId = req.user._id;
 
-    // ✅ Fetch profile data
     const user = await User.findById(userId).select("-password");
 
-    // ✅ Fetch user trips
     const trips = await Trip.find({ user: userId }).sort({ createdAt: -1 });
 
-    // 🧾 Calculate stats
+
     const totalTrips = trips.length;
     const totalSpent = trips.reduce((sum, t) => sum + (t.budget || 0), 0);
     const recentTrips = trips.slice(0, 3);
-    const upcomingTrips = trips.filter((t) => t.days > 1); // sample filter
+    const upcomingTrips = trips.filter((t) => t.days > 1); //sample
 
     res.status(200).json({
       success: true,
@@ -37,15 +32,13 @@ export const getUserDashboard = async (req, res) => {
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* 🧍‍♂️ UPDATE USER PROFILE */
-/* -------------------------------------------------------------------------- */
+
+
 export const updateUserProfile = async (req, res) => {
   try {
     const userId = req.user._id;
     const updates = req.body;
 
-    // ✅ Handle image upload
     if (req.file) updates.profileImage = `uploads/${req.file.filename}`;
 
     const updatedUser = await User.findByIdAndUpdate(userId, updates, { new: true }).select("-password");
@@ -64,9 +57,7 @@ export const updateUserProfile = async (req, res) => {
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* 🗑️ CANCEL TRIP */
-/* -------------------------------------------------------------------------- */
+
 export const cancelUserTrip = async (req, res) => {
   try {
     const { id } = req.params;

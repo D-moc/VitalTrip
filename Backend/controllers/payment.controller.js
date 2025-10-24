@@ -1,7 +1,7 @@
 import Payment from "../models/payment.model.js";
 import Booking from "../models/booking.model.js";
 
-/** 🔹 Generate UPI link for payment */
+
 export const generateUPILink = async (req, res) => {
   try {
     const { bookingId, amount } = req.body;
@@ -26,7 +26,6 @@ export const generateUPILink = async (req, res) => {
   }
 };
 
-/** 🔹 Manual UTR verification (by user) */
 export const submitPaymentProof = async (req, res) => {
   try {
     const { paymentId, utr } = req.body;
@@ -47,7 +46,7 @@ export const submitPaymentProof = async (req, res) => {
   }
 };
 
-/** 🔹 Captain verifies payment manually */
+
 export const verifyPayment = async (req, res) => {
   try {
     const { paymentId } = req.params;
