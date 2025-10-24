@@ -40,7 +40,7 @@ const Footer = () => {
       className="relative bg-gradient-to-r from-green-600 via-teal-600 to-cyan-600 text-white py-10 px-6 md:px-12 border-t-4 border-yellow-400"
     >
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-        {/* ---------- LEFT SIDE ---------- */}
+       
         <div>
           <div className="flex items-center gap-3 mb-3 ">
             <img
@@ -98,7 +98,7 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* ---------- RIGHT SIDE (FORM) ---------- */}
+        {/* EmailJS Form */}
         <div className="bg-green-800/60 p-5 rounded-xl shadow-md backdrop-blur-md border border-green-700/40">
           <h3 className="text-lg font-semibold mb-4 text-yellow-200">
             Have a Query?
@@ -135,13 +135,12 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* ---------- Divider ---------- */}
       <div className="border-t border-white/20 mt-6 pt-4 text-center text-xs text-gray-200">
         © {new Date().getFullYear()}{" "}
         <b className="text-white">VitalTrip</b>. All rights reserved.
       </div>
 
-      {/* ---------- Scroll-to-top ---------- */}
+      
       <button
         onClick={scrollToTop}
         className="fixed bottom-5 right-5 bg-yellow-400 hover:bg-yellow-500 w-10 h-10 flex items-center justify-center rounded-full text-green-900 shadow-lg text-sm font-bold transition"
