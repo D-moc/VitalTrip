@@ -4,7 +4,7 @@ import {
   FaInstagram,
   FaFacebook,
   FaTwitter,
-  FaEnvelope,
+  FaLinkedin,
   FaArrowUp,
 } from "react-icons/fa";
 import logo from "../../src/assets/logo.png";
@@ -62,7 +62,16 @@ const Footer = () => {
           <h3 className="text-3xl font-bold mb-2 ">Follow Us</h3>
           <div className="flex gap-5 text-4xl">
             <a
-              href="https://instagram.com/"
+              href="https://www.linkedin.com/in/imdineshbk"
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-yellow-300 transition-transform hover:scale-110"
+            >
+              <FaLinkedin />
+            </a>
+
+            <a
+              href="https://instagram.com/__.dinesh.bk"
               target="_blank"
               rel="noreferrer"
               className="hover:text-yellow-300 transition-transform hover:scale-110"
@@ -70,7 +79,7 @@ const Footer = () => {
               <FaInstagram />
             </a>
             <a
-              href="https://facebook.com/"
+              href="https://facebook.com/imdineshbk"
               target="_blank"
               rel="noreferrer"
               className="hover:text-yellow-300 transition-transform hover:scale-110"
@@ -78,19 +87,14 @@ const Footer = () => {
               <FaFacebook />
             </a>
             <a
-              href="https://twitter.com/"
+              href="https://twitter.com/imdineshbk"
               target="_blank"
               rel="noreferrer"
               className="hover:text-yellow-300 transition-transform hover:scale-110"
             >
               <FaTwitter />
             </a>
-            <a
-              href="mailto:support@vitaltrip.in"
-              className="hover:text-yellow-300 transition-transform hover:scale-110"
-            >
-              <FaEnvelope />
-            </a>
+            
           </div>
         </div>
 

@@ -3,11 +3,10 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Destinations from "./pages/Destinations";
-// import DestinationDetails from "./pages/DestinationDetails";
 import Services from "./pages/Services";
-import Blogs from "./pages/Blogs"; 
-import AllBlogs from "./pages/AllBlogs"; 
-import BlogDetails from "./pages/BlogDetails"; 
+import Blogs from "./pages/Blogs";
+import AllBlogs from "./pages/AllBlogs";
+import BlogDetails from "./pages/BlogDetails";
 import PlanTrip from "./pages/PlanTrip";
 import Booking from "./pages/Booking";
 import AuthPage from "./pages/AuthPage";
@@ -18,12 +17,11 @@ import Guides from "./pages/Guides";
 import GuideDetails from "./pages/GuideDetails";
 import TripDetails from "./pages/TripDetails";
 
-
 const App = () => {
   const location = useLocation();
 
-
-  const hideNavbar = location.pathname.startsWith("/destinations/");
+  // ✅ Hide Navbar only for single destination pages
+  const hideNavbar = location.pathname.startsWith("/destination/");
 
   return (
     <>
@@ -37,31 +35,30 @@ const App = () => {
               <Home />
               <Destinations />
               <Services />
-              <Blogs /> 
+              <Blogs />
               <Footer />
             </>
           }
         />
-        
+
+        {/* ✅ Dynamic TripDetails route */}
         <Route path="/destinations/:id" element={<TripDetails />} />
 
-        {/* ✅ Static and functional pages */}
+        {/* ✅ Static & Functional Pages */}
         <Route path="/plan-trip" element={<PlanTrip />} />
         <Route path="/booking" element={<Booking />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/captain/dashboard" element={<CaptainDashboard />} />
         <Route path="/user/dashboard" element={<UserDashboard />} />
 
-        {/* ✅ Blog Routes */}
-        <Route path="/blogs" element={<AllBlogs />} /> {/* full blog list */}
-        <Route path="/blogs/:id" element={<BlogDetails />} /> {/* single blog */}
+        {/* ✅ Blogs */}
+        <Route path="/blogs" element={<AllBlogs />} />
+        <Route path="/blogs/:id" element={<BlogDetails />} />
 
-        {/* ✅ Services & related pages */}
+        {/* ✅ Services & Guides */}
         <Route path="/services" element={<Services />} />
         <Route path="/guides" element={<Guides />} />
-
-        
-        
+        <Route path="/guides/:id" element={<GuideDetails />} />
       </Routes>
     </>
   );

@@ -3,81 +3,94 @@ import { useParams, useNavigate } from "react-router-dom";
 import api from "../utils/api";
 
 const TripDetails = () => {
-  const { id } = useParams(); 
+  const { id } = useParams();
   const navigate = useNavigate();
   const [destination, setDestination] = useState(null);
 
   useEffect(() => {
     const fetchDestination = async () => {
       try {
-        console.log("Fetching destination by ID:", id);
         const res = await api.get(`/destinations/${id}`);
-        setDestination(res.data.destination);
+        setDestination(res.data);
       } catch (err) {
         console.error("Error fetching destination:", err);
       }
     };
-
     if (id) fetchDestination();
   }, [id]);
 
   if (!destination)
     return (
-      <div className="flex items-center justify-center min-h-screen text-gray-600">
+      <div className="flex items-center justify-center min-h-screen text-gray-600 text-lg">
         Loading destination details...
       </div>
     );
 
+  // Load local image if available, else fallback
+  const getImageUrl = (imgName) => {
+    try {
+      return new URL(`../assets/destinations/${imgName}`, import.meta.url).href;
+    } catch {
+      return destination.image || "https://source.unsplash.com/1600x900/?travel";
+    }
+  };
+
+  const imageUrl = getImageUrl(
+    destination.image ||
+      `${destination.name.replace(/\s+/g, "").toLowerCase()}.jpg`
+  );
+
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       {/* Hero Section */}
-      <div
-        className="relative h-[60vh] bg-cover bg-center"
-        style={{ backgroundImage: `url(${destination.image})` }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-transparent"></div>
-        <button
-          onClick={() => navigate(-1)}
-          className="absolute top-6 left-6 bg-white/80 hover:bg-white text-gray-700 px-4 py-2 rounded-full shadow"
-        >
-          ← Back
-        </button>
-        <div className="absolute bottom-10 left-10 text-white">
-          <h1 className="text-4xl font-extrabold drop-shadow-md">
+      <div className="relative h-[75vh] bg-gray-200 overflow-hidden flex flex-col items-center justify-center text-center">
+        <img
+          src={imageUrl}
+          alt={destination.name}
+          className="absolute inset-0 w-full h-full object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent"></div>
+
+        <div className="relative z-10 px-6 flex flex-col items-center">
+          <h1 className="text-5xl md:text-6xl font-extrabold text-white drop-shadow-2xl">
             {destination.name}
           </h1>
-          <p className="text-lg text-gray-200 mt-1">{destination.location}</p>
+          <p className="text-lg md:text-xl text-gray-200 mt-2">
+            {destination.location}
+          </p>
         </div>
       </div>
 
-      {/* Details */}
-      <div className="max-w-4xl mx-auto p-8">
-        <p className="text-gray-700 leading-relaxed mb-6">
-          {destination.description ||
-            "This destination is known for its scenic beauty, historical significance, and cultural charm."}
-        </p>
+      {/* Content Section */}
+      <div className="max-w-5xl mx-auto px-6 py-12">
+        <section className="mb-8">
+          <h2 className="text-3xl font-bold mb-5 text-gray-800 border-b-4 border-orange-400 inline-block pb-1">
+            About
+          </h2>
 
-        <div className="flex flex-wrap justify-between text-gray-800 mb-8">
-          <p>
-            <strong>Best Time to Visit:</strong>{" "}
-            {destination.bestTimeToVisit || "All year round"}
-          </p>
-          <p>
-            <strong>Average Budget:</strong>{" "}
-            {destination.budget || "₹500 - ₹1500"}
-          </p>
+          <article
+            className="prose prose-lg max-w-none text-gray-800 leading-relaxed"
+            dangerouslySetInnerHTML={{
+              __html: destination.description
+                .replace(/\*\*(.*?)\*\*/g, "<strong class='text-orange-600'>$1</strong>")
+                .replace(/\n/g, "<br />")
+                .replace(
+                  /<strong class='text-orange-600'>(.*?)<\/strong>/g,
+                  "<br><br><strong class='text-orange-600 text-xl'>$1</strong><br>"
+                ),
+            }}
+          />
+        </section>
+
+        {/* Back Button */}
+        <div className="flex justify-center mt-12 mb-8">
+          <button
+            onClick={() => navigate(-1)}
+            className="bg-gradient-to-r from-orange-500 to-teal-500 text-white font-semibold px-8 py-3 rounded-full shadow-md hover:scale-105 transition-transform duration-200"
+          >
+            ← Back
+          </button>
         </div>
-
-        <button
-          onClick={() =>
-            navigate("/booking", {
-              state: { tripId: destination._id, amount: 1000 },
-            })
-          }
-          className="block mx-auto bg-gradient-to-r from-orange-500 to-teal-500 text-white text-lg font-semibold px-8 py-3 rounded-full shadow-lg hover:scale-105 transition-transform"
-        >
-          Book This Trip
-        </button>
       </div>
     </div>
   );

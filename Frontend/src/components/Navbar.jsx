@@ -41,11 +41,11 @@ const Navbar = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setTimeout(() => setActiveSection(entry.target.id), 140); 
+            setTimeout(() => setActiveSection(entry.target.id), 150); 
           }
         });
       },
-      { threshold: 0.2 } 
+      { threshold: 0.4 } 
     );
 
     sections.forEach((sec) => observer.observe(sec));

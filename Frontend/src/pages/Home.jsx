@@ -1,19 +1,9 @@
-
-
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import {
-  FaSearch,
-  FaMapMarkerAlt,
-  FaRupeeSign,
-  FaCalendarAlt,
-} from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import api from "../utils/api";
 
-// import gateway from "../assets/gateway.jpg";
-import thoseghar from "../assets/thoseghar.jpg";
-// import fort from "../assets/tornafort.jpg";
-
+import thoseghar from "../assets/destinations/thoseghar.jpg";
 import fortsImg from "../assets/destinations/forts.png";
 import beachesImg from "../assets/destinations/beaches.jpg";
 import waterfallsImg from "../assets/destinations/waterfalls.jpg";
@@ -37,19 +27,16 @@ const Home = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Use local scenic images
   const images = [thoseghar];
-
   const [currentImage, setCurrentImage] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [destinations, setDestinations] = useState([]);
   const [filteredResults, setFilteredResults] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-
   const [filtered, setFiltered] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
 
-  // Fetch destinations
+  // Fetch all destinations
   useEffect(() => {
     const fetchDestinations = async () => {
       try {
@@ -62,7 +49,7 @@ const Home = () => {
     fetchDestinations();
   }, []);
 
-  // slideshow
+  // Background slideshow
   useEffect(() => {
     const interval = setInterval(
       () => setCurrentImage((prev) => (prev + 1) % images.length),
@@ -71,11 +58,10 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // scroll if navigation passed state.scrollTo
+  // Scroll to section if routed with location.state.scrollTo
   useEffect(() => {
     if (location.state?.scrollTo) {
       const id = location.state.scrollTo;
-      // small timeout to allow Home to render
       setTimeout(() => {
         const el = document.getElementById(id);
         if (el) {
@@ -83,14 +69,12 @@ const Home = () => {
         } else {
           window.scrollTo({ top: 0, behavior: "smooth" });
         }
-        // clear history state so back/refresh doesn't repeat scroll
         window.history.replaceState({ ...window.history.state, usr: null }, "");
       }, 120);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.key]);
 
-  // search suggestions
+  // Search filtering
   useEffect(() => {
     if (!searchQuery.trim()) {
       setFilteredResults([]);
@@ -108,8 +92,7 @@ const Home = () => {
       (d) => d.name.toLowerCase() === searchQuery.toLowerCase()
     );
     if (match) {
-      // NAVIGATE to match page (updated to match App route /destination/:id)
-      navigate(`/destination/${match._id}`, {
+      navigate(`/destinations/${match._id}`, {
         state: { name: match.name, destinationId: match._id },
       });
     } else {
@@ -125,7 +108,6 @@ const Home = () => {
       d.category?.toLowerCase().includes(tag)
     );
     setFiltered(filteredList);
-    // scroll into view (if user clicked category from somewhere else)
     setTimeout(() => {
       const el = document.getElementById("destinations");
       if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -191,14 +173,16 @@ const Home = () => {
               </button>
             </div>
 
+            {/* ✅ Updated Suggestion List */}
             {showSuggestions && filteredResults.length > 0 && (
               <ul className="absolute left-0 right-0 mt-2 bg-white/90 backdrop-blur-md rounded-xl shadow-lg overflow-hidden border border-gray-200 max-h-60 overflow-y-auto z-50">
                 {filteredResults.map((dest) => (
                   <li
                     key={dest._id}
                     onClick={() => {
-                      // NAVIGATE to destination detail
-                      navigate(`/destination/${dest._id}`);
+                      navigate(`/destinations/${dest._id}`, {
+                        state: { name: dest.name, destinationId: dest._id },
+                      });
                       setShowSuggestions(false);
                       setSearchQuery("");
                     }}
