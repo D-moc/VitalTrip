@@ -1,6 +1,6 @@
 import Blog from "../models/blog.model.js";
 
-// 📝 Create new blog (User or Captain)
+
 export const createBlog = async (req, res) => {
   try {
     const { title, content, category } = req.body;
@@ -15,10 +15,10 @@ export const createBlog = async (req, res) => {
       content,
       category,
       image,
-      // Author can be either a logged-in user or a captain
+      
       author: req.user?._id || req.captain?._id,
       authorModelType: req.user ? "User" : "Captain",
-      // User blogs need approval; Captain blogs are auto-approved
+     
       isApproved: req.user ? false : true,
     });
 
@@ -35,7 +35,7 @@ export const createBlog = async (req, res) => {
   }
 };
 
-// 🌍 Get all approved blogs (Public)
+
 export const getAllBlogs = async (req, res) => {
   try {
     const blogs = await Blog.find({ isApproved: true })
@@ -43,18 +43,18 @@ export const getAllBlogs = async (req, res) => {
       .sort({ createdAt: -1 });
     res.status(200).json({ count: blogs.length, blogs });
   } catch (err) {
-    console.error("❌ Error fetching blogs:", err);
+    console.error("Error fetching blogs:", err);
     res.status(500).json({ message: "Error fetching blogs" });
   }
 };
 
-// 🔍 Get single blog by ID (Public)
+
 export const getBlogById = async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id).populate("author", "name");
     if (!blog) return res.status(404).json({ message: "Blog not found" });
 
-    // Only approved blogs can be publicly viewed
+    
     if (!blog.isApproved) {
       return res
         .status(403)
@@ -63,23 +63,22 @@ export const getBlogById = async (req, res) => {
 
     res.status(200).json({ blog });
   } catch (err) {
-    console.error("❌ Error fetching blog:", err);
+    console.error("Error fetching blog:", err);
     res.status(500).json({ message: "Error fetching blog" });
   }
 };
 
-// 🧾 Get pending blogs (Captain/Admin only)
+
 export const getPendingBlogs = async (req, res) => {
   try {
     const pending = await Blog.find({ isApproved: false }).populate("author");
     res.status(200).json({ count: pending.length, pending });
   } catch (err) {
-    console.error("❌ Error fetching pending blogs:", err);
+    console.error("Error fetching pending blogs:", err);
     res.status(500).json({ message: "Error fetching pending blogs" });
   }
 };
 
-// ✅ Approve blog (Captain/Admin only)
 export const approveBlog = async (req, res) => {
   try {
     const blog = await Blog.findByIdAndUpdate(
@@ -90,18 +89,18 @@ export const approveBlog = async (req, res) => {
     if (!blog) return res.status(404).json({ message: "Blog not found" });
     res.status(200).json({ message: "Blog approved successfully!", blog });
   } catch (err) {
-    console.error("❌ Error approving blog:", err);
+    console.error("Error approving blog:", err);
     res.status(500).json({ message: "Error approving blog" });
   }
 };
 
-// 🗑️ Delete blog (Captain/Admin only)
+
 export const deleteBlog = async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id);
     if (!blog) return res.status(404).json({ message: "Blog not found" });
 
-    // Only captains can delete blogs now
+    
     if (!req.captain)
       return res
         .status(403)
@@ -110,7 +109,7 @@ export const deleteBlog = async (req, res) => {
     await blog.deleteOne();
     res.status(200).json({ message: "Blog deleted successfully" });
   } catch (err) {
-    console.error("❌ Error deleting blog:", err);
+    console.error("Error deleting blog:", err);
     res.status(500).json({ message: "Error deleting blog" });
   }
 };
