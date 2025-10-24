@@ -1,15 +1,10 @@
-const express = require('express');
-const server = express();
-const path = requrire('path');
+import http from "http";
+import app from "./app.js";
 
+const PORT = process.env.PORT || 4000;
 
-const staticPath = path.join(___dirname,".../public")
+const server = http.createServer(app);
 
-server.use(express.static(staticPath));
-
-server.get("/",(req,res)=>{
-    res.write("<h1>Hello Omkar & Dinesh</h1>")
-    res.send();
+server.listen(PORT, () => {
+  console.log("mongoDB connected successfully");
 });
-
-server.listen(4000);
