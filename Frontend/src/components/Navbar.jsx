@@ -5,19 +5,18 @@ import { motion, AnimatePresence } from "framer-motion";
 import { AuthContext } from "../context/AuthContext";
 import logo from "../assets/logo.png";
 import { BASE_URL } from "../utils/config";
-import ChatbotPanel from "../components/ChatbotPanel"; 
+import ChatbotPanel from "../components/ChatbotPanel";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
-  const [showChatbot, setShowChatbot] = useState(false); 
+  const [showChatbot, setShowChatbot] = useState(false);
 
   const { user, role, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const profileRef = useRef(null);
-
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -41,11 +40,11 @@ const Navbar = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setTimeout(() => setActiveSection(entry.target.id), 150); 
+            setTimeout(() => setActiveSection(entry.target.id), 150);
           }
         });
       },
-      { threshold: 0.4 } 
+      { threshold: 0.4 }
     );
 
     sections.forEach((sec) => observer.observe(sec));
@@ -92,7 +91,7 @@ const Navbar = () => {
     <>
       <header className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-green-800 via-teal-800 to-green-800 border-b border-white/40 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto flex justify-between items-center py-4 px-5 md:px-10">
-          {/* Logo */}
+
           <div
             className="flex items-center gap-2 cursor-pointer"
             onClick={() => goToSection("home")}
@@ -109,7 +108,6 @@ const Navbar = () => {
             </h1>
           </div>
 
-          {/* Navigation */}
           <nav
             className={`${
               menuOpen ? "flex" : "hidden"
@@ -139,19 +137,20 @@ const Navbar = () => {
 
           {/* Right Side */}
           <div className="flex items-center gap-4 md:gap-6">
-            {/* 🧠 VitalAsk Button */}
             <button
-              onClick={() => setShowChatbot(true)} 
-              className="flex items-center gap-2 bg-white/20 border border-white/30 text-white font-semibold rounded-full px-4 py-2 hover:bg-white/30 transition-all duration-300"
+              onClick={() => setShowChatbot(true)}
+              className="flex items-center gap-2 bg-white/20 
+              border border-white/30 text-white 
+              font-semibold rounded-full px-4 py-2
+              hover:bg-white/30 transition-all duration-300"
             >
               <FaRobot className="text-yellow-200 text-lg animate-pulse" />
-              {/* <span className="font-bold">Vital</span> */}
               <span className="text-xs italic animate-bounce text-yellow-200">
                 Ask
               </span>
             </button>
 
-            {/* 👤 Profile */}
+            {/* Profile */}
             {user ? (
               <div ref={profileRef} className="relative">
                 <button
@@ -201,7 +200,7 @@ const Navbar = () => {
               </button>
             )}
 
-            {/* 📱 Mobile Menu */}
+            {/* Mobile Menu */}
             <button
               className="md:hidden text-white hover:scale-110 transition-transform"
               onClick={() => setMenuOpen(!menuOpen)}
@@ -212,7 +211,7 @@ const Navbar = () => {
         </div>
       </header>
 
-      {/* 🧠 Chatbot Modal with Framer Motion */}
+      {/* Chatbot Panel */}
       <AnimatePresence>
         {showChatbot && (
           <>
