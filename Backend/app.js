@@ -1,75 +1,70 @@
-// const dotenv = require('dotenv');
-// dotenv.config();
-// const express = require('express');
-// const cors = require('cors');
-// const app = express();
-// const cookieParser = require('cookie-parser');
-// const connectDB = require('./db/db');
-// const userRoutes = require('./routes/user.routes');
-// const captainRoutes = require('./routes/captain.routes');
+import express from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
+import { connectDB } from "./db/db.js";
 
-// connectDB();
-
-// app.use(cors());
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-// app.use(cookieParser());
-
-
-// app.get('/', (req, res) => {
-//     res.send('Hello World!');
-// });    
-
-// app.use('/users', userRoutes);
-// app.use('/captains', captainRoutes);
-
-
-
-// module.exports = app;
-
-const express = require("express");
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
-const dotenv = require("dotenv");
-const connectDB = require("./db/db");
-const path = require("path");
-
-
-
+import { errorHandler } from "./middlewares/error.middleware.js";
+ 
 
 dotenv.config();
+
 connectDB();
 
 const app = express();
 
-// Middlewares
+
 app.use(
   cors({
-    origin: "http://localhost:5173", // Frontend URL
+    origin: "http://localhost:5173", 
     credentials: true,
   })
 );
 app.use(express.json());
 app.use(cookieParser());
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// Import routes
-const userRoutes = require("./routes/user.routes");
-const captainRoutes = require("./routes/captain.routes");
-const destinationRoutes = require("./routes/destination.routes");
-const tripRoutes = require("./routes/trip.routes");
 
-// Use routes
+import userRoutes from "./routes/user.routes.js";
+import captainRoutes from "./routes/captain.routes.js";
+import tripRoutes from "./routes/trip.routes.js";
+import destinationRoutes from "./routes/destination.routes.js";
+import bookingRoutes from "./routes/booking.routes.js";
+import paymentRoutes from "./routes/payment.routes.js";
+import tripGuideRoutes from "./routes/tripGuide.routes.js";
+import captainDashboardRoutes from "./routes/captainDashboard.routes.js";
+import blogRoutes from "./routes/blog.routes.js";
+import aiRoutes from "./routes/ai.routes.js";
+
+
 app.use("/api/users", userRoutes);
 app.use("/api/captains", captainRoutes);
-app.use("/api/destinations", destinationRoutes);
+app.use("/api/destinations",  destinationRoutes);
+app.use("/api/bookings", bookingRoutes);
+app.use("/api/payments", paymentRoutes);
 app.use("/api/trips", tripRoutes);
+app.use("/api/trip-guides", tripGuideRoutes);
 
-// Health Check
+app.use("/api/captain/dashboard", captainDashboardRoutes);
+app.use("/api/blogs", blogRoutes);
+
 app.get("/", (req, res) => {
-  res.status(200).send("🚀 VitalTrip Backend Running Successfully!");
+  res.status(200).send("VitalTrip Backend Running Successfully!");
 });
 
-app.use((req, res) => res.status(404).json({ message: "Route not found" }));
+app.use("/api/ai", aiRoutes);
 
-module.exports = app;
+app.use((req, res) => {
+  res.status(404).json({ success: false, message: "Route not found" });
+});
+
+
+app.use(errorHandler);
+
+export default app;

@@ -1,313 +1,241 @@
-// const userModel = require('../models/user.model');
-// const userService = require('../services/user.service');
-// const { validationResult } = require('express-validator');
-// const blacklistTokenModel = require('../models/blacklistToken.model');
+import User from "../models/user.model.js";
+import ResetToken from "../models/resetToken.model.js";
+import blacklistTokenModel from "../models/blacklistToken.model.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import crypto from "crypto";
+import { validationResult } from "express-validator";
+import { sendResetEmail } from "../utils/mailer.js";
 
-
-// module.exports.registerUser = async (req, res,) => {
-//     const errors = validationResult(req);
-//     if (!errors.isEmpty()) {
-//         return res.status(400).json({ errors: errors.array() });
-//     }
-
-//     console.log(req.body);
-
-
-//     const { fullname, email, password } = req.body;
-    
-//     const isUserAlreadyExist = await userModel.findOne({ email });
-//     if (isUserAlreadyExist) {
-//         return res.status(409).json({ message: 'User already exists' });
-//     }
-    
-
-//     const hashedPassword = await userModel.hashPassword(password);
-
-//     const user = await userService.createUser({
-//         firstname: fullname.firstname,
-//         lastname: fullname.lastname,
-//         email,
-//         password: hashedPassword
-//     });
-
-//     const token = user.generateAuthToken();
-
-//     res.status(201).json({token,user});
-    
-// }
-
-// module.exports.loginUser = async (req, res) => {
-
-//     const errors = validationResult(req);               
-//     if (!errors.isEmpty()) {
-//         return res.status(400).json({ errors: errors.array() });
-//     }       
-//     const { email, password } = req.body; 
-
-//     const user = await userModel.findOne({ email }).select('+password');
-//     if (!user) {
-//         return res.status(401).json({ message: 'Invalid email or password' });
-//     }
-    
-
-//     const isMatch = await user.comparePassword(password);
-//     if (!isMatch) {
-//         return res.status(401).json({ message: 'Invalid email or password' });
-//     }
-//     const token = user.generateAuthToken();
-
-//     res.cookie('token', token);
-
-//     res.status(200).json({ token, user });
-
-// }
-
-// module.exports.getUserProfile = async (req, res) => {
-//    res.status(200).json({ user: req.user });
-// }   
-
-// module.exports.logoutUser = async (req, res) => {
-//     res.clearCookie('token');
-//     const token = req.cookies.token || req.headers.authorization.split(' ')[1];
-
-//     await blacklistTokenModel.create({ token });
-
-//     res.status(200).json({ message: 'Logged out successfully' });
-// }   
-
-
-
-// const userModel = require('../models/user.model');
-// const userService = require('../services/user.service');
-// const { validationResult } = require('express-validator');
-// const blacklistTokenModel = require('../models/blacklistToken.model');
-
-// module.exports.registerUser = async (req, res) => {
-//   const errors = validationResult(req);
-//   if (!errors.isEmpty()) {
-//     return res.status(400).json({ errors: errors.array() });
-//   }
-
-//   const { fullname, email, password } = req.body;
-
-//   const isUserAlreadyExist = await userModel.findOne({ email });
-//   if (isUserAlreadyExist) {
-//     return res.status(409).json({ message: 'User already exists' });
-//   }
-
-//   const hashedPassword = await userModel.hashPassword(password);
-
-//   const user = await userService.createUser({
-//     firstname: fullname.firstname,
-//     lastname: fullname.lastname,
-//     email,
-//     password: hashedPassword,
-//   });
-
-//   const token = user.generateAuthToken();
-
-//   res.status(201).json({
-//     token,
-//     role: 'user', // ✅ added
-//     user,
-//   });
-// };
-
-// module.exports.loginUser = async (req, res) => {
-//   const errors = validationResult(req);
-//   if (!errors.isEmpty()) {
-//     return res.status(400).json({ errors: errors.array() });
-//   }
-
-//   const { email, password } = req.body;
-
-//   const user = await userModel.findOne({ email }).select('+password');
-//   if (!user) {
-//     return res.status(401).json({ message: 'Invalid email or password' });
-//   }
-
-//   const isMatch = await user.comparePassword(password);
-//   if (!isMatch) {
-//     return res.status(401).json({ message: 'Invalid email or password' });
-//   }
-
-//   const token = user.generateAuthToken();
-
-//   res.cookie('token', token);
-//   res.status(200).json({
-//     token,
-//     role: 'user', // ✅ added
-//     user,
-//   });
-// };
-
-// module.exports.getUserProfile = async (req, res) => {
-//   res.status(200).json({ user: req.user });
-// };
-
-// module.exports.logoutUser = async (req, res) => {
-//   res.clearCookie('token');
-//   const token = req.cookies.token || req.headers.authorization.split(' ')[1];
-
-//   await blacklistTokenModel.create({ token });
-
-//   res.status(200).json({ message: 'Logged out successfully' });
-// };
-
-// // ✅ Upload profile image
-// module.exports.uploadProfileImage = async (req, res) => {
-//   try {
-//     if (!req.file) {
-//       return res.status(400).json({ message: "No file uploaded" });
-//     }
-
-//     const imageUrl = `/uploads/${req.file.filename}`;
-
-//     // Update user in DB
-//     await userModel.findByIdAndUpdate(req.user._id, { profileImage: imageUrl });
-
-//     return res.status(200).json({ imageUrl });
-//   } catch (error) {
-//     console.error("Upload failed:", error);
-//     res.status(500).json({ message: "Upload failed" });
-//   }
-// };
-
-
-
-const userModel = require("../models/user.model");
-const userService = require("../services/user.service");
-const { validationResult } = require("express-validator");
-const blacklistTokenModel = require("../models/blacklistToken.model");
-
-// ✅ REGISTER USER
-module.exports.registerUser = async (req, res) => {
+/* -------------------------------------------------------------------------- */
+/* 🧾 REGISTER USER */
+/* -------------------------------------------------------------------------- */
+export const registerUser = async (req, res) => {
   const errors = validationResult(req);
-  if (!errors.isEmpty()) {
+  if (!errors.isEmpty())
     return res.status(400).json({ errors: errors.array() });
-  }
 
   const { fullname, email, password } = req.body;
 
   try {
-    const isUserAlreadyExist = await userModel.findOne({ email });
-    if (isUserAlreadyExist) {
+    const existing = await User.findOne({ email });
+    if (existing)
       return res.status(409).json({ message: "User already exists" });
-    }
 
-    const hashedPassword = await userModel.hashPassword(password);
-
-    const user = await userService.createUser({
-      firstname: fullname.firstname,
-      lastname: fullname.lastname,
+    const hashed = await User.hashPassword(password);
+    const user = await User.create({
+      fullname,
       email,
-      password: hashedPassword,
+      password: hashed,
     });
 
     const token = user.generateAuthToken();
-
     res.status(201).json({
+      message: "User registered successfully ✅",
       token,
       role: "user",
       user,
     });
-  } catch (error) {
-    console.error("Registration error:", error);
+  } catch (err) {
+    console.error("Register error:", err);
     res.status(500).json({ message: "Server error during registration" });
   }
 };
 
-// ✅ LOGIN USER
-module.exports.loginUser = async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
+/* -------------------------------------------------------------------------- */
+/* 🔑 LOGIN USER */
+/* -------------------------------------------------------------------------- */
+export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await userModel.findOne({ email }).select("+password");
-    if (!user) {
+    const user = await User.findOne({ email }).select("+password");
+    if (!user)
       return res.status(401).json({ message: "Invalid email or password" });
-    }
 
     const isMatch = await user.comparePassword(password);
-    if (!isMatch) {
+    if (!isMatch)
       return res.status(401).json({ message: "Invalid email or password" });
-    }
 
     const token = user.generateAuthToken();
-
-    res.cookie("token", token);
     res.status(200).json({
+      message: "Login successful ✅",
       token,
       role: "user",
       user,
     });
-  } catch (error) {
-    console.error("Login error:", error);
+  } catch (err) {
+    console.error("Login error:", err);
     res.status(500).json({ message: "Server error during login" });
   }
 };
 
-// ✅ GET USER PROFILE
-module.exports.getUserProfile = async (req, res) => {
+/* -------------------------------------------------------------------------- */
+/* 👤 GET USER PROFILE */
+/* -------------------------------------------------------------------------- */
+export const getUserProfile = async (req, res) => {
   try {
-    res.status(200).json({ user: req.user });
-  } catch (error) {
-    console.error("Error fetching profile:", error);
-    res.status(500).json({ message: "Server error" });
+    const user = await User.findById(req.user._id).select("-password");
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.status(200).json({ user });
+  } catch (err) {
+    console.error("Get profile error:", err);
+    res.status(500).json({ message: "Error fetching profile" });
   }
 };
 
-// ✅ LOGOUT USER
-module.exports.logoutUser = async (req, res) => {
+/* -------------------------------------------------------------------------- */
+/* ✏️ UPDATE USER PROFILE (Name, Bio, Email, Image) */
+/* -------------------------------------------------------------------------- */
+export const updateUserProfile = async (req, res) => {
   try {
-    res.clearCookie("token");
-    const token = req.cookies.token || req.headers.authorization.split(" ")[1];
-    await blacklistTokenModel.create({ token });
+    const updates = { ...req.body };
 
-    res.status(200).json({ message: "Logged out successfully" });
-  } catch (error) {
-    console.error("Logout error:", error);
-    res.status(500).json({ message: "Server error during logout" });
-  }
-};
-
-// ✅ UPLOAD PROFILE IMAGE (WORKING)
-// ✅ UPLOAD PROFILE IMAGE (FINAL WORKING)
-module.exports.uploadProfileImage = async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ success: false, message: "No image uploaded" });
+    // Handle form-data formatted fullname
+    if (req.body["fullname.firstname"] || req.body["fullname.lastname"]) {
+      updates.fullname = {
+        firstname: req.body["fullname.firstname"],
+        lastname: req.body["fullname.lastname"],
+      };
+      delete updates["fullname.firstname"];
+      delete updates["fullname.lastname"];
     }
 
-    const imageUrl = `uploads/${req.file.filename}`;
+    // Handle uploaded profile image
+    if (req.file) {
+      updates.profileImage = `uploads/${req.file.filename}`;
+    }
 
-    const updatedUser = await userModel.findByIdAndUpdate(
+    const user = await User.findByIdAndUpdate(req.user._id, updates, {
+      new: true,
+    }).select("-password");
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.status(200).json({ message: "Profile updated successfully ✅", user });
+  } catch (err) {
+    console.error("Update profile error:", err);
+    res.status(500).json({ message: "Error updating profile" });
+  }
+};
+
+/* -------------------------------------------------------------------------- */
+/* 🖼️ UPLOAD PROFILE IMAGE (Optional Single Endpoint) */
+/* -------------------------------------------------------------------------- */
+export const uploadProfileImage = async (req, res) => {
+  try {
+    if (!req.file)
+      return res.status(400).json({ message: "No image uploaded" });
+
+    const imageUrl = `uploads/${req.file.filename}`;
+    const user = await User.findByIdAndUpdate(
       req.user._id,
       { profileImage: imageUrl },
       { new: true }
-    );
+    ).select("-password");
 
-    if (!updatedUser) {
-      return res.status(404).json({ success: false, message: "User not found" });
-    }
+    if (!user) return res.status(404).json({ message: "User not found" });
 
     res.status(200).json({
-      success: true,
-      imageUrl, // ✅ matches frontend
-      message: "Profile image uploaded successfully",
-      user: updatedUser,
+      message: "Profile image uploaded successfully ✅",
+      imageUrl,
+      user,
     });
-  } catch (error) {
-    console.error("Profile image upload error:", error);
-    res.status(500).json({
-      success: false,
-      message: "Server error during image upload",
-      error: error.message,
-    });
+  } catch (err) {
+    console.error("Upload image error:", err);
+    res.status(500).json({ message: "Error uploading profile image" });
   }
 };
 
+/* -------------------------------------------------------------------------- */
+/* ✏️ UPDATE EMAIL OR PASSWORD */
+/* -------------------------------------------------------------------------- */
+export const updateUserCredentials = async (req, res) => {
+  try {
+    const { newEmail, currentPassword, newPassword } = req.body;
+    const user = await User.findById(req.user._id).select("+password");
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const isMatch = await user.comparePassword(currentPassword);
+    if (!isMatch)
+      return res.status(400).json({ message: "Incorrect password" });
+
+    if (newEmail) user.email = newEmail;
+    if (newPassword) user.password = await User.hashPassword(newPassword);
+    await user.save();
+
+    res.status(200).json({ message: "Credentials updated successfully ✅", user });
+  } catch (err) {
+    console.error("Update credentials error:", err);
+    res.status(500).json({ message: "Error updating user credentials" });
+  }
+};
+
+/* -------------------------------------------------------------------------- */
+/* 📨 FORGOT PASSWORD (Email Token Flow) */
+/* -------------------------------------------------------------------------- */
+export const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    await ResetToken.deleteMany({ userId: user._id, userModelType: "user" });
+
+    const token = crypto.randomBytes(32).toString("hex");
+    await ResetToken.create({
+      userId: user._id,
+      userModelType: "user",
+      token,
+    });
+
+    const resetLink = `${process.env.FRONTEND_URL}/reset-password/${token}`;
+    await sendResetEmail(user.email, resetLink);
+
+    res.status(200).json({ message: "Password reset link sent to your email" });
+  } catch (err) {
+    console.error("Forgot password error:", err);
+    res.status(500).json({ message: "Server error during password reset" });
+  }
+};
+
+/* -------------------------------------------------------------------------- */
+/* 🔒 RESET PASSWORD */
+/* -------------------------------------------------------------------------- */
+export const resetPassword = async (req, res) => {
+  try {
+    const { token, newPassword } = req.body;
+    const resetToken = await ResetToken.findOne({
+      token,
+      userModelType: "user",
+    });
+    if (!resetToken)
+      return res.status(400).json({ message: "Invalid or expired token" });
+
+    const user = await User.findById(resetToken.userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    user.password = await bcrypt.hash(newPassword, 10);
+    await user.save();
+    await resetToken.deleteOne();
+
+    res.status(200).json({ message: "Password reset successful ✅" });
+  } catch (err) {
+    console.error("Reset password error:", err);
+    res.status(500).json({ message: "Error resetting password" });
+  }
+};
+
+/* -------------------------------------------------------------------------- */
+/* 🚪 LOGOUT USER */
+/* -------------------------------------------------------------------------- */
+export const logoutUser = async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+    if (token) await blacklistTokenModel.create({ token });
+    res.status(200).json({ message: "Logged out successfully ✅" });
+  } catch (err) {
+    console.error("Logout error:", err);
+    res.status(500).json({ message: "Logout error" });
+  }
+};

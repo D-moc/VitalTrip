@@ -1,65 +1,79 @@
-const jwt = require("jsonwebtoken");
-const captainModel = require("../models/captain.model");
-const userModel = require("../models/user.model");
-const blacklistTokenModel = require("../models/blacklistToken.model");
+// // middlewares/roleAuth.middleware.js
+// import jwt from "jsonwebtoken";
+// import Captain from "../models/captain.model.js";
+// import blacklistTokenModel from "../models/blacklistToken.model.js";
 
-// 🔒 Middleware: Captain-Only Access
-exports.verifyCaptainAccess = async (req, res, next) => {
+// export const verifyCaptainAccess = async (req, res, next) => {
+//   try {
+//     const token =
+//       req.cookies?.token || req.headers.authorization?.split(" ")[1];
+
+//     if (!token)
+//       return res.status(401).json({ message: "Unauthorized: No token" });
+
+//     const isBlacklisted = await blacklistTokenModel.findOne({ token });
+//     if (isBlacklisted)
+//       return res.status(401).json({ message: "Token blacklisted" });
+
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//     const captain = await Captain.findById(decoded._id);
+
+//     if (!captain)
+//       return res.status(403).json({ message: "Access denied: Captain required" });
+
+//     req.captain = captain;
+//     next();
+//   } catch (err) {
+//     console.error("verifyCaptainAccess error:", err);
+//     res.status(401).json({ message: "Unauthorized: Invalid or expired token" });
+//   }
+// };
+
+
+import jwt from "jsonwebtoken";
+import Captain from "../models/captain.model.js";
+import blacklistTokenModel from "../models/blacklistToken.model.js";
+
+/* -------------------------------------------------------------------------- */
+/* 🛡️ verifyCaptainAccess - JWT Auth for Captains */
+/* -------------------------------------------------------------------------- */
+export const verifyCaptainAccess = async (req, res, next) => {
   try {
+    // 1️⃣ Extract Token from Header or Cookie
     const token =
-      req.cookies.token || req.headers.authorization?.split(" ")[1];
+      req.cookies?.token || req.headers.authorization?.split(" ")[1];
 
-    if (!token) {
-      return res.status(401).json({ message: "No token, access denied" });
-    }
+    if (!token)
+      return res.status(401).json({ message: "Unauthorized: No token provided" });
 
-    // Check if token is blacklisted
+    // 2️⃣ Check Blacklist
     const isBlacklisted = await blacklistTokenModel.findOne({ token });
-    if (isBlacklisted) {
-      return res.status(401).json({ message: "Blacklisted token" });
-    }
+    if (isBlacklisted)
+      return res.status(401).json({ message: "Token has been revoked" });
 
-    // Decode token
+    // 3️⃣ Verify JWT
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Verify it's a Captain account
-    const captain = await captainModel.findById(decoded._id);
-    if (!captain) {
-      return res.status(403).json({
-        message: "Access denied — Captain credentials required",
-      });
-    }
+    // 4️⃣ Validate Captain Exists
+    const captain = await Captain.findById(decoded.id || decoded._id).select(
+      "-password"
+    );
 
-    req.captain = captain; // Attach captain data for use
-    next();
-  } catch (err) {
-    console.error("Captain access error:", err);
-    res.status(401).json({ message: "Unauthorized: Invalid or expired token" });
-  }
-};
+    if (!captain)
+      return res
+        .status(403)
+        .json({ message: "Access denied: Captain account not found" });
 
-// 🚫 Middleware: User Cannot Access Captain Routes
-exports.preventUserAccess = async (req, res, next) => {
-  try {
-    const token =
-      req.cookies.token || req.headers.authorization?.split(" ")[1];
-
-    if (!token) {
-      return res.status(401).json({ message: "Unauthorized: No token" });
-    }
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await userModel.findById(decoded._id);
-
-    if (user) {
-      return res.status(403).json({
-        message: "User access restricted for this route",
-      });
-    }
+    // 5️⃣ Attach to Request (Unified Field)
+    req.user = captain; // ✅ Used in controllers (consistent naming)
+    req.captain = captain; // ✅ Backward compatibility
 
     next();
   } catch (err) {
-    console.error("User restriction error:", err);
-    res.status(401).json({ message: "Unauthorized request" });
+    console.error("❌ verifyCaptainAccess error:", err);
+    res.status(401).json({
+      message: "Unauthorized: Invalid or expired token",
+      error: err.message,
+    });
   }
 };
