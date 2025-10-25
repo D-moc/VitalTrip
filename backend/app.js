@@ -55,7 +55,7 @@ app.use("/api/captain/dashboard", captainDashboardRoutes);
 app.use("/api/blogs", blogRoutes);
 
 app.get("/", (req, res) => {
-  res.status(200).send("VitalTrip Backend Running Successfully!");
+  res.status(200).send("Backend Running Successfully!");
 });
 
 app.use("/api/ai", aiRoutes);

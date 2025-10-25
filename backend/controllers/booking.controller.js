@@ -15,7 +15,7 @@ export const createBooking = async (req, res) => {
       amount,
     });
 
-    // 🔹 Mock payment info
+    // Mock payment info
     const upiString = `upi://pay?pa=vitaltrip@upi&pn=VitalTrip&am=${amount}&cu=INR&tn=Trip%20Booking`;
     const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(
       upiString

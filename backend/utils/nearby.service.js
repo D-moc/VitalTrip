@@ -1,4 +1,3 @@
-// utils/nearby.service.js
 import fetch from "node-fetch";
 import dotenv from "dotenv";
 dotenv.config();
@@ -37,7 +36,7 @@ export async function getNearbyPlaces(lat, lon, radius = 3000) {
       lon: place.geometry.coordinates[0],
     }));
   } catch (err) {
-    console.error("🌍 Nearby error:", err.message);
+    console.error(" Nearby error:", err.message);
     return [];
   }
 }

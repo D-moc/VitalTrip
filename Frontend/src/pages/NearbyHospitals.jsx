@@ -6,8 +6,7 @@ const NearbyHospitals = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-orange-50 py-16 px-6 md:px-12 border-t-4 border-green-400">
-      {/* 🔙 Back Button */}
+    <div className="min-h-screen bg-linear-to-b from-white to-orange-50 py-16 px-6 md:px-12 border-t-4 border-green-400">
       <button
         onClick={() => navigate(-1)}
         className="flex items-center text-orange-600 hover:underline mb-6 font-semibold"
@@ -20,11 +19,10 @@ const NearbyHospitals = () => {
           Nearby Hospitals
         </h1>
         <p className="text-gray-600 mb-10 max-w-2xl mx-auto">
-          Find nearby hospitals, clinics, and emergency centers around Maharashtra using
-          the live Google Map below.
+          Find nearby hospitals, clinics, and emergency centers around
+          Maharashtra using the live Google Map below.
         </p>
 
-        {/* 🏥 Google Maps Embed — Corrected */}
         <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-200">
           <iframe
             title="Nearby Hospitals"
@@ -38,27 +36,25 @@ const NearbyHospitals = () => {
           ></iframe>
         </div>
 
-        {/* 🌐 Open in Google Maps */}
         <div className="mt-6">
-  <button
-    onClick={() =>
-      window.open(
-        "https://www.google.com/maps/search/hospitals+near+Maharashtra/",
-        "_blank",
-        "noopener,noreferrer"
-      )
-    }
-    className="inline-flex items-center gap-2 bg-orange-500 text-white px-6 py-3 rounded-full font-semibold shadow-md hover:bg-orange-600 transition-all duration-200"
-  >
-    View Full Map <FaExternalLinkAlt className="text-sm" />
-  </button>
-</div>
-
+          <button
+            onClick={() =>
+              window.open(
+                "https://www.google.com/maps/search/hospitals+near+Maharashtra/",
+                "_blank",
+                "noopener,noreferrer"
+              )
+            }
+            className="inline-flex items-center gap-2 bg-orange-500 text-white px-6 py-3 rounded-full font-semibold shadow-md hover:bg-orange-600 transition-all duration-200"
+          >
+            View Full Map <FaExternalLinkAlt className="text-sm" />
+          </button>
+        </div>
 
         <p className="text-gray-700 mt-8 leading-relaxed">
-          You can click “View Full Map” to open Google Maps in a new tab for better
-          navigation, directions, and real-time hospital listings near your current
-          location.
+          You can click “View Full Map” to open Google Maps in a new tab for
+          better navigation, directions, and real-time hospital listings near
+          your current location.
         </p>
       </div>
     </div>

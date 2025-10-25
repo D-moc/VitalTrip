@@ -3,7 +3,7 @@ import { body } from "express-validator";
 import upload from "../middlewares/upload.middleware.js";
 import { verifyCaptainAccess } from "../middlewares/roleAuth.middleware.js";
 
-// 🧭 Captain Auth & Profile Controllers
+
 import {
   registerCaptain,
   loginCaptain,
@@ -16,7 +16,7 @@ import {
   getUpcomingTrips,
 } from "../controllers/captain.controller.js";
 
-// 📊 Dashboard (Admin) Controllers
+
 import {
   getAllUsers,
   getAllDestinations,
@@ -33,9 +33,7 @@ import {
 
 const router = express.Router();
 
-/* -------------------------------------------------------------------------- */
-/* 🧭 REGISTER CAPTAIN (Access Key Protected) */
-/* -------------------------------------------------------------------------- */
+
 router.post(
   "/register",
   [
@@ -51,9 +49,6 @@ router.post(
   registerCaptain
 );
 
-/* -------------------------------------------------------------------------- */
-/* 🔑 LOGIN CAPTAIN */
-/* -------------------------------------------------------------------------- */
 router.post(
   "/login",
   [
@@ -63,14 +58,10 @@ router.post(
   loginCaptain
 );
 
-/* -------------------------------------------------------------------------- */
-/* 👤 CAPTAIN PROFILE ROUTES */
-/* -------------------------------------------------------------------------- */
 
-// Get captain profile
 router.get("/profile", verifyCaptainAccess, getCaptainProfile);
 
-// Update captain profile (with image upload)
+
 router.put(
   "/update-profile",
   verifyCaptainAccess,
@@ -78,74 +69,65 @@ router.put(
   updateCaptainProfile
 );
 
-/* -------------------------------------------------------------------------- */
-/* 📨 PASSWORD MANAGEMENT */
-/* -------------------------------------------------------------------------- */
+
 router.post("/forgot-password", forgotPassword);
 router.post("/reset-password", resetPassword);
 
-/* -------------------------------------------------------------------------- */
-/* 🚪 LOGOUT CAPTAIN */
-/* -------------------------------------------------------------------------- */
+
 router.post("/logout", verifyCaptainAccess, logoutCaptain);
 
-/* -------------------------------------------------------------------------- */
-/* 📊 CAPTAIN DASHBOARD ROUTES */
-/* -------------------------------------------------------------------------- */
 
-// 👥 All Users
+
 router.get("/dashboard/users", verifyCaptainAccess, getAllUsers);
 
-// 🌍 All Destinations
+
 router.get("/dashboard/destinations", verifyCaptainAccess, getAllDestinations);
 
-// 🧳 All Trips
+
 router.get("/dashboard/trips", verifyCaptainAccess, getAllTrips);
 
-// 📅 All Bookings
+
 router.get("/dashboard/bookings", verifyCaptainAccess, getAllBookings);
 
-// 💰 All Payments
+
 router.get("/dashboard/payments", verifyCaptainAccess, getAllPayments);
 
-// 🟠 Pending Verification Bookings
+
 router.get(
   "/dashboard/bookings/pending",
   verifyCaptainAccess,
   getPendingVerificationBookings
 );
 
-// ✅ Verify Booking (Captain approval)
+
 router.put(
   "/dashboard/bookings/verify/:id",
   verifyCaptainAccess,
   markBookingVerified
 );
 
-// ✅ Verify Payment (Captain approval)
+
 router.put(
   "/dashboard/payments/verify/:paymentId",
   verifyCaptainAccess,
   verifyPayment
 );
 
-// 🧭 NEW: View all Users with Their Planned Trips
+
 router.get(
   "/dashboard/users-trips",
   verifyCaptainAccess,
   getAllUsersAndTrips
 );
 
-// 🧭 NEW: View only Upcoming Trips
+
 router.get(
   "/dashboard/upcoming-trips",
   verifyCaptainAccess,
   getUpcomingTrips
 );
 
-/* -------------------------------------------------------------------------- */
-/* 🗑️ DELETE ROUTES (Captain privileges) */
-/* -------------------------------------------------------------------------- */
+
 router.delete("/dashboard/users/:id", verifyCaptainAccess, deleteUser);
 router.delete("/dashboard/trips/:id", verifyCaptainAccess, deleteTrip);
 router.delete("/dashboard/bookings/:id", verifyCaptainAccess, deleteBooking);

@@ -159,7 +159,7 @@ const PlanTrip = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-orange-50 pt-32 pb-20 px-4 sm:px-6 lg:px-10">
+    <div className="min-h-screen bg-linear-to-b from-white to-orange-50 pt-32 pb-20 px-4 sm:px-6 lg:px-10">
       <div className="max-w-6xl mx-auto bg-white shadow-2xl rounded-3xl p-6 sm:p-8 border border-gray-200">
         <h1 className="text-3xl sm:text-4xl font-extrabold text-center text-gray-800 mb-3">
           Plan Your Trip
@@ -168,7 +168,6 @@ const PlanTrip = () => {
           Fill in your travel details and let AI design your perfect itinerary.
         </p>
 
-        {/* Form + Map Layout */}
         <div className="flex flex-col lg:flex-row gap-10 relative">
           {/* Form Section */}
           <form
@@ -312,7 +311,7 @@ const PlanTrip = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-orange-500 to-teal-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:scale-105 transition-transform text-sm sm:text-base"
+              className="w-full bg-linear-to-r from-orange-500 to-teal-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:scale-105 transition-transform text-sm sm:text-base"
             >
               {loading ? "Generating Itinerary..." : "Create Trip Plan"}
             </button>

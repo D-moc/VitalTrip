@@ -3,13 +3,7 @@ import { motion } from "framer-motion";
 import { AuthContext } from "../context/AuthContext";
 import api from "../utils/api";
 import { BASE_URL } from "../utils/config";
-import {
-  FaMapMarkedAlt,
-  FaCalendarAlt,
-  FaMoneyBillWave,
-  FaSignOutAlt,
-  FaUserEdit,
-} from "react-icons/fa";
+import {FaMapMarkedAlt, FaCalendarAlt, FaMoneyBillWave, FaSignOutAlt, FaUserEdit,} from "react-icons/fa";
 import ProfileUpdateModal from "../pages/ProfileUpdateModal";
 
 const UserDashboard = () => {
@@ -28,13 +22,12 @@ const UserDashboard = () => {
         setProfile(profileRes.data.user || {});
         setTrips(tripsRes.data.trips || tripsRes.data || []);
       } catch (err) {
-        console.error("Error loading dashboard:", err);
+        console.error("error loading dashboard:", err);
       }
     };
     fetchData();
   }, []);
 
-  // ✅ Update both local + global context
   const handleProfileUpdate = (updatedUser) => {
     setProfile(updatedUser);
     setUser(updatedUser);
@@ -46,7 +39,6 @@ const UserDashboard = () => {
   ).length;
   const totalSpent = trips.reduce((sum, t) => sum + (t.budget || 0), 0);
 
-  // ✅ Handle image path properly (backend-relative)
   const profileImageSrc = profile?.profileImage
     ? profile.profileImage.startsWith("http")
       ? profile.profileImage
@@ -54,7 +46,7 @@ const UserDashboard = () => {
     : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-teal-50 pt-24 pb-20 px-6">
+    <div className="min-h-screen bg-linear-to-br from-orange-50 via-white to-teal-50 pt-24 pb-20 px-6">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -79,14 +71,14 @@ const UserDashboard = () => {
         <div className="flex items-center gap-3 mt-4 md:mt-0">
           <button
             onClick={() => setShowModal(true)}
-            className="flex items-center gap-2 bg-gradient-to-r from-orange-500 to-teal-500 text-white px-5 py-2 rounded-full shadow hover:scale-105 transition"
+            className="flex items-center gap-2 bg-linear-to-r from-orange-500 to-teal-500 text-white px-5 py-2 rounded-full shadow hover:scale-105 transition"
           >
             <FaUserEdit /> Edit Profile
           </button>
 
           <button
             onClick={logout}
-            className="flex items-center gap-2 bg-gradient-to-r from-red-500 to-orange-500 text-white px-5 py-2 rounded-full shadow hover:scale-105 transition"
+            className="flex items-center gap-2 bg-linear-to-r from-red-500 to-orange-500 text-white px-5 py-2 rounded-full shadow hover:scale-105 transition"
           >
             <FaSignOutAlt /> Logout
           </button>
@@ -120,7 +112,7 @@ const UserDashboard = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
-            className={`p-6 bg-gradient-to-br ${item.color} text-white rounded-3xl shadow-xl flex flex-col items-center justify-center hover:scale-105 transition-transform`}
+            className={`p-6 bg-linear-to-br ${item.color} text-white rounded-3xl shadow-xl flex flex-col items-center justify-center hover:scale-105 transition-transform`}
           >
             <div className="text-4xl mb-2">{item.icon}</div>
             <h3 className="text-lg font-semibold">{item.title}</h3>
@@ -174,7 +166,6 @@ const UserDashboard = () => {
         )}
       </motion.div>
 
-      {/* 🪞 Profile Edit Modal */}
       <ProfileUpdateModal
         isOpen={showModal}
         onClose={() => setShowModal(false)}

@@ -4,7 +4,7 @@ const resetTokenSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    refPath: "userModelType", // dynamic ref (User or Captain)
+    refPath: "userModelType", 
   },
   userModelType: {
     type: String,

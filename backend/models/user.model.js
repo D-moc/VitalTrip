@@ -4,12 +4,29 @@ import jwt from "jsonwebtoken";
 
 const userSchema = new mongoose.Schema({
   fullname: {
-    firstname: { type: String, required: true },
-    lastname: { type: String, required: true },
+    firstname: {
+      type: String,
+      required: true,
+    },
+    lastname: {
+      type: String,
+      required: true,
+    },
   },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true, select: false },
-  profileImage: { type: String, default: "" },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+    select: false,
+  },
+  profileImage: {
+    type: String,
+    default: "",
+  },
 });
 
 userSchema.methods.generateAuthToken = function () {
@@ -19,6 +36,8 @@ userSchema.methods.generateAuthToken = function () {
 };
 
 userSchema.statics.hashPassword = async (password) => bcrypt.hash(password, 10);
+
+
 userSchema.methods.comparePassword = async function (pw) {
   return bcrypt.compare(pw, this.password);
 };

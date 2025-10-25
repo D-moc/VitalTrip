@@ -1,10 +1,6 @@
-// models/blacklistToken.model.js
 import mongoose from "mongoose";
 
-/**
- * Blacklist Token Schema
- * Used to invalidate JWTs after logout
- */
+
 const blacklistTokenSchema = new mongoose.Schema(
   {
     token: {
@@ -15,7 +11,7 @@ const blacklistTokenSchema = new mongoose.Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      expires: 86400, // auto delete after 24 hours (1 day)
+      expires: 86400, // auto delete after 1 day
     },
   },
   { timestamps: true }

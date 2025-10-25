@@ -1,4 +1,3 @@
-// utils/route.service.js
 import fetch from "node-fetch";
 import dotenv from "dotenv";
 dotenv.config();
@@ -40,7 +39,7 @@ export async function getRoute(from, to) {
       geometry,
     };
   } catch (err) {
-    console.error("🚗 Route error:", err.message);
+    console.error("Route error:", err.message);
     return null;
   }
 }

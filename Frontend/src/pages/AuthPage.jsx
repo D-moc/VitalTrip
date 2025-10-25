@@ -43,7 +43,7 @@ const AuthPage = () => {
               fullname: { firstname: form.firstname, lastname: form.lastname },
               email: form.email,
               password: form.password,
-              accessKey: form.adminKey, // optional key field for admins
+              accessKey: form.adminKey, 
             }
         : isLogin
         ? { email: form.email, password: form.password }
@@ -56,7 +56,7 @@ const AuthPage = () => {
       const res = await api.post(endpoint, payload);
 
       if (res.status === 200 || res.status === 201) {
-        toast.success(`${isLogin ? "Login" : "Registration"} successful! 🎉`);
+        toast.success(`${isLogin ? "Login" : "Registration"} successful!`);
 
         const token = res.data.token;
 
@@ -76,7 +76,8 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-cyan-50 to-white font-poppins">
+    <div className="min-h-[calc(100vh-80px)] pt-24 flex items-center justify-center bg-gradient-to-br from-cyan-50 to-white font-poppins">
+
       <motion.div
         className="bg-white/80 backdrop-blur-lg shadow-2xl rounded-3xl p-10 w-[90%] max-w-md border border-cyan-100"
         initial={{ opacity: 0, y: 40 }}

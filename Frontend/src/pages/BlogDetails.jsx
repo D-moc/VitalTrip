@@ -8,6 +8,14 @@ const BlogDetails = () => {
   const [blog, setBlog] = useState(null);
   const navigate = useNavigate();
 
+  const getImageUrl = (imgName) => {
+    try {
+      return new URL(`../assets/blogs/${imgName}`, import.meta.url).href;
+    } catch {
+      return "https://via.placeholder.com/800x400";
+    }
+  };
+
   useEffect(() => {
     const fetchBlog = async () => {
       try {
@@ -27,6 +35,11 @@ const BlogDetails = () => {
       </div>
     );
 
+  const imageUrl =
+    blog.image && !blog.image.startsWith("http")
+      ? getImageUrl(blog.image)
+      : blog.image;
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-orange-50 py-12 px-6 md:px-16 border-t-4 border-green-400">
       {/* 🔙 Top Back Button */}
@@ -40,7 +53,7 @@ const BlogDetails = () => {
       {/* 🧾 Blog Card */}
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
         <img
-          src={blog.image || "https://via.placeholder.com/800x400"}
+          src={imageUrl}
           alt={blog.title}
           className="w-full h-80 object-cover"
         />

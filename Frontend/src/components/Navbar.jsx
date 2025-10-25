@@ -5,19 +5,18 @@ import { motion, AnimatePresence } from "framer-motion";
 import { AuthContext } from "../context/AuthContext";
 import logo from "../assets/logo.png";
 import { BASE_URL } from "../utils/config";
-import ChatbotPanel from "../components/ChatbotPanel"; 
+import ChatbotPanel from "../components/ChatbotPanel";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
-  const [showChatbot, setShowChatbot] = useState(false); 
+  const [showChatbot, setShowChatbot] = useState(false);
 
   const { user, role, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const profileRef = useRef(null);
-
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -41,20 +40,18 @@ const Navbar = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setTimeout(() => setActiveSection(entry.target.id), 140); 
+            setTimeout(() => setActiveSection(entry.target.id), 150);
           }
         });
       },
-      { threshold: 0.2 } 
+      { threshold: 0.4 }
     );
 
     sections.forEach((sec) => observer.observe(sec));
     return () => observer.disconnect();
   }, [location.pathname]);
 
-  /* -------------------------------------------------------------------------- */
-  /* ✅ Smooth scroll */
-  /* -------------------------------------------------------------------------- */
+
   const goToSection = (id) => {
     if (location.pathname === "/") {
       const el = document.getElementById(id);
@@ -70,9 +67,6 @@ const Navbar = () => {
     }
   };
 
-  /* -------------------------------------------------------------------------- */
-  /* ✅ Auth utilities */
-  /* -------------------------------------------------------------------------- */
   const handleLogout = () => {
     logout();
     setShowProfile(false);
@@ -90,9 +84,9 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-green-800 via-teal-800 to-green-800 border-b border-white/40 backdrop-blur-sm">
+      <header className="fixed top-0 left-0 w-full z-50 bg-linear-to-r from-green-800 via-teal-800 to-green-800 border-b border-white/40 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto flex justify-between items-center py-4 px-5 md:px-10">
-          {/* Logo */}
+
           <div
             className="flex items-center gap-2 cursor-pointer"
             onClick={() => goToSection("home")}
@@ -109,7 +103,6 @@ const Navbar = () => {
             </h1>
           </div>
 
-          {/* Navigation */}
           <nav
             className={`${
               menuOpen ? "flex" : "hidden"
@@ -127,7 +120,7 @@ const Navbar = () => {
               >
                 {section.charAt(0).toUpperCase() + section.slice(1)}
                 <span
-                  className={`absolute bottom-[-6px] left-1/2 transform -translate-x-1/2 h-[3px] rounded-full transition-all duration-500 ease-in-out ${
+                  className={`absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 h-[3px] rounded-full transition-all duration-500 ease-in-out ${
                     activeSection === section
                       ? "w-10 bg-yellow-400 opacity-100 shadow-[0_0_10px_#fde68a]"
                       : "w-0 opacity-0 bg-transparent"
@@ -139,19 +132,20 @@ const Navbar = () => {
 
           {/* Right Side */}
           <div className="flex items-center gap-4 md:gap-6">
-            {/* 🧠 VitalAsk Button */}
             <button
-              onClick={() => setShowChatbot(true)} 
-              className="flex items-center gap-2 bg-white/20 border border-white/30 text-white font-semibold rounded-full px-4 py-2 hover:bg-white/30 transition-all duration-300"
+              onClick={() => setShowChatbot(true)}
+              className="flex items-center gap-2 bg-white/20 
+              border border-white/30 text-white 
+              font-semibold rounded-full px-4 py-2
+              hover:bg-white/30 transition-all duration-300"
             >
               <FaRobot className="text-yellow-200 text-lg animate-pulse" />
-              {/* <span className="font-bold">Vital</span> */}
               <span className="text-xs italic animate-bounce text-yellow-200">
                 Ask
               </span>
             </button>
 
-            {/* 👤 Profile */}
+            {/* Profile */}
             {user ? (
               <div ref={profileRef} className="relative">
                 <button
@@ -201,7 +195,7 @@ const Navbar = () => {
               </button>
             )}
 
-            {/* 📱 Mobile Menu */}
+            {/* Mobile Menu */}
             <button
               className="md:hidden text-white hover:scale-110 transition-transform"
               onClick={() => setMenuOpen(!menuOpen)}
@@ -212,12 +206,12 @@ const Navbar = () => {
         </div>
       </header>
 
-      {/* 🧠 Chatbot Modal with Framer Motion */}
+      {/* Chatbot Panel */}
       <AnimatePresence>
         {showChatbot && (
           <>
             <motion.div
-              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[98]"
+              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-98"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -230,8 +224,8 @@ const Navbar = () => {
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 100, damping: 18 }}
             >
-              <div className="flex justify-between items-center bg-gradient-to-r from-green-700 to-teal-600 text-white px-5 py-3">
-                <h2 className="text-xl font-bold">Vital AI Assistant 🤖</h2>
+              <div className="flex justify-between items-center bg-linear-to-r from-green-700 to-teal-600 text-white px-5 py-3">
+                <h2 className="text-xl font-bold">Vital Assistant</h2>
                 <button
                   onClick={() => setShowChatbot(false)}
                   className="hover:text-yellow-300"

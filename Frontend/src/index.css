@@ -43,5 +43,5 @@ html, body {
 
 /* global stylesheet */
 input:invalid, select:invalid, textarea:invalid {
-  scroll-margin-top: 120px; /* adjust for your navbar height */
+  scroll-margin-top: 120px; 
 }

@@ -4,9 +4,6 @@ import Payment from "../models/payment.model.js";
 import Destination from "../models/destination.model.js";
 import Trip from "../models/trip.model.js";
 
-/* -------------------------------------------------------------------------- */
-/* 🧾 GET ALL USERS */
-/* -------------------------------------------------------------------------- */
 export const getAllUsers = async (req, res) => {
   try {
     const users = await User.find().select("fullname email profileImage createdAt");
@@ -16,9 +13,6 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* 🌍 GET ALL DESTINATIONS */
-/* -------------------------------------------------------------------------- */
 export const getAllDestinations = async (req, res) => {
   try {
     const destinations = await Destination.find();
@@ -28,9 +22,7 @@ export const getAllDestinations = async (req, res) => {
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* 🧳 GET ALL TRIPS */
-/* -------------------------------------------------------------------------- */
+
 export const getAllTrips = async (req, res) => {
   try {
     const trips = await Trip.find()
@@ -42,9 +34,7 @@ export const getAllTrips = async (req, res) => {
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* 💰 GET ALL PAYMENTS */
-/* -------------------------------------------------------------------------- */
+
 export const getAllPayments = async (req, res) => {
   try {
     const payments = await Payment.find()
@@ -57,9 +47,7 @@ export const getAllPayments = async (req, res) => {
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* 📅 GET ALL BOOKINGS */
-/* -------------------------------------------------------------------------- */
+
 export const getAllBookings = async (req, res) => {
   try {
     const bookings = await Booking.find()
@@ -73,9 +61,7 @@ export const getAllBookings = async (req, res) => {
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* 🟠 GET ALL PENDING VERIFICATION BOOKINGS */
-/* -------------------------------------------------------------------------- */
+
 export const getPendingVerificationBookings = async (req, res) => {
   try {
     const pending = await Booking.find({ status: "pending_verification" })
@@ -94,9 +80,7 @@ export const getPendingVerificationBookings = async (req, res) => {
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* ✅ CAPTAIN MARKS BOOKING AS VERIFIED */
-/* -------------------------------------------------------------------------- */
+
 export const markBookingVerified = async (req, res) => {
   try {
     const booking = await Booking.findById(req.params.id)
@@ -129,9 +113,7 @@ export const markBookingVerified = async (req, res) => {
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* ✅ VERIFY PAYMENT (CAPTAIN ONLY) */
-/* -------------------------------------------------------------------------- */
+
 export const verifyPayment = async (req, res) => {
   try {
     const payment = await Payment.findById(req.params.paymentId);
@@ -156,9 +138,7 @@ export const verifyPayment = async (req, res) => {
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* 🧭 GET ALL USERS + THEIR PLANNED TRIPS (NEW FEATURE) */
-/* -------------------------------------------------------------------------- */
+
 export const getAllUsersWithTrips = async (req, res) => {
   try {
     const users = await User.find().select("fullname email profileImage createdAt");
@@ -194,7 +174,7 @@ export const getAllUsersWithTrips = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "All users with planned trips fetched successfully ✅",
+      message: "All users with planned trips fetched successfully",
       count: userTrips.length,
       data: userTrips,
     });
@@ -204,9 +184,7 @@ export const getAllUsersWithTrips = async (req, res) => {
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* 🗑️ DELETE USER / TRIP / BOOKING */
-/* -------------------------------------------------------------------------- */
+
 export const deleteUser = async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id);

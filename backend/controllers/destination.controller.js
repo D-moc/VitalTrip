@@ -1,9 +1,7 @@
 import Destination from "../models/destination.model.js";
 import { geocodeLocation } from "../utils/geocode.service.js";
 
-/* -------------------------------------------------------------------------- */
-/* 🔍 Search Destinations */
-/* -------------------------------------------------------------------------- */
+
 export const searchDestinations = async (req, res) => {
   try {
     const query = req.query.q?.trim();
@@ -23,29 +21,25 @@ export const searchDestinations = async (req, res) => {
 
     res.json({ count: results.length, results });
   } catch (err) {
-    console.error("❌ Search error:", err);
+    console.error("Search error:", err);
     res
       .status(500)
       .json({ message: "Server error while searching destinations" });
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* 🗂️ Get All Categories */
-/* -------------------------------------------------------------------------- */
+
 export const getCategories = async (req, res) => {
   try {
     const categories = await Destination.distinct("category");
     res.json({ count: categories.length, categories });
   } catch (err) {
-    console.error("❌ Category fetch error:", err);
+    console.error("Category fetch error:", err);
     res.status(500).json({ message: "Failed to fetch categories" });
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* 🏝️ Get By Category */
-/* -------------------------------------------------------------------------- */
+
 export const getByCategory = async (req, res) => {
   try {
     const category = req.params.category;
@@ -57,14 +51,12 @@ export const getByCategory = async (req, res) => {
 
     res.json({ count: results.length, results });
   } catch (err) {
-    console.error("❌ getByCategory error:", err);
+    console.error("getByCategory error:", err);
     res.status(500).json({ message: "Server error fetching category" });
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* ➕ Add Destination (Captain only) */
-/* -------------------------------------------------------------------------- */
+
 export const addDestination = async (req, res) => {
   try {
     const {
@@ -83,12 +75,12 @@ export const addDestination = async (req, res) => {
         .status(400)
         .json({ message: "Name, location & category are required" });
 
-    // 🧭 Optional geocoding (handles errors gracefully)
+    
     let coordinates = {};
     try {
       coordinates = await geocodeLocation(`${name}, ${location}`);
     } catch (geoErr) {
-      console.warn("⚠️ Geocoding failed:", geoErr.message);
+      console.warn("Geocoding failed:", geoErr.message);
       coordinates = { lat: 0, lng: 0 };
     }
 
@@ -110,16 +102,14 @@ export const addDestination = async (req, res) => {
       destination: newDest,
     });
   } catch (err) {
-    console.error("❌ Add destination error:", err);
+    console.error("Add destination error:", err);
     res
       .status(500)
       .json({ message: "Server error adding destination", error: err.message });
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* ✏️ Update Destination */
-/* -------------------------------------------------------------------------- */
+
 export const updateDestination = async (req, res) => {
   try {
     const { id } = req.params;
@@ -130,14 +120,12 @@ export const updateDestination = async (req, res) => {
       return res.status(404).json({ message: "Destination not found" });
     res.json({ message: "Destination updated successfully", updated });
   } catch (err) {
-    console.error("❌ Update destination error:", err);
+    console.error("Update destination error:", err);
     res.status(500).json({ message: "Error updating destination" });
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* 📍 Get Destination By ID */
-/* -------------------------------------------------------------------------- */
+
 export const getDestinationById = async (req, res) => {
   try {
     const dest = await Destination.findById(req.params.id);
@@ -145,19 +133,16 @@ export const getDestinationById = async (req, res) => {
       return res.status(404).json({ message: "Destination not found" });
     res.json(dest);
   } catch (err) {
-    console.error("❌ Get destination by ID error:", err);
+    console.error("Get destination by ID error:", err);
     res.status(500).json({ message: "Error fetching destination" });
   }
 };
 
-/* -------------------------------------------------------------------------- */
-/* 🌍 Get All Destinations */
-/* -------------------------------------------------------------------------- */
+
 export const getAllDestinations = async (req, res) => {
   try {
-    console.log("🧭 Fetching all destinations...");
     const destinations = await Destination.find();
-    console.log("✅ Found destinations:", destinations.length);
+    console.log("Found destinations:", destinations.length);
 
     if (!destinations.length)
       return res
@@ -166,7 +151,7 @@ export const getAllDestinations = async (req, res) => {
 
     res.json({ count: destinations.length, destinations });
   } catch (err) {
-    console.error("❌ Failed to fetch destinations:", err);
+    console.error("Failed to fetch destinations:", err);
     res.status(500).json({
       message: "Failed to fetch destinations",
       error: err.message,

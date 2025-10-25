@@ -41,11 +41,11 @@ For travelers planning to explore these monumental marvels, the best time is bet
 Conclusion  
 Exploring the forts of Maharashtra is not just a journey through ancient walls—it’s a pilgrimage through India’s living history. Every fortress, whether majestic or modest, echoes the enduring courage of those who built and defended them. From the sea-breeze whispers at Sindhudurg to the cloud-draped peaks of Rajgad, these architectural marvels invite travelers to pause, reflect, and admire the legacy of a civilization that believed in courage, culture, and craftsmanship above all.`,
     category: "Culture",
-    image: "https://images.unsplash.com/photo-1593173806061-2f4b4b8e6b09",
+    image: "fort.jpg",
     isApproved: true,
   },
 
-  // ✅ (2) Hidden Beaches of Konkan — long blog
+
   {
     title: "Hidden Beaches of Konkan",
     content: `The Konkan coastline, stretching elegantly along the Arabian Sea, is Maharashtra’s hidden gem—a tranquil stretch of golden sands, turquoise waves, and untouched beauty. Unlike the crowded beaches of Goa, Konkan offers solitude wrapped in scenic charm and cultural authenticity. From the unspoiled shores of Diveagar to the crystal-clear waters of Tarkarli, each beach here feels like a secret whisper from nature.
@@ -69,11 +69,10 @@ The best time to explore Konkan beaches is from November to February, when the a
 Conclusion  
 The hidden beaches of Konkan are not merely destinations—they are experiences of serenity and simplicity. They invite you to slow down, breathe deeply, and reconnect with nature’s rhythm. Whether you’re watching dolphins leap at Tarkarli, walking barefoot on Diveagar’s sands, or listening to waves crash against Sindhudurg’s walls, the Konkan coast will always whisper—“stay a little longer.”`,
     category: "Nature",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+    image: "konkanbeaches.jpg",
     isApproved: true,
   },
 
-  // ✅ (3) Top Waterfalls to Visit During Monsoon
   {
     title: "Top Waterfalls to Visit During Monsoon",
     content: `When monsoon clouds descend upon Maharashtra, the landscape transforms into a lush green paradise dotted with cascading waterfalls. The rhythmic downpour awakens rivers, fills reservoirs, and births magnificent waterfalls that flow with unmatched power and grace. For travelers and photographers alike, these natural spectacles offer a visual symphony of mist, motion, and magic.
@@ -96,11 +95,11 @@ Monsoon (June–September) is the best season to witness these waterfalls in ful
 Conclusion  
 Maharashtra’s waterfalls are not just nature’s marvels—they are moments of calm amid chaos. Standing before their thunderous beauty, one realizes how deeply nature connects to human emotion. For anyone seeking to experience the monsoon in its purest form, these waterfalls promise not just a view, but a feeling—of peace, wonder, and awe.`,
     category: "Adventure",
-    image: "https://images.unsplash.com/photo-1533616688419-b7a585564566",
+    image: "dugarwadiwaterfall.jpg",
     isApproved: true,
   },
 
-  // ✅ (4) A Guide to Temples of Nashik
+  
     {
     title: "A Guide to Temples of Nashik",
     content: `Nashik, nestled along the sacred banks of the Godavari River, stands as one of Maharashtra’s most spiritual and historically rich cities. Known for its blend of mythology, devotion, and architectural splendor, Nashik invites pilgrims and travelers alike to explore its timeless temples, where every stone echoes with chants of faith and stories of gods.
@@ -131,7 +130,7 @@ October to February offers pleasant weather, ideal for exploring temples. During
 Conclusion  
 Nashik’s temples aren’t just places of worship—they’re living monuments of faith, art, and culture. Walking through their ancient corridors feels like traversing centuries of devotion, where every prayer adds a whisper to the city’s sacred rhythm. A journey to Nashik isn’t just a pilgrimage—it’s an awakening.`,
     category: "Culture",
-    image: "https://images.unsplash.com/photo-1605433244899-77b0e731cfc7",
+    image: "saptashuringi.jpg",
     isApproved: true,
   },
 
@@ -158,9 +157,9 @@ Best Time to Trek
 While monsoon treks are magical, October to February offers safer, clearer trails with cool weather. Carry proper footwear, hydration packs, and always trek with local guides if you’re new to the region.
 
 Conclusion  
-Trekking the Sahyadris is more than an outdoor pursuit—it’s a spiritual journey into the heart of Maharashtra. Every sunrise atop a fort and every breeze through the valleys tells stories of warriors, sages, and dreamers. Once you’ve conquered a Sahyadri peak, you don’t just return home with memories—you return with a piece of its soul.`,
+Trekking the Sahyadris is more than an outdoor pursuit; it’s a spiritual journey into the heart of Maharashtra. Every sunrise atop a fort and every breeze through the valleys tells stories of warriors, sages, and dreamers. Once you’ve conquered a Sahyadri peak, you don’t just return home with memories—you return with a piece of its soul.`,
     category: "Adventure",
-    image: "https://images.unsplash.com/photo-1587133901923-4983866ea742",
+    image: "sahyadris.jpg",
     isApproved: true,
   },
 
@@ -183,79 +182,10 @@ The best months are between October and March, when the weather is cool and plea
 Conclusion  
 Camping at Pawna Lake is not just a weekend retreat—it’s a reminder that peace lies in simplicity. Whether you’re watching the sunrise with a cup of chai or gazing at constellations beside a bonfire, Pawna teaches you to pause, breathe, and just be.`,
     category: "Nature",
-    image: "https://images.unsplash.com/photo-1571501679680-de32f1e7aad4",
+    image: "pawna.jpg",
     isApproved: true,
   },
 
-  {
-    title: "The Cultural Streets of Pune",
-    content: `Pune, fondly known as the cultural capital of Maharashtra, is a city where tradition meets modernity at every corner. From grand Maratha-era monuments to cozy cafés echoing with live music, Pune’s streets narrate a story that’s both ancient and youthful.
-
-A Glimpse into the Past  
-Once the seat of the Peshwas, Pune was the nerve center of the Maratha Empire. Shaniwarwada, with its majestic gates and burnt ruins, still stands as a silent reminder of royal opulence and tragedy. Walking through its courtyards, one can almost hear the echoes of horse hooves and royal decrees.
-
-Beyond history, Pune thrives as a cultural hub. Areas like Kasba Peth showcase traditional homes called “wadas” with wooden balconies and courtyards that retain old-world charm. These wadas now coexist with modern art galleries, co-working cafés, and student hangouts.
-
-The Modern Beat  
-On Fergusson College Road and Koregaon Park, Pune’s youth culture blooms. Street musicians, bookshops, and aromatic coffee houses create a bohemian vibe. Art exhibitions, theater performances, and food festivals run year-round, reflecting the city’s creative spirit.
-
-Food and Festivals  
-Pune’s culinary scene mirrors its diversity. From spicy Misal Pav and Mastani milkshakes to North Indian delicacies and fusion cafés, the city’s food trail is a gastronomic delight. Festivals like Ganesh Chaturthi and Sawai Gandharva Bhimsen Mahotsav bring people together in music, devotion, and joy.
-
-Best Time to Visit  
-The city is most pleasant between October and February, when cultural events peak. Pune’s monsoons, too, have their charm—lush hills, blooming gardens, and steaming cups of chai on balconies.
-
-Conclusion  
-Pune’s streets are not just pathways—they are storytellers. Every alley, fort, and café carries a piece of history, art, and humanity. The city embodies Maharashtra’s heart—progress rooted in pride, tradition blended with tomorrow.`,
-    category: "Culture",
-    image: "https://images.unsplash.com/photo-1608645288609-2be6e52f0f14",
-    isApproved: true,
-  },
-
-  {
-    title: "A Weekend at Mahabaleshwar",
-    content: `Nestled in the misty embrace of the Western Ghats, Mahabaleshwar remains one of Maharashtra’s most cherished hill stations—a retreat for nature lovers, honeymooners, and weary city souls seeking fresh air and strawberries.
-
-The Land of Scenic Splendor  
-At an altitude of 4,400 feet, Mahabaleshwar is blessed with lush forests, cascading waterfalls, and viewpoints that seem to touch the clouds. From Wilson Point, one can watch a breathtaking sunrise that paints the valleys gold. At Arthur’s Seat, the valleys plunge dramatically, resembling a grand amphitheater of nature.
-
-The hill station’s colonial charm is evident in its old British cottages, charming churches, and tree-lined avenues. Venna Lake offers peaceful boating experiences, while Mapro Garden serves up creamy strawberry delights that have become synonymous with Mahabaleshwar.
-
-Adventure and Leisure  
-For trekkers, trails leading to Pratapgad Fort provide a dose of history and adventure. Shoppers can explore the vibrant town market, packed with jams, honey, and leather goods. Couples stroll along Lover’s Point or indulge in horse rides near the lake.
-
-Best Time to Visit  
-October to June offers the best weather, with March-April marking the peak strawberry season. Monsoon visits are magical too, with fog-draped roads and overflowing waterfalls—but driving requires caution.
-
-Conclusion  
-Mahabaleshwar is not just a destination; it’s a feeling—a blend of cool winds, sweet berries, and warm memories. Whether you’re sipping tea by the fireplace or watching mist roll over the hills, this hill station leaves a piece of serenity in your heart.`,
-    category: "Travel",
-    image: "https://images.unsplash.com/photo-1603727709574-30f72dcfbc0a",
-    isApproved: true,
-  },
-
-  {
-    title: "Discovering Ajanta & Ellora Caves",
-    content: `Deep in the heart of Aurangabad lie two of India’s greatest treasures—the Ajanta and Ellora Caves. Together, they stand as magnificent chronicles of ancient artistry, spirituality, and craftsmanship that span more than a thousand years.
-
-Ajanta – The Canvas of the Divine  
-Dating back to the 2nd century BCE, Ajanta’s 30 rock-cut Buddhist caves are adorned with murals and sculptures depicting the Jataka tales—the life stories of Buddha’s previous incarnations. The paintings, still vivid after centuries, reveal delicate expressions and colors derived from natural minerals. Cave 1 and Cave 26 are especially mesmerizing, with intricate depictions of the Bodhisattvas Padmapani and Vajrapani.
-
-Ellora – A Symphony of Faiths  
-While Ajanta celebrates Buddhism, Ellora showcases the harmony of three religions—Buddhism, Hinduism, and Jainism—coexisting in artistic brilliance. Carved between the 6th and 10th centuries, its 34 caves form an open-air museum of devotion and design. The most astonishing of them all, the Kailasa Temple (Cave 16), is a monolithic wonder carved from a single rock. Measuring 200 feet long and 100 feet high, it’s a feat of human genius and divine inspiration.
-
-Art, Architecture, and Legacy  
-The sculptures here depict celestial dancers, mythological battles, and meditative saints with lifelike precision. The blend of architectural mastery and spiritual symbolism makes Ajanta and Ellora not just historical sites, but journeys into the essence of Indian philosophy.
-
-Best Time to Visit  
-October to March is ideal for exploration, offering pleasant weather and clear visibility. Early mornings and late afternoons provide the best lighting for photography.
-
-Conclusion  
-The Ajanta and Ellora Caves are timeless testaments to India’s unity in diversity. They stand not just as monuments of stone, but as monuments of thought—where art, religion, and humanity met in perfect harmony. Visiting them is not sightseeing; it’s an awakening of the soul.`,
-    category: "Culture",
-    image: "https://images.unsplash.com/photo-1570791225612-9e0ce1fc86d5",
-    isApproved: true,
-  },
 ];
 
 const blogs = baseBlogs.map((b) => ({
@@ -264,22 +194,22 @@ const blogs = baseBlogs.map((b) => ({
   authorModelType: "Captain",
 }));
 
-console.log("🧩 Prepared Blogs:", blogs.map((b) => b.authorModelType));
+console.log("Prepared Blogs:", blogs.map((b) => b.authorModelType));
 
 (async () => {
   try {
     await mongoose.connect(process.env.DB_CONNECT);
-    console.log("✅ Connected to MongoDB");
+    console.log("Connected to MongoDB");
 
     await Blog.deleteMany();
-    console.log("🧹 Old blogs cleared");
+    console.log("Old blogs cleared");
 
     await Blog.insertMany(blogs);
-    console.log("✅ Blogs seeded successfully!");
+    console.log("Blogs seeded successfully");
 
     process.exit(0);
   } catch (err) {
-    console.error("❌ Error seeding blogs:", err);
+    console.error("Error seeding blogs:", err);
     process.exit(1);
   }
 })();
