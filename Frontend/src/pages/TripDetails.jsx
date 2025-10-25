@@ -26,7 +26,7 @@ const TripDetails = () => {
       </div>
     );
 
-  // Load local image if available, else fallback
+  
   const getImageUrl = (imgName) => {
     try {
       return new URL(`../assets/destinations/${imgName}`, import.meta.url).href;
@@ -41,7 +41,8 @@ const TripDetails = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+    <div className="min-h-screen bg-linear-to-b from-white to-gray-50">
+      
       {/* Hero Section */}
       <div className="relative h-[75vh] bg-gray-200 overflow-hidden flex flex-col items-center justify-center text-center">
         <img
@@ -49,7 +50,7 @@ const TripDetails = () => {
           alt={destination.name}
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent"></div>
+        <div className="absolute inset-0 bg-linear-to-b from-black/70 via-black/40 to-transparent"></div>
 
         <div className="relative z-10 px-6 flex flex-col items-center">
           <h1 className="text-5xl md:text-6xl font-extrabold text-white drop-shadow-2xl">
@@ -86,7 +87,7 @@ const TripDetails = () => {
         <div className="flex justify-center mt-12 mb-8">
           <button
             onClick={() => navigate(-1)}
-            className="bg-gradient-to-r from-orange-500 to-teal-500 text-white font-semibold px-8 py-3 rounded-full shadow-md hover:scale-105 transition-transform duration-200"
+            className="bg-linear-to-r from-orange-500 to-teal-500 text-white font-semibold px-8 py-3 rounded-full shadow-md hover:scale-105 transition-transform duration-200"
           >
             ← Back
           </button>

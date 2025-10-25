@@ -1,6 +1,3 @@
-
-
-
 import React, { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -34,7 +31,6 @@ const Signup = () => {
       const { token } = res.data;
       if (!token) throw new Error("Signup failed");
 
-      // Use context login → immediately sets user
       localStorage.setItem("authToken", token);
       await login({ email: form.email, password: form.password }, "user");
     } catch (err) {
@@ -45,8 +41,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#3a0ca3] via-[#7209b7] to-[#f72585] text-white">
-      <AuthCard title="Create Account ✨" subtitle="Start your adventure with VitalTrip">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-[#3a0ca3] via-[#7209b7] to-[#f72585] text-white">
+      <AuthCard title="Create Account" subtitle="Start your adventure with VitalTrip">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex gap-2">
             <input
@@ -84,7 +80,7 @@ const Signup = () => {
           />
           <motion.button
             whileTap={{ scale: 0.95 }}
-            className="w-full py-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg text-white font-semibold shadow-lg hover:shadow-pink-500/40 transition-all"
+            className="w-full py-3 bg-linear-to-r from-purple-500 to-pink-500 rounded-lg text-white font-semibold shadow-lg hover:shadow-pink-500/40 transition-all"
             disabled={loading}
           >
             {loading ? "Creating account..." : "Sign Up"}

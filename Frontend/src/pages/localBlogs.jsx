@@ -1,4 +1,3 @@
-// src/pages/localBlogs.js
 export const localBlogs = [
   {
     _id: "forts",

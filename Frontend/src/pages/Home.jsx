@@ -33,10 +33,11 @@ const Home = () => {
   const [destinations, setDestinations] = useState([]);
   const [filteredResults, setFilteredResults] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [filtered, setFiltered] = useState([]);
-  const [activeCategory, setActiveCategory] = useState(null);
+  // const [filtered, setFiltered] = useState([]);
+  // const [activeCategory, setActiveCategory] = useState(null);
 
   // Fetch all destinations
+  
   useEffect(() => {
     const fetchDestinations = async () => {
       try {
@@ -49,32 +50,31 @@ const Home = () => {
     fetchDestinations();
   }, []);
 
-  // Background slideshow
-  useEffect(() => {
-    const interval = setInterval(
-      () => setCurrentImage((prev) => (prev + 1) % images.length),
-      6000
-    );
-    return () => clearInterval(interval);
-  }, []);
+  // useEffect(() => {
+  //   const interval = setInterval(
+  //     () => setCurrentImage((prev) => (prev + 1) % images.length),
+  //     6000
+  //   );
+  //   return () => clearInterval(interval);
+  // }, []);
 
-  // Scroll to section if routed with location.state.scrollTo
-  useEffect(() => {
-    if (location.state?.scrollTo) {
-      const id = location.state.scrollTo;
-      setTimeout(() => {
-        const el = document.getElementById(id);
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
-        } else {
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }
-        window.history.replaceState({ ...window.history.state, usr: null }, "");
-      }, 120);
-    }
-  }, [location.key]);
+ 
+  // useEffect(() => {
+  //   if (location.state?.scrollTo) {
+  //     const id = location.state.scrollTo;
+  //     setTimeout(() => {
+  //       const el = document.getElementById(id);
+  //       if (el) {
+  //         el.scrollIntoView({ behavior: "smooth", block: "start" });
+  //       } else {
+  //         window.scrollTo({ top: 0, behavior: "smooth" });
+  //       }
+  //       window.history.replaceState({ ...window.history.state, usr: null }, "");
+  //     }, 120);
+  //   }
+  // }, [location.key]);
 
-  // Search filtering
+
   useEffect(() => {
     if (!searchQuery.trim()) {
       setFilteredResults([]);
@@ -127,25 +127,24 @@ const Home = () => {
         className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden"
       >
         <div
-          className="absolute inset-0 bg-cover bg-center transition-all duration-[1500ms]"
+          className="absolute inset-0 bg-cover bg-center transition-all duration-1500"
           style={{
             backgroundImage: `url(${images[currentImage]})`,
             filter: "brightness(0.45)",
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-black/80 z-[1]" />
-
-        <div className="relative z-[2] text-center px-6 md:px-12 max-w-3xl">
+        <div className="absolute inset-0 bg-linear-to-b from-black/70 via-transparent to-black/80 z-1" />
+        <div className="relative z-2 text-center px-6 md:px-12 max-w-3xl">
           <h1 className="text-5xl md:text-7xl font-extrabold text-white leading-tight drop-shadow-2xl">
             Discover <span className="text-orange-400">Maharashtra</span>
             <br />
-            <span className="bg-gradient-to-r from-orange-400 via-yellow-500 to-teal-400 text-transparent bg-clip-text">
+            <span className="bg-linear-to-r from-orange-400 via-yellow-500 to-teal-400 text-transparent bg-clip-text">
               Like Never Before
             </span>
           </h1>
 
           <p className="mt-5 text-lg md:text-xl text-gray-200 font-medium drop-shadow-md">
-            Search forts, caves, beaches and more — all waiting to be explored.
+          Plan your trips, explore destinations, and travel smarter with VitalTrip
           </p>
 
           {/* Search */}
@@ -167,13 +166,13 @@ const Home = () => {
               />
               <button
                 type="submit"
-                className="bg-gradient-to-r from-orange-500 to-teal-500 text-white font-semibold px-5 py-3 rounded-none hover:opacity-90 transition-all"
+                className="bg-linear-to-r from-orange-500 to-teal-500 text-white font-semibold px-5 py-3 rounded-none hover:opacity-90 transition-all"
               >
                 Search
               </button>
             </div>
 
-            {/* ✅ Updated Suggestion List */}
+           {/* Suggestions */}
             {showSuggestions && filteredResults.length > 0 && (
               <ul className="absolute left-0 right-0 mt-2 bg-white/90 backdrop-blur-md rounded-xl shadow-lg overflow-hidden border border-gray-200 max-h-60 overflow-y-auto z-50">
                 {filteredResults.map((dest) => (
@@ -198,14 +197,14 @@ const Home = () => {
           <div className="mt-12">
             <button
               onClick={() => navigate("/plan-trip")}
-              className="px-10 py-4 bg-gradient-to-r from-orange-500 to-teal-500 text-white text-lg font-semibold rounded-2xl shadow-lg hover:scale-105 transition-transform"
+              className="px-10 py-4 bg-linear-to-r from-orange-500 to-teal-500 text-white text-lg font-semibold rounded-2xl shadow-lg hover:scale-105 transition-transform"
             >
               Plan Your Trip
             </button>
           </div>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/90 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-black/90 to-transparent" />
       </section>
     </>
   );

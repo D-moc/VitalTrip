@@ -43,7 +43,7 @@ const Services = () => {
   return (
     <section
       id="services"
-      className="bg-gradient-to-b from-white via-orange-50 to-white pt-16 pb-12 px-6 md:px-12 scroll-mt-20 border-t-4 border-green-400"
+      className="bg-linear-to-b from-white via-orange-50 to-white pt-16 pb-12 px-6 md:px-12 scroll-mt-20 border-t-4 border-green-400"
     >
       <div className="max-w-6xl mx-auto text-center">
         <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-3">

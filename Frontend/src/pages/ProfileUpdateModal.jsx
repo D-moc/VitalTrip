@@ -27,16 +27,10 @@ const ProfileUpdateModal = ({
 
   if (!isOpen) return null;
 
-  /* -------------------------------------------------------------------------- */
-  /* 🧭 Handle Input Change */
-  /* -------------------------------------------------------------------------- */
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  /* -------------------------------------------------------------------------- */
-  /* 🖼️ Handle Image Upload + Preview */
-  /* -------------------------------------------------------------------------- */
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImageFile(file);
@@ -48,9 +42,6 @@ const ProfileUpdateModal = ({
     }
   };
 
-  /* -------------------------------------------------------------------------- */
-  /* 💾 Submit Updated Data */
-  /* -------------------------------------------------------------------------- */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -84,24 +75,20 @@ const res = await api.put(endpoint, form, {
         const updated = res.data.user || res.data.captain;
         onUpdate?.(updated);
 
-        // 🔄 Refresh global AuthContext instantly (Navbar + Dashboard)
         if (role === "captain") await refreshCaptain();
         else await refreshUser();
 
-        toast.success("✅ Profile updated successfully!");
+        toast.success("Profile updated successfully!");
         onClose();
       }
     } catch (err) {
       console.error("Profile update error:", err);
-      toast.error(err.response?.data?.message || "❌ Failed to update profile");
+      toast.error(err.response?.data?.message || "Failed to update profile");
     } finally {
       setLoading(false);
     }
   };
 
-  /* -------------------------------------------------------------------------- */
-  /* 🎨 Modal UI */
-  /* -------------------------------------------------------------------------- */
   return (
     <AnimatePresence>
       {isOpen && (
@@ -117,7 +104,7 @@ const res = await api.put(endpoint, form, {
             exit={{ scale: 0.9, opacity: 0 }}
             className="bg-white rounded-3xl shadow-2xl w-full max-w-lg p-6 relative"
           >
-            {/* ❌ Close Button */}
+
             <button
               onClick={onClose}
               className="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition"
@@ -130,7 +117,7 @@ const res = await api.put(endpoint, form, {
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-5">
-              {/* Profile Image Upload */}
+          
               <div className="flex flex-col items-center gap-3">
                 <label htmlFor="profileImage" className="cursor-pointer group">
                   <div className="relative w-28 h-28 rounded-full border-4 border-orange-400 overflow-hidden shadow-lg hover:scale-105 transition-transform">
@@ -156,7 +143,6 @@ const res = await api.put(endpoint, form, {
                 />
               </div>
 
-              {/* Name Fields */}
               <div className="grid grid-cols-2 gap-3">
                 <input
                   type="text"
@@ -176,7 +162,6 @@ const res = await api.put(endpoint, form, {
                 />
               </div>
 
-              {/* Email Field */}
               <input
                 type="email"
                 name="email"
@@ -186,7 +171,6 @@ const res = await api.put(endpoint, form, {
                 className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-orange-400"
               />
 
-              {/* Bio */}
               <textarea
                 name="bio"
                 placeholder="Write something about yourself..."
@@ -196,11 +180,10 @@ const res = await api.put(endpoint, form, {
                 className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-orange-400"
               />
 
-              {/* Save Button */}
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-orange-500 to-teal-500 text-white font-semibold py-3 rounded-lg shadow-md hover:scale-105 transition-transform flex justify-center items-center gap-2"
+                className="w-full bg-linear-to-r from-orange-500 to-teal-500 text-white font-semibold py-3 rounded-lg shadow-md hover:scale-105 transition-transform flex justify-center items-center gap-2"
               >
                 <FaSave />
                 {loading ? "Saving..." : "Save Changes"}
