@@ -1,5 +1,7 @@
 import React from "react";
 import { FaPhoneAlt, FaMapMarkerAlt, FaUserTie } from "react-icons/fa";
+// import omakrimage from "../assets/omkar.jpg";
+// import dineshimage from "../assets/dinesh.jpg";
 
 const guides = [
   {
@@ -24,14 +26,14 @@ const guides = [
 
 const Guides = () => {
   return (
-    <section className="min-h-screen bg-gradient-to-b from-white via-orange-50 to-white py-20 px-6 md:px-12 border-t-4 border-green-400">
+    <section className="min-h-screen bg-linear-to-b from-white via-orange-50 to-white py-20 px-6 md:px-12 border-t-4 border-green-400">
       {/* Header */}
       <div className="text-center mb-7">
         <h2 className="text-3xl md:text-5xl font-extrabold text-gray-800 mb-3">
           Meet Our Expert Guides
         </h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
-          Discover Maharashtra with our trusted local experts — passionate storytellers
+          Discover Maharashtra with our trusted local experts, passionate storytellers
           who make every destination come alive.
         </p>
       </div>

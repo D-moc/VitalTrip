@@ -14,7 +14,7 @@ import CaptainDashboard from "./pages/CaptainDashboard";
 import UserDashboard from "./pages/UserDashboard";
 import Footer from "./components/Footer";
 import Guides from "./pages/Guides";
-import GuideDetails from "./pages/GuideDetails";
+
 import TripDetails from "./pages/TripDetails";
 
 const App = () => {
@@ -53,7 +53,7 @@ const App = () => {
 
         <Route path="/services" element={<Services />} />
         <Route path="/guides" element={<Guides />} />
-        <Route path="/guides/:id" element={<GuideDetails />} />
+       
       </Routes>
     </>
   );

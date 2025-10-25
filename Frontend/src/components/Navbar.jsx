@@ -51,9 +51,7 @@ const Navbar = () => {
     return () => observer.disconnect();
   }, [location.pathname]);
 
-  /* -------------------------------------------------------------------------- */
-  /* ✅ Smooth scroll */
-  /* -------------------------------------------------------------------------- */
+
   const goToSection = (id) => {
     if (location.pathname === "/") {
       const el = document.getElementById(id);
@@ -69,9 +67,6 @@ const Navbar = () => {
     }
   };
 
-  /* -------------------------------------------------------------------------- */
-  /* ✅ Auth utilities */
-  /* -------------------------------------------------------------------------- */
   const handleLogout = () => {
     logout();
     setShowProfile(false);
@@ -89,7 +84,7 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-green-800 via-teal-800 to-green-800 border-b border-white/40 backdrop-blur-sm">
+      <header className="fixed top-0 left-0 w-full z-50 bg-linear-to-r from-green-800 via-teal-800 to-green-800 border-b border-white/40 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto flex justify-between items-center py-4 px-5 md:px-10">
 
           <div
@@ -125,7 +120,7 @@ const Navbar = () => {
               >
                 {section.charAt(0).toUpperCase() + section.slice(1)}
                 <span
-                  className={`absolute bottom-[-6px] left-1/2 transform -translate-x-1/2 h-[3px] rounded-full transition-all duration-500 ease-in-out ${
+                  className={`absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 h-[3px] rounded-full transition-all duration-500 ease-in-out ${
                     activeSection === section
                       ? "w-10 bg-yellow-400 opacity-100 shadow-[0_0_10px_#fde68a]"
                       : "w-0 opacity-0 bg-transparent"
@@ -216,7 +211,7 @@ const Navbar = () => {
         {showChatbot && (
           <>
             <motion.div
-              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[98]"
+              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-98"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -229,8 +224,8 @@ const Navbar = () => {
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 100, damping: 18 }}
             >
-              <div className="flex justify-between items-center bg-gradient-to-r from-green-700 to-teal-600 text-white px-5 py-3">
-                <h2 className="text-xl font-bold">Vital AI Assistant 🤖</h2>
+              <div className="flex justify-between items-center bg-linear-to-r from-green-700 to-teal-600 text-white px-5 py-3">
+                <h2 className="text-xl font-bold">Vital Assistant</h2>
                 <button
                   onClick={() => setShowChatbot(false)}
                   className="hover:text-yellow-300"
