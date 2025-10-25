@@ -7,7 +7,7 @@ dotenv.config();
 const MONGO_URI = process.env.DB_CONNECT;
 
 const destinations = [
-  // 🏰 Forts
+  
   {
     name: "Sinhagad Fort",
     location: "Pune",
@@ -89,6 +89,7 @@ Pratapgad represents Maratha bravery and strategy at its finest. Its commanding 
     coordinates: { lat: 17.933, lng: 73.58 },
     image: "pratapgad.jpg",
   },
+ 
   {
     name: "Lohagad Fort",
     location: "Lonavala",
@@ -138,8 +139,32 @@ A historically sacred site, Shivneri Fort offers a mix of Maratha history, archi
     coordinates: { lat: 19.202, lng: 73.854 },
     image: "shivneri.jpg",
   },
+  {
+  name: "Panhala Fort",
+  location: "Kolhapur",
+  category: "Fort",
+  description: `**Vast Hill Fort with Deep History:**  
+Panhala is a sprawling Sahyadri fort with long ramparts, historic bastions, caves and a network of tunnels. Less crowded than some forts, it offers a contemplative walk through layered Deccan history and sweeping valley views.  
 
-   // 🏖️ Beaches
+**What to See:**  
+- Teen Darwaza (gateway), long parapet walls and Rajdindi bastion.  
+- Underground passages, folklore points and small water cisterns.  
+- Nearby Kolhapur cultural circuits (food, temples, craft).  
+
+**Best Time to Visit:**  
+October to February for pleasant climbs and clear views.  
+
+**Budget & How to Reach:**  
+About 20 km from Kolhapur city; reachable by road. Day trip budget ₹800–₹2,000.  
+
+**Why It’s Worth Visiting:**  
+A large, under-appreciated fort with rich historic layers — ideal for history lovers and peaceful trekking without large crowds.`,
+  coordinates: { lat: 16.8113, lng: 74.1078 },
+  image: "panhala.jpg",
+},
+
+
+   // Beaches
   {
     name: "Alibaug Beach",
     location: "Alibaug",
@@ -266,7 +291,60 @@ Known as Maharashtra’s “Scuba Paradise,” Tarkarli offers unmatched marine 
     image: "tarkarli.jpg",
   },
 
-   // 💧 Waterfalls
+{
+  name: "Gorai Beach",
+  location: "Mumbai",
+  category: "Beach",
+  description: `**Historical Significance:**  
+Gorai Beach is one of Mumbai’s most accessible yet relaxed coastal getaways, located across the Manori Creek. Once a sleepy fishing village, it’s now a beloved escape for locals who want sea air without long drives. The area still retains its East Indian and fishing community heritage, giving visitors a glimpse of old coastal Mumbai.  
+
+**What to See:**  
+- Long sandy stretch ideal for walks, sunsets, and photography.  
+- Ferry ride from Marve or Borivali — a short scenic boat trip over the creek.  
+- Local seafood shacks, horse carts, and cycling paths near the shore.  
+- Nearby attractions like the Global Vipassana Pagoda and EsselWorld amusement park.  
+
+**Best Time to Visit:**  
+October to March for pleasant sea breezes and clean tides.  
+Avoid monsoon (June–September) when the beach can get rough and some ferry routes pause.  
+
+**Budget & How to Reach:**  
+Reach via ferry from Marve Jetty (Malad) or drive via Bhayandar–Uttan Road.  
+Budget ₹500–₹2,000 including ferry, food, and local activities.  
+
+**Why It’s Worth Visiting:**  
+Close to the city but worlds apart — Gorai combines Mumbai’s coastal charm with a village feel, perfect for quiet sunset walks and weekend relaxation.`,
+  coordinates: { lat: 19.2376, lng: 72.7926 },
+  image: "gorai.jpg",
+},
+{
+  name: "Kelva Beach",
+  location: "Palghar",
+  category: "Beach",
+  description: `**Historical Significance:**  
+Kelva (also spelled Kelwe) Beach is a hidden gem on the northern Konkan coast, north of Mumbai. Once a quiet fishing area, it’s now an emerging eco-tourism spot known for its long, untouched shoreline and the nearby Kelva Fort that dates back to the Maratha era.  
+
+**What to See:**  
+- 7 km of wide, clean sand with casuarina trees along the coast.  
+- Remains of Kelva Fort and Shitladevi Temple near the beach.  
+- Small shacks serving local seafood and coconut water.  
+- Horse cart rides, ATV bikes, and peaceful sunrise/sunset walks.  
+
+**Best Time to Visit:**  
+October to March for calm weather and easy sea access.  
+Monsoon (June–September) transforms the beach into a lush, misty paradise but swimming isn’t recommended.  
+
+**Budget & How to Reach:**  
+About 100 km from Mumbai; accessible via Palghar by train or road.  
+Budget ₹1,000–₹3,000 for travel, food, and stay (beachside resorts or homestays available).  
+
+**Why It’s Worth Visiting:**  
+One of Maharashtra’s cleanest and most underrated beaches — perfect for solitude seekers, weekend families, and photographers craving scenic coastal beauty without crowds.`,
+  coordinates: { lat: 19.6533, lng: 72.7433 },
+  image: "kelva.jpg",
+},
+
+   // Waterfalls
   {
     name: "Thoseghar Waterfalls",
     location: "Satara",
@@ -345,7 +423,7 @@ Randha Falls is a perfect monsoon spectacle — combining scenic grandeur, calm 
   },
 
 
-    // 🛕 Temples
+    // Temples
   {
     name: "Trimbakeshwar Temple",
     location: "Nashik",
@@ -398,8 +476,152 @@ Siddhivinayak Temple embodies devotion amid urban life — a place where spiritu
     coordinates: { lat: 19.016, lng: 72.83 },
     image: "siddhivinayak.jpg",
   },
+{
+  name: "Grishneshwar Temple",
+  location: "Ellora (Aurangabad)",
+  category: "Temple",
+  description: `**Historical & Religious Significance:**  
+Grishneshwar (also spelled Ghushmeshwar) is one of the twelve Jyotirlinga shrines of Lord Shiva and sits close to the Ellora Caves. The temple’s current structure dates to the 18th century, but the site’s sanctity goes back much further in regional tradition.
 
-   // 🌊 Lakes
+**What to See:**  
+- The sanctum with the Jyotirlinga and ornate stone carvings.  
+- Close proximity to the Ellora cave complex — easy to combine both cultural visits.  
+- Regular pujas and festivals that bring the temple alive, especially during Mahashivratri.
+
+**Best Time to Visit:**  
+October to March for comfortable weather. Mahashivratri is an important festival time.
+
+**Budget & How to Reach:**  
+About 30 km from Aurangabad; accessible by car or taxi. Combine with an Ellora day trip. Budget ₹1,000–₹3,000 for travel and entry/offerings.
+
+**Why It’s Worth Visiting:**  
+A Jyotirlinga site with compact, powerful spiritual presence and immediate access to one of India’s great rock-cut complexes.`,
+  coordinates: { lat: 20.0220, lng: 75.1789 },
+  image: "grishneshwar.jpg",
+},
+{
+  name: "Tulja Bhavani Temple",
+  location: "Tuljapur",
+  category: "Temple",
+  description: `**Historical & Cultural Significance:**  
+Tulja Bhavani is one of Maharashtra’s most revered Devi shrines, dedicated to the fierce goddess Bhavani — the patron deity of the Marathas. The temple has been a focal point of regional faith for centuries and draws devotees year-round.
+
+**What to See:**  
+- The garbha griha with the powerful image of Goddess Tulja Bhavani.  
+- Traditional aarti, processions and the bustling prasad/market area.  
+- Local festivals and fairs that showcase regional folk culture.
+
+**Best Time to Visit:**  
+October to February for comfortable travel; Navratri and local festivals are peak times for pilgrimage.
+
+**Budget & How to Reach:**  
+Accessible from Solapur / Osmanabad by road (Tuljapur is well connected). Budget ₹800–₹2,000.
+
+**Why It’s Worth Visiting:**  
+A living center of devotion and Maratha cultural history — ideal for spiritual visitors and cultural travelers.`,
+  coordinates: { lat: 18.0231, lng: 76.0556 },
+  image: "tuljabhavani.jpg",
+},
+{
+  name: "Mahalaxmi Temple (Kolhapur)",
+  location: "Kolhapur",
+  category: "Temple",
+  description: `**Historical & Spiritual Significance:**  
+Kolhapur’s Mahalaxmi (Ambabai) Temple is an ancient and powerful Shakti peeth, drawing pilgrims from across India. The temple architecture is classically Deccan and the shrine plays a central role in local religious life.
+
+**What to See:**  
+- The main shrine and the gold-plated ornamentation used by devotees.  
+- Busy bazaars around the temple selling Kolhapuri chappals, sarees and sweets.  
+- Major festivals like Navratri, when the temple and city are especially vibrant.
+
+**Best Time to Visit:**  
+October to March for comfortable sightseeing and festival visits.
+
+**Budget & How to Reach:**  
+Located in central Kolhapur, accessible by road and rail. Budget ₹800–₹2,000 including offerings and local shopping.
+
+**Why It’s Worth Visiting:**  
+A must-visit for devotees and cultural tourists — combines potent ritual life with rich local handicrafts and cuisine.`,
+  coordinates: { lat: 16.6910, lng: 74.2446 },
+  image: "kolhapurmahalaxmi.jpg",
+},
+
+{
+  name: "Jivdani Mata Temple",
+  location: "Virar",
+  category: "Temple",
+  description: `**Historical & Spiritual Significance:**  
+The Jivdani Mata Temple, perched atop a hill in Virar, is one of Maharashtra’s most important shrines dedicated to Goddess Jivdani — believed to be a form of Goddess Adishakti. The temple’s name means “Goddess who gives life,” and it holds immense significance for devotees across the Vasai–Virar region. The shrine sits within an ancient cave where the goddess’s idol was discovered centuries ago, and the surrounding hills are rich with legends and local traditions.  
+
+**What to See:**  
+- The sacred idol of Goddess Jivdani in the cave sanctum, adorned with flowers and lamps.  
+- 1,300 stone steps (or the modern ropeway) leading to panoramic views of Virar and the Arabian Sea.  
+- The new marble temple structure, prayer halls, and resting shelters for pilgrims.  
+- The vibrant Navratri festival, when thousands of devotees climb the hill in celebration.  
+
+**Best Time to Visit:**  
+October to March for comfortable weather and clear views.  
+Navratri (September–October) is the most auspicious time but expect large crowds.  
+Avoid peak monsoon when the steps can be slippery.  
+
+**Budget & How to Reach:**  
+Located about 1.5 km from Virar Railway Station (Western Line); autos and local buses available up to the temple base.  
+Budget ₹300–₹1,000 for travel, offerings, and refreshments. Ropeway tickets cost extra (optional).  
+
+**Why It’s Worth Visiting:**  
+Jivdani Mata Temple combines faith, panoramic views, and light adventure — a sacred climb that rewards both the spirit and the senses, making it one of the must-visit temples near Mumbai.`,
+  coordinates: { lat: 19.4624, lng: 72.8005 },
+  image: "jivdani.jpg",
+},
+
+{
+  name: "Khandoba Temple",
+  location: "Jejuri",
+  category: "Temple",
+  description: `**Folk Devotion & Hilltop Shrine:**  
+Jejuri’s Khandoba temple (on Parvati Hill) is a lively folk-shrine dedicated to Khandoba (a regional form of Shiva). Known for turmeric-splashed devotees and a distinctly Maharashtrian festive tone, Jejuri offers both ritual drama and panoramic hilltop views.
+
+**What to See:**  
+- The colorful main shrine, devotees with turmeric markings and the festival atmosphere.  
+- Steps and viewpoints offering sweeping views of the surrounding plains.  
+- Local stalls selling devotional items and snacks.
+
+**Best Time to Visit:**  
+October to February for comfortable climbing and festival visits; Somvati Amavasya and Champa Shashti are peak celebration days.
+
+**Budget & How to Reach:**  
+About 50 km from Pune city; accessible by road. Budget ₹500–₹1,800.
+
+**Why It’s Worth Visiting:**  
+A culturally distinctive temple experience uncommon outside Maharashtra — vivid, tactile and energetic.`,
+  coordinates: { lat: 18.4042, lng: 73.8920 },
+  image: "khandoba.jpg",
+},
+{
+  name: "Bhuleshwar Temple",
+  location: "Bhuleshwar ",
+  category: "Temple",
+  description: `**Ancient Temple with Fort Remains:**  
+Bhuleshwar (near Pune) is a lesser-known but architecturally interesting Shiva temple situated on a hill with fort ruins and panoramic views. The site offers calm, history-rich exploration without crowds.
+
+**What to See:**  
+- The small but intricate sanctum and carved stonework.  
+- Nearby fort remnants and hilltop viewing points.  
+- Quiet walks and local village charm.
+
+**Best Time to Visit:**  
+October to March for pleasant exploration and trekking weather.
+
+**Budget & How to Reach:**  
+Short drive from Pune; ideal for half-day trips. Budget ₹500–₹1,200.
+
+**Why It’s Worth Visiting:**  
+A compact, peaceful temple-ruin site offering history, views and low-tourist crowds — ideal for reflective half-day visits.`,
+  coordinates: { lat: 18.4750, lng: 73.8350 },
+  image: "bhuleshwar.jpg",
+},
+
+   // Lakes
   {
     name: "Pawna Lake",
     location: "Lonavala",
@@ -452,9 +674,79 @@ Bhandardara Lake offers a perfect mix of tranquility and natural beauty — whet
     coordinates: { lat: 19.531, lng: 73.758 },
     image: "bhandardara.jpg",
   },
+{
+  name: "Powai Lake",
+  location: "Mumbai",
+  category: "Lake/River",
+  description: `**Urban Lake with Scenic Walks:**  
+Powai Lake is a large artificial lake in suburban Mumbai, surrounded by Powai’s gardens, walking paths and residential skyline. It’s popular for morning walks, birdwatching and cityside sunset views.
+
+**What to See:**  
+- Lakeside promenades and early-morning birdlife (kingfishers, migratory ducks in season).  
+- Scenic views framed by Powai’s skyline and the nearby Hiranandani neighbourhood.  
+- Nearby cafes and easy urban amenities.
+
+**Best Time to Visit:**  
+October to March for comfortable mornings and clear skies.
+
+**Budget & How to Reach:**  
+Easily accessible within Mumbai by local transport; minimal costs for transport and refreshments.
+
+**Why It’s Worth Visiting:**  
+A relaxing urban green spot for city dwellers — useful for short escapes without leaving Mumbai.`,
+  coordinates: { lat: 19.1186, lng: 72.9043 },
+  image: "powailake.jpeg",
+},
+{
+  name: "Mulshi Lake",
+  location: "pune",
+  category: "Lake/River",
+  description: `**Reservoir & Hill Drive:**  
+Mulshi Lake (fed by Mulshi Dam) offers a beautiful hill-backdrop reservoir, serene resorts, and scenic drives through the Sahyadris. It’s a popular short-break spot for Pune residents seeking water views and quiet stays.
+
+**What to See:**  
+- Wide reservoir views, verdant hills and dam infrastructure.  
+- Lakeside resorts and short hikes to nearby viewpoints.  
+- Sunrise/sunset reflections and monsoon mist.
+
+**Best Time to Visit:**  
+October to March for clear conditions; monsoon is spectacular but roads can be wet.
+
+**Budget & How to Reach:**  
+About 40–60 km from Pune depending on route; day trip or overnight stays at lakeside resorts. Budget ₹1,500–₹5,000.
+
+**Why It’s Worth Visiting:**  
+An accessible water escape from Pune with good resort options and scenic drives.`,
+  coordinates: { lat: 18.5136, lng: 73.5254 },
+  image: "mulshilake.jpg",
+},
+
+{
+  name: "Khadakwasla Lake",
+  location: "pune",
+  category: "Lake/River",
+  description: `**Reservoir with Fort Views:**  
+Khadakwasla lake (Khadakwasla Dam / Khadakwasla Reservoir) lies below Sinhagad and offers beautiful reflections of the surrounding forts and hills. It’s a popular local spot for picnics, boathouses and lakeside drives.
+
+**What to See:**  
+- Wide reservoir views with Lohagad/Sinhagad silhouettes.  
+- Boating in calmer seasons, lakeside evening walks, and local food stalls.  
+- Great sunrise views and easy access from Pune city.
+
+**Best Time to Visit:**  
+October to March for clear skies; monsoon brings dramatic inflows and views.
+
+**Budget & How to Reach:**  
+Very close to Pune (under an hour by car); minimal local costs.
+
+**Why It’s Worth Visiting:**  
+A convenient and scenic lakeside destination combining fort views and easy access from Pune.`,
+  coordinates: { lat: 18.4806, lng: 73.7660 },
+  image: "khadakwasla.jpg",
+},
 
 
-    // 🌿 Hidden Gems
+    //  Hidden Gems
   {
     name: "Kaas Plateau",
     location: "Satara",
@@ -582,6 +874,178 @@ Tamhini Ghat offers one of Maharashtra’s most scenic drives — a peaceful ret
     image: "tamhini.jpg",
   },
 
+
+{
+  name: "Kalsubai Peak",
+  location: "Akole (Ahmednagar)",
+  category: "Hidden Gem",
+  description: `**Highest Point in Maharashtra:**  
+Kalsubai is the state’s highest peak and a classic Sahyadri trek. The summit houses a small temple and rewards trekkers with panoramic Western Ghats vistas, rare wildflowers, and (in season) dawn clouds rolling across the ridgelines.  
+
+**What to See:**  
+- Sunrise from the summit — unparalleled vistas across the Kalsubai-Harishchandragad sanctuary.  
+- Seasonal wildflowers and endemic birds; excellent vantage points for photographers.  
+- Small shrine at the top and narrow rock sections that add a little scrambling fun.  
+
+**Best Time to Visit:**  
+October to February for clear skies; monsoon (June–Sept) turns the route lush but slippery — go prepared.  
+
+**Budget & How to Reach:**  
+Nearest base is Bhandardara / Bari village approach via Akole — accessible by road from Ahmednagar/Pune. Day trek budget ~₹800–₹2,000.  
+
+**Why It’s Worth Visiting:**  
+It’s Maharashtra’s “Everest” — accessible, satisfying, and scenically spectacular for trekkers of moderate experience.`,
+  coordinates: { lat: 19.6003, lng: 73.7111 },
+  image: "kalsubai.jpg",
+},
+
+
+{
+  name: "Harishchandragad",
+  location: "Ahmednagar",
+  category: "Hidden Gem",
+  description: `**Classic Adventure & Ancient Caves:**  
+Harishchandragad is a rugged Sahyadri plateau famed for its steep climbs, ancient temples and the Konkan Kada (a dramatic cliff). The fort and caves combine thrill, archaeology and wide hilltop vistas.  
+
+**What to See:**  
+- Konkan Kada cliff (breathtaking viewpoint) and the ancient Harishchandreshwar temple.  
+- Kedareshwar cave with a natural Shiva linga and a seasonal waterfall near the cave entrance.  
+- Long ridge treks and starry nights for campers.  
+
+**Best Time to Visit:**  
+November to February for safe trekking and clear skies. Monsoon offers waterfalls but can close trails.  
+
+**Budget & How to Reach:**  
+Trailheads near Khireshwar village; accessible by road from Pune/Ahmednagar. Plan ₹1,000–₹3,000 for a trek weekend.  
+
+**Why It’s Worth Visiting:**  
+Perfect blend of technical trekking, sacred sites, and dramatic Sahyadri scenery — a favorite among experienced trekkers.`,
+  coordinates: { lat: 19.3882, lng: 73.7759 },
+  image: "harishchandragad.jpg",
+},
+
+
+{
+  name: "Matheran",
+  location: "Raigad",
+  category: "Hidden Gem",
+  description: `**Automobile-free Hill Station:**  
+Matheran is a compact, colonial-era hill station famous for being strictly vehicle-free — travel is by foot, horseback or hand-pulled rickshaw. Its toy-train heritage, easy trails and dozens of viewpoints make it a peaceful escape from city life.
+
+**What to See:**  
+- Panorama Points (Porcupine, Panorama, Echo Point) for sunrise/sunset.  
+- Toy train (Neral–Matheran narrow-gauge) and quaint market streets.  
+- Short forest walks, small waterfalls in monsoon and vintage colonial bungalows.
+
+**Best Time to Visit:**  
+October to February for clear days; monsoon (June–Sept) turns the hillset lush and dramatically misty (take care on trails).  
+
+**Budget & How to Reach:**  
+About 90 km from Mumbai; reachable via Neral by train/road. Day-trip or overnight; budget ~₹1,000–₹3,000.  
+
+**Why It’s Worth Visiting:**  
+A rare quiet hill experience near Mumbai/Pune with easy walks, viewpoints and an old-school hill-station charm.`,
+  coordinates: { lat: 18.9870, lng: 73.2709 },
+  image: "matheran.jpg",
+},
+{
+  name: "Mahabaleshwar",
+  location: "Satara",
+  category: "Hidden Gem",
+  description: `**Famous Plateau & Viewpoint Hub:**  
+Mahabaleshwar is a classic Sahyadri plateau known for sweeping viewpoints, strawberry farms, cool weather and cultural sites. It’s ideal for family trips, short treks and scenic drives across the Western Ghats.
+
+**What to See:**  
+- Arthur’s Seat, Kate’s Point, and Wilson Point for epic vistas.  
+- Strawberry farms, local markets and the ancient Mahabaleshwar temple.  
+- Lingmala and Chinaman’s Falls and short nature walks.
+
+**Best Time to Visit:**  
+October to February for crisp weather; monsoon (June–Sept) offers dramatic greenery.  
+
+**Budget & How to Reach:**  
+About 120 km from Pune; well-connected by road. Weekend budgets typically ₹2,000–₹6,000 depending on stay and activities.  
+
+**Why It’s Worth Visiting:**  
+A versatile hill retreat combining viewpoints, local produce (strawberries) and accessible nature trails — great for families and couples.`,
+  coordinates: { lat: 17.9230, lng: 73.6590 },
+  image: "mahabaleshwar.jpg",
+},
+{
+  name: "Panchgani",
+  location: "Satara",
+  category: "Hidden Gem",
+  description: `**Tableland & Adventure-Friendly Plateau:**  
+Panchgani’s broad Table Land is among the highest plateaus in Asia. It offers paragliding, easy walks, viewpoints and a pleasant colonial atmosphere. Close to Mahabaleshwar yet distinctive in its flat, open vistas.
+
+**What to See:**  
+- Table Land for sunrise walks and paragliding.  
+- Sydney Point, Mapro Garden (strawberry-based treats) and scenic drives to nearby villages.  
+- Gentle trails and viewpoints overlooking the Krishna valley.
+
+**Best Time to Visit:**  
+October to February for comfortable weather; monsoon for lush vistas.  
+
+**Budget & How to Reach:**  
+Well connected by road from Pune and Mumbai; day trips or weekend resort stays common. Budget ~₹1,500–₹4,000.  
+
+**Why It’s Worth Visiting:**  
+Easy-access plateau with family-friendly activities and beautiful wide-open views — a mellow counterpoint to steeper Sahyadri treks.`,
+  coordinates: { lat: 17.9233, lng: 73.8200 },
+  image: "panchgani.jpg",
+},
+
+
+{
+  name: "Chalkewadi Windmill Plateau",
+  location: "Satara",
+  category: "Hidden Gem",
+  description: `**Iconic Windmill Landscape:**  
+Chalkewadi is a wide, breezy plateau famous for its hundreds of wind turbines set against Sahyadri backdrops — an unusual and photogenic landscape in Maharashtra.
+
+**What to See:**  
+- Vast rows of windmills with dramatic sunrise & sunset photography.  
+- Nearby small temples and village routes for quiet exploration.  
+- Seasonal wildflowers and open-air picnic spots.
+
+**Best Time to Visit:**  
+October to March for clear skies and comfortable visits; monsoon adds lushness but can be misty.  
+
+**Budget & How to Reach:**  
+Accessible from Satara/Talpadeh region by road. Low-cost day visit or en-route stop on longer Sahyadri drives.  
+
+**Why It’s Worth Visiting:**  
+Unique visual landscape — excellent for photography and quiet countryside drives away from crowds.`,
+  coordinates: { lat: 17.6703, lng: 73.9978 },
+  image: "chalkewadi.jpg",
+},
+
+
+{
+  name: "Sawantwadi",
+  location: "Sindhudurg",
+  category: "Hidden Gem",
+  description: `**Craft Town & Cultural Gateway to Konkan:**  
+Sawantwadi is known for its wooden handicrafts, royal palace, and proximity to Konkan coastal circuits. It’s a good base for cultural exploration and quieter coastal trips.
+
+**What to See:**  
+- Sawantwadi Palace and palace museum, local woodcraft workshops.  
+- Nearby beaches and small Konkan hamlets.  
+- Traditional Konkani cuisine and weekly markets.
+
+**Best Time to Visit:**  
+October to March for coastal comfort; monsoon for lush greenery.  
+
+**Budget & How to Reach:**  
+Accessible from Sindhudurg / Ratnagiri by road and rail; budget ~₹1,500–₹4,000 depending on travel and stays.  
+
+**Why It’s Worth Visiting:**  
+A cultural stop that connects crafts, palace history and peaceful Konkan routes — excellent for travelers who appreciate local make and slow tourism.`,
+  coordinates: { lat: 15.8666, lng: 73.7853 },
+  image: "sawantwadi.jpg",
+},
+
+
 ];
 
 (async () => {
@@ -597,10 +1061,10 @@ Tamhini Ghat offers one of Maharashtra’s most scenic drives — a peaceful ret
       console.log("Added:", newDest.name);
     }
 
-    console.log("✅ Seeding complete!");
+    console.log("Seeding complete");
     process.exit(0);
   } catch (err) {
-    console.error("❌ Seeding failed:", err);
+    console.error("Seeding failed:", err);
     process.exit(1);
   }
 })();
