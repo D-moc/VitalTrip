@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../utils/api";
 
-const CaptainResetPassword = () => {
+const UserResetPassword = () => {
   const { token } = useParams();
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
@@ -16,7 +16,7 @@ const CaptainResetPassword = () => {
 
     setLoading(true);
     try {
-      const res = await api.post(`/captains/reset-password/${token}`, { password });
+      const res = await api.post(`/users/reset-password/${token}`, { password });
       setMessage(res.data.message || "Password reset successful");
 
       setTimeout(() => navigate("/"), 2000);
@@ -30,9 +30,9 @@ const CaptainResetPassword = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-r from-purple-600 to-pink-500">
       <div className="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md text-center">
-        <h2 className="text-2xl font-bold mb-2 text-gray-800">Reset Password ⚓</h2>
+        <h2 className="text-2xl font-bold mb-2 text-gray-800">Reset Password</h2>
         <p className="text-gray-600 mb-6">
-          Enter your new password for your Captain account
+          Enter your new password to continue your VitalTrip journey
         </p>
         <form onSubmit={handleReset} className="space-y-4">
           <input
@@ -52,7 +52,7 @@ const CaptainResetPassword = () => {
           {message && (
             <p
               className={`text-sm ${
-                message.includes("success") ? "text-green-600" : "text-red-500"
+                message.includes("Success") ? "text-green-600" : "text-red-500"
               }`}
             >
               {message}
@@ -71,4 +71,4 @@ const CaptainResetPassword = () => {
   );
 };
 
-export default CaptainResetPassword;
+export default UserResetPassword;

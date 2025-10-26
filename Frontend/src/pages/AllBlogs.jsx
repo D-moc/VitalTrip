@@ -39,9 +39,9 @@ const AllBlogs = () => {
     <section
       id="blogs"
       ref={blogSectionRef}
-      className="min-h-screen bg-gradient-to-b from-orange-50 to-white pt-32 pb-20 px-6 md:px-12 border-t-4 border-green-400"
+      className="min-h-screen bg-linear-to-b from-orange-50 to-white pt-32 pb-20 px-6 md:px-12 border-t-4 border-green-400"
     >
-      {/* 🧭 Hero Header */}
+      
       <div className="text-center mb-16">
         <h1 className="text-5xl font-extrabold text-gray-800 mb-3">
           All Travel Blogs
@@ -53,7 +53,7 @@ const AllBlogs = () => {
         <div className="w-24 h-1 bg-orange-500 mx-auto mt-4 rounded-full shadow-md"></div>
       </div>
 
-      {/* 🧩 BLOG GRID */}
+      
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
         {currentBlogs.length > 0 ? (
           currentBlogs.map((blog, index) => (
@@ -104,7 +104,7 @@ const AllBlogs = () => {
         )}
       </div>
 
-      {/* 🔢 PAGINATION */}
+      {/* PAGINATION */}
       {totalPages > 1 && (
         <div className="flex justify-center mt-14 gap-3">
           {[...Array(totalPages)].map((_, i) => (

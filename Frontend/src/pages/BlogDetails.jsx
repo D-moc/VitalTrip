@@ -41,8 +41,8 @@ const BlogDetails = () => {
       : blog.image;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-orange-50 py-12 px-6 md:px-16 border-t-4 border-green-400">
-      {/* 🔙 Top Back Button */}
+    <div className="min-h-screen bg-linear-to-b from-white to-orange-50 py-12 px-6 md:px-16 border-t-4 border-green-400">
+     
       <button
         onClick={() => navigate("/blogs")}
         className="flex items-center text-orange-600 hover:underline mb-6 font-semibold"
@@ -50,7 +50,6 @@ const BlogDetails = () => {
         <FaArrowLeft className="mr-2" /> Back to Blogs
       </button>
 
-      {/* 🧾 Blog Card */}
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
         <img
           src={imageUrl}
@@ -79,7 +78,7 @@ const BlogDetails = () => {
         </div>
       </div>
 
-      {/* 🔙 Bottom Back Button */}
+      
       <div className="max-w-4xl mx-auto mt-8 flex justify-center">
         <button
           onClick={() => navigate("/#blogs")}

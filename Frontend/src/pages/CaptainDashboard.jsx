@@ -22,9 +22,6 @@ const CaptainDashboard = () => {
   const [upcomingTrips, setUpcomingTrips] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
-  /* -------------------------------------------------------------------------- */
-  /* 🧭 Fetch Captain Profile + Users + Trips */
-  /* -------------------------------------------------------------------------- */
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
@@ -35,28 +32,25 @@ const CaptainDashboard = () => {
         ]);
 
         setProfile(profileRes.data.captain || {});
-        setUsers(usersTripsRes.data?.users || []);
-        setTrips(usersTripsRes.data?.trips || []);
+        
+        setUsers(usersTripsRes.data?.data || []);
+        setTrips(usersTripsRes.data?.data?.flatMap((u) => u.trips) || []);
         setUpcomingTrips(upcomingRes.data?.trips || []);
       } catch (err) {
-        console.error("❌ Error loading captain dashboard:", err);
+        console.error("Error loading captain dashboard:", err);
       }
     };
 
     fetchDashboardData();
   }, []);
 
-  /* -------------------------------------------------------------------------- */
-  /* ✅ Handle Profile Update + Navbar Sync */
-  /* -------------------------------------------------------------------------- */
+ 
   const handleProfileUpdate = (updatedCaptain) => {
     setProfile(updatedCaptain);
-    setUser(updatedCaptain); // sync with Navbar instantly
+    setUser(updatedCaptain); 
   };
 
-  /* -------------------------------------------------------------------------- */
-  /* ✅ Stats Calculation */
-  /* -------------------------------------------------------------------------- */
+
   const stats = {
     users: users.length,
     trips: trips.length,
@@ -64,7 +58,7 @@ const CaptainDashboard = () => {
     totalBudget: trips.reduce((sum, t) => sum + (t.budget || 0), 0),
   };
 
-  // ✅ Resolve Captain profile image
+  
   const profileImageSrc = profile?.profileImage
     ? profile.profileImage.startsWith("http")
       ? profile.profileImage
@@ -80,11 +74,8 @@ const CaptainDashboard = () => {
 
   const email = profile?.email || user?.email || "captain@mail.com";
 
-  /* -------------------------------------------------------------------------- */
-  /* ✅ JSX */
-  /* -------------------------------------------------------------------------- */
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-teal-50 pt-24 pb-20 px-6">
+    <div className="min-h-screen bg-linear-to-br from-orange-50 via-white to-teal-50 pt-24 pb-20 px-6">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -99,7 +90,7 @@ const CaptainDashboard = () => {
           />
           <div>
             <h1 className="text-3xl font-bold text-gray-800">
-              Welcome Captain {fullName.split(" ")[0]} ⚓
+              Welcome {fullName.split(" ")[0]} 
             </h1>
             <p className="text-gray-600">{email}</p>
           </div>
@@ -108,13 +99,13 @@ const CaptainDashboard = () => {
         <div className="flex items-center gap-3 mt-4 md:mt-0">
           <button
             onClick={() => setShowModal(true)}
-            className="flex items-center gap-2 bg-gradient-to-r from-orange-500 to-teal-500 text-white px-5 py-2 rounded-full shadow hover:scale-105 transition"
+            className="flex items-center gap-2 bg-linear-to-r from-orange-500 to-teal-500 text-white px-5 py-2 rounded-full shadow hover:scale-105 transition"
           >
             <FaUserEdit /> Edit Profile
           </button>
           <button
             onClick={logout}
-            className="flex items-center gap-2 bg-gradient-to-r from-red-500 to-orange-500 text-white px-5 py-2 rounded-full shadow hover:scale-105 transition"
+            className="flex items-center gap-2 bg-linear-to-r from-red-500 to-orange-500 text-white px-5 py-2 rounded-full shadow hover:scale-105 transition"
           >
             <FaSignOutAlt /> Logout
           </button>
@@ -154,7 +145,7 @@ const CaptainDashboard = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
-            className={`p-6 bg-gradient-to-br ${item.color} text-white rounded-3xl shadow-xl flex flex-col items-center justify-center hover:scale-105 transition-transform`}
+            className={`p-6 bg-linear-to-br ${item.color} text-white rounded-3xl shadow-xl flex flex-col items-center justify-center hover:scale-105 transition-transform`}
           >
             <div className="text-4xl mb-2">{item.icon}</div>
             <h3 className="text-lg font-semibold">{item.title}</h3>
@@ -163,7 +154,7 @@ const CaptainDashboard = () => {
         ))}
       </div>
 
-      {/* 🧭 Recent User Trips */}
+      {/* Recent User Trips */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -171,7 +162,7 @@ const CaptainDashboard = () => {
         className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl p-6 overflow-x-auto border border-gray-100 max-w-6xl mx-auto mb-10"
       >
         <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-          🧭 Recent User Trips
+          Recent User Trips
         </h2>
 
         {trips.length === 0 ? (
@@ -219,7 +210,7 @@ const CaptainDashboard = () => {
         )}
       </motion.div>
 
-      {/* ✅ Upcoming Trips Section */}
+      {/* Upcoming Trips Section */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -273,7 +264,7 @@ const CaptainDashboard = () => {
         )}
       </motion.div>
 
-      {/* 🪞 Profile Edit Modal */}
+      
       <ProfileUpdateModal
         isOpen={showModal}
         onClose={() => setShowModal(false)}

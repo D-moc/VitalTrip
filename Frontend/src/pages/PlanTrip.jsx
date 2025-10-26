@@ -1,13 +1,18 @@
-import React, { useState, useContext } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import {
   MapContainer,
   TileLayer,
   Marker,
   Polyline,
   Popup,
+  useMap,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import {
   FaRoute,
   FaSave,
@@ -15,12 +20,19 @@ import {
   FaMapMarkerAlt,
   FaChevronDown,
 } from "react-icons/fa";
-import { toast } from "react-toastify";
 import api from "../utils/api";
+import { toast } from "react-toastify";
 import { AuthContext } from "../context/AuthContext";
 
+
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: markerIcon2x,
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+});
+
 const PlanTrip = () => {
-  const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const { state } = useLocation();
 
@@ -66,7 +78,7 @@ const PlanTrip = () => {
       !tripData.transport ||
       !tripData.accommodation
     ) {
-      toast.warn("Please fill in all fields for accurate itinerary generation!");
+      alert("Please filled allfields for accurate itinerary generation!");
       return;
     }
 
@@ -94,8 +106,7 @@ const PlanTrip = () => {
       setAiItinerary(text);
       formatItinerary(text);
 
-      toast.success("AI itinerary created successfully!");
-
+      // example (Mumbai to Pune)
       setRouteData({
         start: { lat: 19.076, lng: 72.8777, name: tripData.startLocation },
         end: { lat: 18.5204, lng: 73.8567, name: tripData.destination },
@@ -108,23 +119,38 @@ const PlanTrip = () => {
       });
     } catch (err) {
       console.error("AI itinerary error:", err);
-      toast.error("AI itinerary generation failed. Try again later!");
+      alert("AI itinerary generation failed. Try again later!");
     } finally {
       setLoading(false);
     }
   };
 
+  
   const handleSaveTrip = async () => {
+    
     if (!user) {
-      toast.warn("Please log in or register before saving your trip!");
-      navigate("/auth");
+      alert("Please log in or register first!");
+      return;
+    }
+
+    
+    const captainToken = localStorage.getItem("captainToken");
+    if (captainToken) {
+      alert("Captains don’t have permission to save trips.");
       return;
     }
 
     try {
       setSaving(true);
+
       const token =
-        localStorage.getItem("userToken") || localStorage.getItem("authToken");
+        localStorage.getItem("userToken") ||
+        localStorage.getItem("authToken");
+
+      if (!token) {
+        toast.warn("You must be logged in as a user to save a trip!");
+        return;
+      }
 
       await api.post(
         "/trips/create",
@@ -132,14 +158,30 @@ const PlanTrip = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      toast.success("Trip saved successfully! Check your dashboard.");
+      toast.success("Your trip has been saved successfully!");
+
+      
+      setTripData({
+        destination: "",
+        startLocation: "",
+        days: "",
+        travellers: "",
+        budget: "",
+        transport: "",
+        accommodation: "",
+        preferences: "",
+      });
+      setAiItinerary("");
+      setParsedItinerary([]);
+      setRouteData(null);
     } catch (err) {
       console.error("Error saving trip:", err);
-      toast.error("Failed to save trip!");
+      
     } finally {
       setSaving(false);
     }
   };
+
 
   const handleCancelTrip = () => {
     setTripData({
@@ -174,7 +216,6 @@ const PlanTrip = () => {
             onSubmit={handleAIGenerate}
             className="flex-1 space-y-5 lg:pr-6 order-2 lg:order-1"
           >
-            {/* Starting Point */}
             <div>
               <label className="block text-gray-700 font-semibold mb-2 text-sm sm:text-base">
                 Starting Point
@@ -190,7 +231,6 @@ const PlanTrip = () => {
               />
             </div>
 
-            {/* Destination */}
             <div>
               <label className="block text-gray-700 font-semibold mb-2 text-sm sm:text-base">
                 Destination
@@ -206,7 +246,6 @@ const PlanTrip = () => {
               />
             </div>
 
-            {/* Days & Travellers */}
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="w-full sm:w-1/2">
                 <label className="block text-gray-700 font-semibold mb-2 text-sm sm:text-base">
@@ -238,7 +277,6 @@ const PlanTrip = () => {
               </div>
             </div>
 
-            {/* Budget */}
             <div>
               <label className="block text-gray-700 font-semibold mb-2 text-sm sm:text-base">
                 Budget (₹)
@@ -254,7 +292,6 @@ const PlanTrip = () => {
               />
             </div>
 
-            {/* Transport & Accommodation */}
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="w-full sm:w-1/2">
                 <label className="block text-gray-700 font-semibold mb-2 text-sm sm:text-base">
@@ -292,7 +329,6 @@ const PlanTrip = () => {
               </div>
             </div>
 
-            {/* Preferences */}
             <div>
               <label className="block text-gray-700 font-semibold mb-2 text-sm sm:text-base">
                 Travel Preferences
@@ -307,7 +343,6 @@ const PlanTrip = () => {
               />
             </div>
 
-            {/* Submit */}
             <button
               type="submit"
               disabled={loading}
@@ -325,7 +360,6 @@ const PlanTrip = () => {
                 zoom={8}
                 scrollWheelZoom={false}
                 className="h-full w-full rounded-2xl"
-                style={{ borderRadius: "1rem" }}
               >
                 <TileLayer
                   url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -338,6 +372,7 @@ const PlanTrip = () => {
                   <Popup>Destination: {routeData.end.name}</Popup>
                 </Marker>
                 <Polyline positions={routeData.path} color="orange" weight={4} />
+                <MapViewFitBounds path={routeData.path} />
               </MapContainer>
             ) : (
               <div className="flex flex-col justify-center items-center h-full bg-gray-50 text-gray-500">
@@ -354,7 +389,8 @@ const PlanTrip = () => {
         {parsedItinerary.length > 0 && (
           <div className="mt-12 bg-orange-50 border border-orange-200 rounded-2xl p-6 shadow-inner">
             <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-              <FaMapMarkerAlt className="text-orange-500" /> Your AI-Generated Itinerary
+              <FaMapMarkerAlt className="text-orange-500" /> Your AI-Generated
+              Itinerary
             </h2>
 
             <div className="space-y-4">
@@ -369,7 +405,9 @@ const PlanTrip = () => {
                       {day.split("\n")[0]}
                     </h3>
                     <FaChevronDown
-                      className={`transition-transform ${openDay === i ? "rotate-180" : ""}`}
+                      className={`transition-transform ${
+                        openDay === i ? "rotate-180" : ""
+                      }`}
                     />
                   </div>
 
@@ -403,6 +441,18 @@ const PlanTrip = () => {
       </div>
     </div>
   );
+};
+
+
+const MapViewFitBounds = ({ path }) => {
+  const map = useMap();
+  useEffect(() => {
+    if (path && path.length > 0) {
+      const bounds = L.latLngBounds(path);
+      map.fitBounds(bounds, { padding: [50, 50] });
+    }
+  }, [map, path]);
+  return null;
 };
 
 export default PlanTrip;

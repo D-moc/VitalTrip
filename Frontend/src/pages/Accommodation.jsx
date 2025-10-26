@@ -6,8 +6,8 @@ const Accommodation = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-orange-50 py-16 px-6 md:px-12 border-t-4 border-green-400">
-      {/* 🔙 Back Button */}
+    <div className="min-h-screen bg-linear-to-b from-white to-orange-50 py-16 px-6 md:px-12 border-t-4 border-green-400">
+     
       <button
         onClick={() => navigate(-1)}
         className="flex items-center text-orange-600 hover:underline mb-6 font-semibold"
@@ -24,7 +24,7 @@ const Accommodation = () => {
           budget-friendly hotels and homestays with verified guest reviews.
         </p>
 
-        {/* 🏨 Google Map Embed */}
+      
         <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-200">
           <iframe
             title="Hotels in Maharashtra"
@@ -38,7 +38,6 @@ const Accommodation = () => {
           ></iframe>
         </div>
 
-        {/* 🌐 Open in New Tab */}
         <div className="mt-6">
           <button
             onClick={() =>

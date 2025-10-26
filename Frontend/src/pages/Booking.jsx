@@ -30,14 +30,14 @@ const Booking = () => {
       toast.warn("Please login first to continue booking!");
       navigate("/auth");
     } else if (tripId) {
-      handleBookNow(); // Auto-generate QR as soon as page loads
+      handleBookNow(); 
     } else {
       toast.error("Invalid trip data!");
       navigate("/plan-trip");
     }
   }, [user]);
 
-  /** 🧾 Auto booking on load */
+  
   const handleBookNow = async () => {
     try {
       setBookingLoading(true);
@@ -57,7 +57,7 @@ const Booking = () => {
     }
   };
 
-  /** 📋 Copy UPI */
+ 
   const handleCopyUPI = async () => {
     try {
       await navigator.clipboard.writeText(paymentInfo.payment.upiString);
@@ -67,7 +67,7 @@ const Booking = () => {
     }
   };
 
-  /** 💳 Confirm Payment */
+  
   const handleConfirmPayment = async () => {
     if (!paymentInfo?.booking?._id) return;
     try {
@@ -87,14 +87,13 @@ const Booking = () => {
     }
   };
 
-  /** ❌ Cancel Booking → Back to PlanTrip */
   const handleCancel = () => {
     toast.info("Booking cancelled.");
     navigate("/plan-trip");
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 via-white to-teal-50 p-6">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-orange-50 via-white to-teal-50 p-6">
       <div className="bg-white shadow-2xl rounded-3xl border border-gray-200 p-8 w-full max-w-md text-center animate-fadeIn">
         <h2 className="text-3xl font-bold text-gray-800 mb-3">
           Complete Your Payment
@@ -103,7 +102,7 @@ const Booking = () => {
           Scan the QR below using any UPI app to pay securely.
         </p>
 
-        {/* Show loader until paymentInfo is fetched */}
+        
         {!paymentInfo ? (
           <div className="text-gray-500 italic py-20">
             {bookingLoading
@@ -124,7 +123,7 @@ const Booking = () => {
               </div>
             </div>
 
-            {/* Copy + Open Buttons */}
+           
             <div className="flex flex-wrap justify-center gap-3 mb-4">
               <button
                 onClick={handleCopyUPI}
@@ -143,7 +142,7 @@ const Booking = () => {
               </a>
             </div>
 
-            {/* Confirm / Cancel Buttons */}
+           
             <div className="flex justify-center gap-4 mt-6">
               <button
                 onClick={handleConfirmPayment}

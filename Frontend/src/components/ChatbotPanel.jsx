@@ -100,7 +100,7 @@ const ChatbotPanel = () => {
           </div>
         )}
         <div
-          className={`p-3 rounded-2xl max-w-[75%] leading-relaxed break-words shadow-md ${
+          className={`p-3 rounded-2xl max-w-[75%] leading-relaxed wrap-break-word shadow-md ${
             isUser
               ? "bg-yellow-100 text-gray-900 rounded-br-none"
               : "bg-green-100 text-gray-900 rounded-bl-none"
@@ -130,7 +130,7 @@ const ChatbotPanel = () => {
 
   return (
     <div
-      className="flex flex-col h-[calc(100vh-60px)] sm:h-full bg-gradient-to-br from-green-50 via-white to-yellow-50 rounded-t-2xl overflow-hidden"
+      className="flex flex-col h-[calc(100vh-60px)] sm:h-full bg-linear-to-br from-green-50 via-white to-yellow-50 rounded-t-2xl overflow-hidden"
       style={{ maxHeight: "100vh" }}
     >
       <div className="flex-1 overflow-y-auto px-4 py-5 space-y-2 scroll-smooth">

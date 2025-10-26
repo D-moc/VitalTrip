@@ -10,19 +10,18 @@ const Blogs = () => {
   const [blogs, setBlogs] = useState(localBlogs);
   const [loading, setLoading] = useState(true);
 
-    /* ✅ This tells Navbar which section is currently active */
+
   useEffect(() => {
     sessionStorage.setItem("activeSection", "blogs");
     return () => sessionStorage.removeItem("activeSection");
   }, []);
 
-  // Pagination state
+  
   const isFullPage = location.pathname === "/blogs";
-  const defaultPageSize = isFullPage ? 6 : 3; // homepage: 3 per page; full page: 6 per page
+  const defaultPageSize = isFullPage ? 6 : 3; 
   const [pageSize] = useState(defaultPageSize);
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Fetch backend blogs (if available)
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
@@ -31,7 +30,7 @@ const Blogs = () => {
           setBlogs(res.data.blogs);
         }
       } catch (err) {
-        console.warn("⚠️ Backend offline — using local previews.");
+        console.warn("Backend offline — using local previews.");
       } finally {
         setLoading(false);
       }
@@ -39,7 +38,7 @@ const Blogs = () => {
     fetchBlogs();
   }, []);
 
-  // Reset to first page if blogs or size change
+  
   useEffect(() => {
     setCurrentPage(1);
   }, [blogs, pageSize]);
@@ -59,7 +58,7 @@ const Blogs = () => {
       </section>
     );
 
-  // pagination calculations
+ 
   const totalItems = blogs.length;
   const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
   const startIndex = (currentPage - 1) * pageSize;
@@ -74,7 +73,7 @@ const Blogs = () => {
   return (
     <section
       id="blogs"
-      className="min-h-screen bg-gradient-to-b from-white to-orange-50 py-16 px-6 md:px-12 border-t-4 border-green-400"
+      className="min-h-screen bg-linear-to-b from-white to-orange-50 py-16 px-6 md:px-12 border-t-4 border-green-400"
     >
       <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 text-center mb-4">
         Travel Stories & Blogs
@@ -124,7 +123,7 @@ const Blogs = () => {
         ))}
       </div>
 
-      {/* Pagination Controls - only Prev / Next */}
+      
       {totalPages > 1 && (
         <div className="mt-12 flex flex-col items-center gap-4">
           <div className="flex items-center gap-4">

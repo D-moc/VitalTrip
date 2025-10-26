@@ -37,7 +37,7 @@ const Footer = () => {
   return (
     <footer
       id="footer"
-      className="relative bg-gradient-to-r from-green-600 via-teal-600 to-cyan-600 text-white py-10 px-6 md:px-12 border-t-4 border-yellow-400"
+      className="relative bg-linear-to-r from-green-600 via-green-600 to-blue-600 text-white py-10 px-6 md:px-12 border-t-4 border-yellow-400"
     >
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
        

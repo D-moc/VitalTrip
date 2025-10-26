@@ -9,11 +9,14 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [justLoggedIn, setJustLoggedIn] = useState(false);
   const navigate = useNavigate();
 
+  
   useEffect(() => {
-    const userToken =
-      localStorage.getItem("userToken") || localStorage.getItem("authToken");
+    if (justLoggedIn) return;
+
+    const userToken = localStorage.getItem("userToken");
     const captainToken = localStorage.getItem("captainToken");
     const token = captainToken || userToken;
 
@@ -24,50 +27,42 @@ const AuthProvider = ({ children }) => {
 
     const fetchProfile = async () => {
       try {
-        console.log("🔑 Checking token...");
 
         if (captainToken) {
-          try {
-            const res = await api.get("/captains/profile", {
-              headers: { Authorization: `Bearer ${captainToken}` },
-            });
-            if (res.data?.captain) {
-              setUser(res.data.captain);
-              setRole("captain");
-              console.log("Captain authenticated:", res.data.captain);
-              return;
-            }
-          } catch {
-            console.warn("Captain token invalid, falling back to user.");
+          const res = await api.get("/captains/profile", {
+            headers: { Authorization: `Bearer ${captainToken}` },
+          });
+
+          if (res.data?.captain) {
+            setUser(res.data.captain);
+            setRole("captain");
+            setLoading(false);
+            return;
           }
         }
 
-  
-        const res = await api.get("/users/profile", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        if (userToken) {
+          const res = await api.get("/users/profile", {
+            headers: { Authorization: `Bearer ${userToken}` },
+          });
 
-        if (res.data?.user) {
-          setUser(res.data.user);
-          setRole(res.data.user.role || "user");
-          console.log("User authenticated:", res.data.user);
+          if (res.data?.user) {
+            setUser(res.data.user);
+            setRole(res.data.user.role || "user");
+          }
         }
       } catch (err) {
-        console.warn("Invalid token, clearing storage:", err.message);
-        localStorage.removeItem("userToken");
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("captainToken");
-        setUser(null);
-        setRole(null);
+        console.warn("Invalid or expired token:", err.message);
+        logout(false); 
       } finally {
         setLoading(false);
       }
     };
 
     fetchProfile();
-  }, []);
+  }, [justLoggedIn]);
 
-
+ 
   const login = async (credentials, roleType = "user") => {
     try {
       const endpoint =
@@ -76,8 +71,9 @@ const AuthProvider = ({ children }) => {
       const res = await api.post(endpoint, credentials);
       const { token, user: userData, captain } = res.data;
 
-      if (!token) throw new Error("Token not provided by server.");
+      if (!token) throw new Error("Token missing from server response.");
 
+      
       if (roleType === "captain") {
         localStorage.setItem("captainToken", token);
         localStorage.removeItem("userToken");
@@ -88,41 +84,72 @@ const AuthProvider = ({ children }) => {
 
       const activeUser = userData || captain || null;
       setUser(activeUser);
-      setRole(userData ? "user" : "captain");
+      setRole(roleType);
 
       localStorage.setItem("user", JSON.stringify(activeUser));
-      localStorage.setItem("role", userData ? "user" : "captain");
+      localStorage.setItem("role", roleType);
 
       toast.success(
         `Welcome back, ${
-          activeUser?.fullname?.firstname || activeUser?.firstname || "Traveler"
+          activeUser?.fullname?.firstname || activeUser?.firstname || "User"
         }!`
       );
 
-      navigate("/");
+     
+      window.dispatchEvent(new Event("auth-updated"));
+
+      
+      if (window.location.pathname !== "/") navigate("/");
+
+ 
+      setJustLoggedIn(true);
+      setTimeout(() => setJustLoggedIn(false), 2000);
     } catch (err) {
       console.error("Login failed:", err);
       toast.error(err.response?.data?.message || "Login failed!");
     }
   };
 
-  const logout = () => {
+  
+  const logout = async (notify = true) => {
+    const captainToken = localStorage.getItem("captainToken");
+    const userToken = localStorage.getItem("userToken");
+
+    try {
+      if (captainToken)
+        await api.post(
+          "/captains/logout",
+          {},
+          { headers: { Authorization: `Bearer ${captainToken}` } }
+        );
+      else if (userToken)
+        await api.post(
+          "/users/logout",
+          {},
+          { headers: { Authorization: `Bearer ${userToken}` } }
+        );
+    } catch {
+      console.warn("Logout request failed — proceeding to clear session.");
+    }
+
+    
     localStorage.removeItem("userToken");
-    localStorage.removeItem("authToken");
     localStorage.removeItem("captainToken");
     localStorage.removeItem("user");
     localStorage.removeItem("role");
 
     setUser(null);
     setRole(null);
-    toast.info("Logged out successfully!");
-    navigate("/");
+    if (notify) toast.info("Logged out successfully!");
+
+    window.dispatchEvent(new Event("auth-updated"));
+    if (window.location.pathname !== "/") navigate("/");
   };
 
+  
   const refreshUser = async () => {
     try {
-      const token =
-        localStorage.getItem("userToken") || localStorage.getItem("authToken");
+      const token = localStorage.getItem("userToken");
       if (!token) return;
 
       const res = await api.get("/users/profile", {
@@ -132,13 +159,13 @@ const AuthProvider = ({ children }) => {
       if (res.data?.user) {
         setUser(res.data.user);
         localStorage.setItem("user", JSON.stringify(res.data.user));
-        console.log("User profile refreshed:", res.data.user);
       }
     } catch (err) {
       console.error("Error refreshing user:", err);
     }
   };
 
+  
   const refreshCaptain = async () => {
     try {
       const token = localStorage.getItem("captainToken");
@@ -151,7 +178,6 @@ const AuthProvider = ({ children }) => {
       if (res.data?.captain) {
         setUser(res.data.captain);
         localStorage.setItem("user", JSON.stringify(res.data.captain));
-        console.log("Captain profile refreshed:", res.data.captain);
       }
     } catch (err) {
       console.error("Error refreshing captain:", err);

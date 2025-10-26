@@ -7,12 +7,12 @@ html, body {
   font-family: Georgia, "Times New Roman", serif;
 }
 
-/* Make sections align below navbar */
+
 [id] {
   scroll-margin-top: 7rem;
 }
 
-/* Smooth fade-in animation */
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -41,7 +41,7 @@ html, body {
 }
 
 
-/* global stylesheet */
+/* global */
 input:invalid, select:invalid, textarea:invalid {
   scroll-margin-top: 120px; 
 }
