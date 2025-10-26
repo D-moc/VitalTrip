@@ -116,7 +116,7 @@ const UserDashboard = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
-            className={`p-6 bg-gradient-to-br ${item.color} text-white rounded-3xl shadow-xl flex flex-col items-center justify-center hover:scale-105 transition-transform`}
+            className={`p-6 bg-linear-to-br ${item.color} text-white rounded-3xl shadow-xl flex flex-col items-center justify-center hover:scale-105 transition-transform`}
           >
             <div className="text-4xl mb-2">{item.icon}</div>
             <h3 className="text-lg font-semibold">{item.title}</h3>
