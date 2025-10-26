@@ -1,7 +1,11 @@
+
 import nodemailer from "nodemailer";
 
-export const sendResetEmail = async (email, link) => {
+export const sendResetEmail = async (email, resetLink) => {
   try {
+    console.log("📤 Attempting to send reset email...");
+    console.log("SMTP user:", process.env.EMAIL_USER);
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -10,26 +14,25 @@ export const sendResetEmail = async (email, link) => {
       },
     });
 
+    await transporter.verify();
+    console.log("✅ SMTP connection successful.");
+
+    const html = `
+      <h2>VitalTrip Password Reset</h2>
+      <p>Click the link below to reset your password:</p>
+      <a href="${resetLink}" target="_blank">${resetLink}</a>
+    `;
+
     await transporter.sendMail({
       from: `"VitalTrip Support" <${process.env.EMAIL_USER}>`,
       to: email,
-      subject: "Reset Your VitalTrip Password",
-      html: `
-        <div style="font-family:sans-serif;">
-          <h2>Reset Your Password</h2>
-          <p>Click the link below to reset your password. This link will expire in 10 minutes:</p>
-          <a href="${link}" 
-             style="display:inline-block;background:#20b2aa;color:white;
-             padding:10px 20px;border-radius:5px;text-decoration:none;">
-             Reset Password
-          </a>
-          <p>If you didn’t request this, please ignore this email.</p>
-        </div>
-      `,
+      subject: "Reset your VitalTrip password",
+      html,
     });
 
-    console.log(`Password reset email sent to ${email}`);
+    console.log(`✅ Reset email sent to ${email}`);
   } catch (err) {
-    console.error("Error sending email:", err);
+    console.error("❌ Error sending reset email:", err);
+    throw new Error("Email could not be sent");
   }
 };

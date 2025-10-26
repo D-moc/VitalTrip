@@ -2,44 +2,67 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-const userSchema = new mongoose.Schema({
-  fullname: {
-    firstname: {
+const userSchema = new mongoose.Schema(
+  {
+    fullname: {
+      firstname: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+      lastname: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+    },
+    email: {
       type: String,
       required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
     },
-    lastname: {
+    password: {
       type: String,
       required: true,
+      select: false,
+    },
+    profileImage: {
+      type: String,
+      default: "",
     },
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-    select: false,
-  },
-  profileImage: {
-    type: String,
-    default: "",
-  },
+  { timestamps: true, versionKey: false }
+);
+
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (err) {
+    next(err);
+  }
 });
 
 userSchema.methods.generateAuthToken = function () {
-  return jwt.sign({ _id: this._id, role: "user" }, process.env.JWT_SECRET, {
-    expiresIn: "24h",
-  });
+  return jwt.sign(
+    { id: this._id, email: this.email, role: "user" },
+    process.env.JWT_SECRET,
+    { expiresIn: "7d" }
+  );
 };
 
-userSchema.statics.hashPassword = async (password) => bcrypt.hash(password, 10);
+userSchema.methods.comparePassword = async function (enteredPassword) {
+  return bcrypt.compare(enteredPassword, this.password);
+};
 
-
-userSchema.methods.comparePassword = async function (pw) {
-  return bcrypt.compare(pw, this.password);
+userSchema.statics.hashPassword = async function (password) {
+  const salt = await bcrypt.genSalt(10);
+  return bcrypt.hash(password, salt);
 };
 
 export default mongoose.model("User", userSchema);

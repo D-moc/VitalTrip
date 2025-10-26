@@ -11,6 +11,8 @@ import {
   deleteBooking,
   getPendingVerificationBookings, 
   markBookingVerified,
+  getAllUsersWithTrips,
+  getUpcomingTrips,
 } from "../controllers/captainDashboard.controller.js";
 import { verifyCaptainAccess } from "../middlewares/roleAuth.middleware.js";
 

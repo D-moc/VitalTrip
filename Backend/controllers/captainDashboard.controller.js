@@ -4,21 +4,23 @@ import Payment from "../models/payment.model.js";
 import Destination from "../models/destination.model.js";
 import Trip from "../models/trip.model.js";
 
+
 export const getAllUsers = async (req, res) => {
   try {
     const users = await User.find().select("fullname email profileImage createdAt");
     res.status(200).json({ success: true, users });
   } catch (err) {
-    res.status(500).json({ message: "Error fetching users", error: err.message });
+    res.status(500).json({ success: false, message: "Error fetching users", error: err.message });
   }
 };
+
 
 export const getAllDestinations = async (req, res) => {
   try {
     const destinations = await Destination.find();
     res.status(200).json({ success: true, destinations });
   } catch (err) {
-    res.status(500).json({ message: "Error fetching destinations", error: err.message });
+    res.status(500).json({ success: false, message: "Error fetching destinations", error: err.message });
   }
 };
 
@@ -30,7 +32,7 @@ export const getAllTrips = async (req, res) => {
       .sort({ createdAt: -1 });
     res.status(200).json({ success: true, trips });
   } catch (err) {
-    res.status(500).json({ message: "Error fetching trips", error: err.message });
+    res.status(500).json({ success: false, message: "Error fetching trips", error: err.message });
   }
 };
 
@@ -43,7 +45,7 @@ export const getAllPayments = async (req, res) => {
     const total = payments.reduce((sum, p) => sum + (p.amount || 0), 0);
     res.status(200).json({ success: true, total, payments });
   } catch (err) {
-    res.status(500).json({ message: "Error fetching payments", error: err.message });
+    res.status(500).json({ success: false, message: "Error fetching payments", error: err.message });
   }
 };
 
@@ -57,7 +59,7 @@ export const getAllBookings = async (req, res) => {
       .sort({ createdAt: -1 });
     res.status(200).json({ success: true, bookings });
   } catch (err) {
-    res.status(500).json({ message: "Error fetching bookings", error: err.message });
+    res.status(500).json({ success: false, message: "Error fetching bookings", error: err.message });
   }
 };
 
@@ -76,10 +78,9 @@ export const getPendingVerificationBookings = async (req, res) => {
     });
   } catch (err) {
     console.error("Error fetching pending verification bookings:", err);
-    res.status(500).json({ message: "Error fetching pending verification bookings" });
+    res.status(500).json({ success: false, message: "Error fetching pending verification bookings" });
   }
 };
-
 
 export const markBookingVerified = async (req, res) => {
   try {
@@ -87,9 +88,8 @@ export const markBookingVerified = async (req, res) => {
       .populate("payment", "status")
       .populate("user", "fullname email");
 
-    if (!booking) {
-      return res.status(404).json({ message: "Booking not found" });
-    }
+    if (!booking)
+      return res.status(404).json({ success: false, message: "Booking not found" });
 
     booking.status = "confirmed";
     await booking.save();
@@ -100,16 +100,14 @@ export const markBookingVerified = async (req, res) => {
       await payment.save();
     }
 
-    console.log(`✅ Captain verified booking: ${booking._id}`);
-
     res.status(200).json({
       success: true,
-      message: "Booking marked as verified",
+      message: "Booking marked as verified successfully",
       booking,
     });
   } catch (err) {
     console.error("Error verifying booking:", err);
-    res.status(500).json({ message: "Error verifying booking" });
+    res.status(500).json({ success: false, message: "Error verifying booking" });
   }
 };
 
@@ -117,7 +115,8 @@ export const markBookingVerified = async (req, res) => {
 export const verifyPayment = async (req, res) => {
   try {
     const payment = await Payment.findById(req.params.paymentId);
-    if (!payment) return res.status(404).json({ message: "Payment not found" });
+    if (!payment)
+      return res.status(404).json({ success: false, message: "Payment not found" });
 
     payment.status = "verified";
     await payment.save();
@@ -134,7 +133,7 @@ export const verifyPayment = async (req, res) => {
       booking,
     });
   } catch (err) {
-    res.status(500).json({ message: "Error verifying payment", error: err.message });
+    res.status(500).json({ success: false, message: "Error verifying payment", error: err.message });
   }
 };
 
@@ -150,6 +149,8 @@ export const getAllUsersWithTrips = async (req, res) => {
       const plannedTrips = trips
         .filter((t) => t.user?._id?.toString() === user._id.toString())
         .map((t) => ({
+          _id: t._id,
+          user: t.user, 
           destination: t.destination,
           days: t.days,
           travellers: t.travellers,
@@ -157,7 +158,7 @@ export const getAllUsersWithTrips = async (req, res) => {
           status: t.status,
           transport: t.transport,
           stay: t.stay,
-          tripDate: t.routeSummary?.tripDate || t.createdAt,
+          tripDate: t.tripDate || t.createdAt,
         }));
 
       return {
@@ -180,7 +181,30 @@ export const getAllUsersWithTrips = async (req, res) => {
     });
   } catch (err) {
     console.error("Error fetching user trips:", err);
-    res.status(500).json({ message: "Server error fetching user trips" });
+    res
+      .status(500)
+      .json({ success: false, message: "Server error fetching user trips" });
+  }
+};
+
+
+export const getUpcomingTrips = async (req, res) => {
+  try {
+    const today = new Date();
+    const nextWeek = new Date(today);
+    nextWeek.setDate(today.getDate() + 7);
+
+    const upcomingTrips = await Trip.find({
+      createdAt: { $gte: today, $lte: nextWeek },
+    }).populate("user", "fullname email");
+
+    res.status(200).json({
+      success: true,
+      count: upcomingTrips.length,
+      trips: upcomingTrips,
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Error fetching upcoming trips" });
   }
 };
 
@@ -190,7 +214,7 @@ export const deleteUser = async (req, res) => {
     await User.findByIdAndDelete(req.params.id);
     res.status(200).json({ success: true, message: "User deleted successfully" });
   } catch (err) {
-    res.status(500).json({ message: "Error deleting user" });
+    res.status(500).json({ success: false, message: "Error deleting user" });
   }
 };
 
@@ -199,15 +223,16 @@ export const deleteTrip = async (req, res) => {
     await Trip.findByIdAndDelete(req.params.id);
     res.status(200).json({ success: true, message: "Trip deleted successfully" });
   } catch (err) {
-    res.status(500).json({ message: "Error deleting trip" });
+    res.status(500).json({ success: false, message: "Error deleting trip" });
   }
 };
+
 
 export const deleteBooking = async (req, res) => {
   try {
     await Booking.findByIdAndDelete(req.params.id);
     res.status(200).json({ success: true, message: "Booking deleted successfully" });
   } catch (err) {
-    res.status(500).json({ message: "Error deleting booking" });
+    res.status(500).json({ success: false, message: "Error deleting booking" });
   }
 };

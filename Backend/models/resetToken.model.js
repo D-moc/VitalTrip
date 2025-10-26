@@ -9,15 +9,17 @@ const resetTokenSchema = new mongoose.Schema({
   userModelType: {
     type: String,
     required: true,
-    enum: ["user", "Captain"],
+    enum: ["user", "captain"],
   },
   token: { type: String, required: true },
   createdAt: {
     type: Date,
     default: Date.now,
-    expires: 600, // token expires in 10 minutes
+    expires: 600,  // 10 minutes
   },
 });
 
 const ResetToken = mongoose.model("ResetToken", resetTokenSchema);
+
+
 export default ResetToken;

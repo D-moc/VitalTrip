@@ -5,17 +5,18 @@ import jwt from "jsonwebtoken";
 const captainSchema = new mongoose.Schema(
   {
     fullname: {
-      firstname: { 
-        type: String, 
-        required: true, 
-        trim: true 
+      firstname: {
+        type: String,
+        required: true,
+        trim: true,
       },
-      lastname: { 
-        type: String, 
-        required: true, 
-        trim: true 
+      lastname: {
+        type: String,
+        required: true,
+        trim: true,
       },
     },
+
     email: {
       type: String,
       required: true,
@@ -23,34 +24,34 @@ const captainSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
+
     password: {
-      type: String, 
-      required: true, 
-      select: false 
+      type: String,
+      required: true,
+      select: false, 
     },
 
     profileImage: {
-       type: String, 
-       default: "" 
-      },
-
-    bio: { 
-      type: String, 
-      default: "" 
+      type: String,
+      default: "",
     },
 
-    createdAt: { 
-      type: Date, 
-      default: Date.now 
+    bio: {
+      type: String,
+      default: "",
+      trim: true,
     },
   },
-  { versionKey: false }
+  { timestamps: true, versionKey: false }
 );
 
 
-captainSchema.statics.hashPassword = async function (password) {
-  return await bcrypt.hash(password, 10);
-};
+captainSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
 
 
 captainSchema.methods.comparePassword = async function (enteredPassword) {
@@ -62,19 +63,14 @@ captainSchema.methods.generateAuthToken = function () {
   return jwt.sign(
     {
       id: this._id.toString(),
-      role: "captain",
       email: this.email,
+      role: "captain",
     },
     process.env.JWT_SECRET,
-    { expiresIn: "24h" }
+    { expiresIn: "7d" }
   );
 };
 
+const Captain = mongoose.model("Captain", captainSchema);
 
-captainSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
-  this.password = await bcrypt.hash(this.password, 10);
-  next();
-});
-
-export default mongoose.model("Captain", captainSchema);
+export default Captain;

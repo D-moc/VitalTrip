@@ -33,29 +33,37 @@ export const getUserDashboard = async (req, res) => {
 };
 
 
-
 export const updateUserProfile = async (req, res) => {
   try {
-    const userId = req.user._id;
-    const updates = req.body;
-
-    if (req.file) updates.profileImage = `uploads/${req.file.filename}`;
-
-    const updatedUser = await User.findByIdAndUpdate(userId, updates, { new: true }).select("-password");
-
-    if (!updatedUser)
+    const user = await User.findById(req.user._id);
+    if (!user)
       return res.status(404).json({ success: false, message: "User not found" });
+
+    if (req.body["fullname.firstname"])
+      user.fullname.firstname = req.body["fullname.firstname"];
+    if (req.body["fullname.lastname"])
+      user.fullname.lastname = req.body["fullname.lastname"];
+
+    if (req.body.email) user.email = req.body.email.toLowerCase();
+    if (req.body.bio !== undefined) user.bio = req.body.bio;
+
+    if (req.file) {
+      user.profileImage = `uploads/${req.file.filename}`;
+    }
+
+    await user.save();
 
     res.status(200).json({
       success: true,
       message: "Profile updated successfully",
-      user: updatedUser,
+      user,
     });
   } catch (error) {
     console.error("Update profile error:", error);
     res.status(500).json({ success: false, message: "Error updating profile" });
   }
 };
+
 
 
 export const cancelUserTrip = async (req, res) => {
