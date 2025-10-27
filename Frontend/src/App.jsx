@@ -4,6 +4,9 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Destinations from "./pages/Destinations";
 import Services from "./pages/Services";
+import NearbyHospitals from "./pages/NearbyHospitals";
+import Accommodation from "./pages/Accommodation";
+import Guides from "./pages/Guides";
 import Blogs from "./pages/Blogs";
 import AllBlogs from "./pages/AllBlogs";
 import BlogDetails from "./pages/BlogDetails";
@@ -12,7 +15,6 @@ import Booking from "./pages/Booking";
 import CaptainDashboard from "./pages/CaptainDashboard";
 import UserDashboard from "./pages/UserDashboard";
 import Footer from "./components/Footer";
-import Guides from "./pages/Guides";
 import TripDetails from "./pages/TripDetails";
 import UserResetPassword from "./pages/UserResetPassword";
 import CaptainResetPassword from "./pages/CaptainResetPassword";
@@ -49,6 +51,8 @@ const App = () => {
         <Route path="/blogs" element={<AllBlogs />} />
         <Route path="/blogs/:id" element={<BlogDetails />} />
         <Route path="/services" element={<Services />} />
+        <Route path="/nearby-hospitals" element={<NearbyHospitals />} />
+        <Route path="/accommodation" element={<Accommodation />} />
         <Route path="/guides" element={<Guides />} />
         <Route path="/reset-password/:token" element={<UserResetPassword />} />
         <Route

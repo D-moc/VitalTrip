@@ -1,42 +1,42 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { FaHospital, FaHotel, FaUserTie } from "react-icons/fa";
-
-const services = [
-  {
-    id: 1,
-    icon: <FaHospital size={36} />,
-    title: "Nearby Hospitals",
-    desc: "Locate hospitals, clinics, and emergency medical facilities wherever you travel in Maharashtra.",
-    link: "https://www.google.com/maps/search/hospitals+near+me/",
-    external: true,
-  },
-  {
-    id: 2,
-    icon: <FaHotel size={36} />,
-    title: "Accommodation",
-    desc: "Find and book comfortable hotels, homestays, and resorts with trusted traveler reviews.",
-    link: "https://www.google.com/maps/search/hotels+near+me/",
-    external: true,
-  },
-  {
-    id: 3,
-    icon: <FaUserTie size={36} />,
-    title: "Guided Tours",
-    desc: "Connect with verified local guides who bring destinations to life through stories and culture.",
-    link: "/guides",
-    external: false,
-  },
-];
+import { useNavigate } from "react-router-dom";
 
 const Services = () => {
   const navigate = useNavigate();
 
+  const services = [
+    {
+      id: 1,
+      icon: <FaHospital size={36} />,
+      title: "Nearby Hospitals",
+      desc: "Locate hospitals, clinics, and emergency facilities anywhere in Maharashtra.",
+      link: "/nearby-hospitals",
+      external: false,
+    },
+    {
+      id: 2,
+      icon: <FaHotel size={36} />,
+      title: "Accommodation",
+      desc: "Find hotels, resorts, and homestays near your travel destinations.",
+      link: "/accommodation",
+      external: false,
+    },
+    {
+      id: 3,
+      icon: <FaUserTie size={36} />,
+      title: "Guided Tours",
+      desc: "Connect with verified local guides for heritage and cultural tours.",
+      link: "/guides",
+      external: false,
+    },
+  ];
+
   const handleServiceClick = (service) => {
     if (service.external) {
-      window.open(service.link, "_blank", "noopener,noreferrer");
+      window.open(service.link, "_blank");
     } else {
-      navigate(service.link);
+      window.open(service.link, "_blank"); 
     }
   };
 
@@ -50,9 +50,10 @@ const Services = () => {
           Assistance Services
         </h2>
         <p className="text-gray-600 max-w-2xl mx-auto mb-10 text-sm md:text-base">
-          From safety to comfort — access all essential travel services with ease and confidence.
+         Making your travel simpler, safer, and more enjoyable.
         </p>
 
+        {/* Services Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service) => (
             <div

@@ -1,63 +1,89 @@
-import React from "react";
-import { FaArrowLeft, FaExternalLinkAlt } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { FaHotel, FaUmbrellaBeach, FaHome } from "react-icons/fa";
 
 const Accommodation = () => {
-  const navigate = useNavigate();
+  const [destination, setDestination] = useState("");
+  const [stayType, setStayType] = useState("hotel");
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (!destination.trim()) return;
+    const encoded = encodeURIComponent(destination);
+    window.open(
+      `https://www.google.com/maps/search/${stayType}+in+${encoded}/`,
+      "_blank"
+    );
+    setDestination("");
+  };
+
+  const quickCities = ["Mumbai", "Pune", "Nashik", "Lonavala", "Mahabaleshwar"];
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-white to-orange-50 py-16 px-6 md:px-12 border-t-4 border-green-400">
-     
-      <button
-        onClick={() => navigate(-1)}
-        className="flex items-center text-orange-600 hover:underline mb-6 font-semibold"
-      >
-        <FaArrowLeft className="mr-2" /> Back to Services
-      </button>
-
-      <div className="max-w-5xl mx-auto text-center">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">
-          Accommodation & Hotels
+    <div className="min-h-screen bg-linear-to-br from-white via-orange-50 to-white flex flex-col items-center justify-center p-6">
+      <div className="bg-white border border-gray-200 rounded-2xl shadow-xl p-8 w-full max-w-md">
+        <h1 className="text-3xl font-bold text-gray-800 text-center mb-4">
+          Find Accommodation
         </h1>
-        <p className="text-gray-600 mb-10 max-w-2xl mx-auto">
-          Explore comfortable stays across Maharashtra — from luxury resorts to
-          budget-friendly hotels and homestays with verified guest reviews.
-        </p>
 
-      
-        <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-200">
-          <iframe
-            title="Hotels in Maharashtra"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1512112.8291785012!2d72.5!3d19.6!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b8fdc4e9a35f%3A0x8aaf7a0eb4e31e57!2sMaharashtra!5e0!3m2!1sen!2sin!4v1711180812394!5m2!1sen!2sin"
-            width="100%"
-            height="500"
-            style={{ border: 0 }}
-            allowFullScreen=""
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          ></iframe>
-        </div>
+        <form onSubmit={handleSearch}>
+          <input
+            type="text"
+            value={destination}
+            onChange={(e) => setDestination(e.target.value)}
+            placeholder="Enter destination (e.g., Lonavala)"
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-orange-400"
+          />
 
-        <div className="mt-6">
+          <div className="flex flex-wrap justify-center gap-2 mb-4">
+            {[
+              { id: "hotel", label: "Hotel", icon: <FaHotel /> },
+              { id: "resort", label: "Resort", icon: <FaUmbrellaBeach /> },
+              { id: "homestay", label: "Homestay", icon: <FaHome /> },
+            ].map((type) => (
+              <button
+                key={type.id}
+                type="button"
+                onClick={() => setStayType(type.id)}
+                className={`px-3 py-2 flex items-center gap-2 rounded-lg font-semibold border ${
+                  stayType === type.id
+                    ? "bg-orange-500 text-white border-orange-500"
+                    : "bg-orange-100 text-orange-600 border-orange-200 hover:bg-orange-200"
+                }`}
+              >
+                {type.icon} {type.label}
+              </button>
+            ))}
+          </div>
+
           <button
-            onClick={() =>
-              window.open(
-                "https://www.google.com/maps/search/hotels+in+Maharashtra/",
-                "_blank",
-                "noopener,noreferrer"
-              )
-            }
-            className="inline-flex items-center gap-2 bg-orange-500 text-white px-6 py-3 rounded-full font-semibold shadow-md hover:bg-orange-600 transition-all duration-200"
+            type="submit"
+            className="w-full bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-semibold"
           >
-            View Full Map <FaExternalLinkAlt className="text-sm" />
+            Search {stayType.charAt(0).toUpperCase() + stayType.slice(1)}s
           </button>
-        </div>
+        </form>
 
-        <p className="text-gray-700 mt-8 leading-relaxed">
-          Use this live Google Map to find hotels, resorts, and stays near your
-          preferred travel destination. Click “View Full Map” to explore or book directly
-          in Google Maps.
-        </p>
+        <div className="mt-5 text-center">
+          <p className="text-gray-700 text-sm font-semibold mb-2">
+            Popular Destinations:
+          </p>
+          <div className="flex flex-wrap justify-center gap-2">
+            {quickCities.map((city) => (
+              <button
+                key={city}
+                onClick={() =>
+                  window.open(
+                    `https://www.google.com/maps/search/${stayType}+in+${city}/`,
+                    "_blank"
+                  )
+                }
+                className="px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-sm font-semibold hover:bg-orange-200 transition"
+              >
+                {city}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

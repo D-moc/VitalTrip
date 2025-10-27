@@ -1,61 +1,98 @@
-import React from "react";
-import { FaArrowLeft, FaExternalLinkAlt } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { FaMapMarkerAlt } from "react-icons/fa";
 
 const NearbyHospitals = () => {
-  const navigate = useNavigate();
+  const [destination, setDestination] = useState("");
+  const [loadingLocation, setLoadingLocation] = useState(false);
+
+  const handleHospitalSearch = (e) => {
+    e.preventDefault();
+    if (!destination.trim()) return;
+    const encoded = encodeURIComponent(destination);
+    window.open(
+      `https://www.google.com/maps/search/hospitals+near+${encoded}/`,
+      "_blank"
+    );
+    setDestination("");
+  };
+
+  const handleUseCurrentLocation = () => {
+    if (!navigator.geolocation) {
+      alert("Geolocation not supported by your browser.");
+      return;
+    }
+    setLoadingLocation(true);
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const { latitude, longitude } = pos.coords;
+        window.open(
+          `https://www.google.com/maps/search/hospitals+near+${latitude},${longitude}/`,
+          "_blank"
+        );
+        setLoadingLocation(false);
+      },
+      () => {
+        alert("Unable to fetch location.");
+        setLoadingLocation(false);
+      }
+    );
+  };
+
+  const quickCities = ["Mumbai", "Pune", "Nashik", "Nagpur", "Lonavala", "Kolhapur"];
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-white to-orange-50 py-16 px-6 md:px-12 border-t-4 border-green-400">
-      <button
-        onClick={() => navigate(-1)}
-        className="flex items-center text-orange-600 hover:underline mb-6 font-semibold"
-      >
-        <FaArrowLeft className="mr-2" /> Back to Services
-      </button>
-
-      <div className="max-w-5xl mx-auto text-center">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">
-          Nearby Hospitals
+    <div className="min-h-screen bg-linear-to-br from-white via-orange-50 to-white flex flex-col items-center justify-center p-6">
+      <div className="bg-white border border-gray-200 rounded-2xl shadow-xl p-8 w-full max-w-md">
+        <h1 className="text-3xl font-bold text-gray-800 text-center mb-4">
+          Find Nearby Hospitals
         </h1>
-        <p className="text-gray-600 mb-10 max-w-2xl mx-auto">
-          Find nearby hospitals, clinics, and emergency centers around
-          Maharashtra using the live Google Map below.
-        </p>
 
-        <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-200">
-          <iframe
-            title="Nearby Hospitals"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1512112.8291785012!2d72.5!3d19.6!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b8fdc4e9a35f%3A0x8aaf7a0eb4e31e57!2sMaharashtra!5e0!3m2!1sen!2sin!4v1711180712394!5m2!1sen!2sin"
-            width="100%"
-            height="500"
-            style={{ border: 0 }}
-            allowFullScreen=""
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          ></iframe>
-        </div>
-
-        <div className="mt-6">
+        <form onSubmit={handleHospitalSearch}>
+          <input
+            type="text"
+            value={destination}
+            onChange={(e) => setDestination(e.target.value)}
+            placeholder="Enter city or area"
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-orange-400"
+          />
           <button
-            onClick={() =>
-              window.open(
-                "https://www.google.com/maps/search/hospitals+near+Maharashtra/",
-                "_blank",
-                "noopener,noreferrer"
-              )
-            }
-            className="inline-flex items-center gap-2 bg-orange-500 text-white px-6 py-3 rounded-full font-semibold shadow-md hover:bg-orange-600 transition-all duration-200"
+            type="submit"
+            className="w-full bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-semibold mb-3"
           >
-            View Full Map <FaExternalLinkAlt className="text-sm" />
+            Search Hospitals
           </button>
-        </div>
+        </form>
 
-        <p className="text-gray-700 mt-8 leading-relaxed">
-          You can click “View Full Map” to open Google Maps in a new tab for
-          better navigation, directions, and real-time hospital listings near
-          your current location.
-        </p>
+        <button
+          onClick={handleUseCurrentLocation}
+          disabled={loadingLocation}
+          className="w-full bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-semibold flex items-center justify-center gap-2"
+        >
+          <FaMapMarkerAlt />
+          {loadingLocation ? "Fetching location..." : "Use My Current Location"}
+        </button>
+
+        <div className="mt-5 text-center">
+          <p className="text-gray-700 text-sm font-semibold mb-2">
+            Quick Destinations:
+          </p>
+          <div className="flex flex-wrap justify-center gap-2">
+            {quickCities.map((city) => (
+              <button
+                key={city}
+                onClick={() =>
+                  window.open(
+                    `https://www.google.com/maps/search/hospitals+near+${city}/`,
+                    "_blank"
+                  )
+                }
+                className="px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-sm font-semibold hover:bg-orange-200 transition"
+              >
+                {city}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

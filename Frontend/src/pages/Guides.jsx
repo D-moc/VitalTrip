@@ -1,14 +1,15 @@
 import React from "react";
-import { FaPhoneAlt, FaMapMarkerAlt, FaUserTie } from "react-icons/fa";
-// import omakrimage from "../assets/omkar.jpg";
-// import dineshimage from "../assets/dinesh.jpg";
+import { FaPhoneAlt, FaMapMarkerAlt, FaUserTie, FaWhatsapp } from "react-icons/fa";
+import omkarimage from "../assets/omkarImage.jpg";
+import dineshimage from "../assets/dineshImage.jpg";
 
 const guides = [
   {
     id: 1,
     name: "Omkar Gupta",
-    image: "https://randomuser.me/api/portraits/men/52.jpg",
-    contact: "+91 98765 43210",
+    image: omkarimage,
+    contact: "+919876543210",
+    whatsapp: "919876543210",
     location: "Mumbai, Maharashtra",
     about:
       "Omkar is a passionate local guide with 5+ years of experience in Mumbai’s heritage and coastal tours. Known for his storytelling, he brings the city’s history and hidden gems to life for every traveler.",
@@ -16,8 +17,9 @@ const guides = [
   {
     id: 2,
     name: "Dinesh Bishokarma",
-    image: "https://randomuser.me/api/portraits/men/32.jpg",
-    contact: "+91 91234 56789",
+    image: dineshimage,
+    contact: "+919123456789",
+    whatsapp: "919123456789",
     location: "Pune, Maharashtra",
     about:
       "Dinesh specializes in cultural and nature-based tours around Pune and Lonavala. His deep local insights and friendly approach make every journey authentic and memorable.",
@@ -33,7 +35,7 @@ const Guides = () => {
           Meet Our Expert Guides
         </h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
-          Discover Maharashtra with our trusted local experts, passionate storytellers
+          Discover Maharashtra with our trusted local experts passionate storytellers
           who make every destination come alive.
         </p>
       </div>
@@ -57,14 +59,29 @@ const Guides = () => {
               <FaUserTie /> Professional Tour Guide
             </p>
             <p className="flex items-center justify-center text-gray-700 gap-2 mb-1">
-              <FaPhoneAlt className="text-orange-400" /> {guide.contact}
-            </p>
-            <p className="flex items-center justify-center text-gray-700 gap-2 mb-4">
               <FaMapMarkerAlt className="text-orange-400" /> {guide.location}
             </p>
-            <p className="text-gray-600 text-sm leading-relaxed max-w-md mx-auto">
+            <p className="text-gray-600 text-sm leading-relaxed max-w-md mx-auto mb-4">
               {guide.about}
             </p>
+
+            {/* Contact Buttons */}
+            <div className="flex gap-3 mt-3">
+              <a
+                href={`tel:${guide.contact}`}
+                className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-semibold transition"
+              >
+                <FaPhoneAlt /> Call
+              </a>
+              <a
+                href={`https://wa.me/${guide.whatsapp}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-semibold transition"
+              >
+                <FaWhatsapp /> WhatsApp
+              </a>
+            </div>
           </div>
         ))}
       </div>
