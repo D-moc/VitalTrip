@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import {FaArrowLeft, FaUser, FaCalendarAlt } from "react-icons/fa";
+import { FaArrowLeft, FaUser, FaCalendarAlt } from "react-icons/fa";
 import api from "../utils/api";
 
 const AllBlogs = () => {
@@ -41,7 +41,7 @@ const AllBlogs = () => {
       ref={blogSectionRef}
       className="min-h-screen bg-linear-to-b from-orange-50 to-white pt-32 pb-20 px-6 md:px-12 border-t-4 border-green-400"
     >
-      
+      {/* HEADER */}
       <div className="text-center mb-16">
         <h1 className="text-5xl font-extrabold text-gray-800 mb-3">
           All Travel Blogs
@@ -53,14 +53,16 @@ const AllBlogs = () => {
         <div className="w-24 h-1 bg-orange-500 mx-auto mt-4 rounded-full shadow-md"></div>
       </div>
 
-      
+      {/* BLOG GRID */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
         {currentBlogs.length > 0 ? (
           currentBlogs.map((blog, index) => (
             <div
               key={blog._id}
+              onClick={() =>
+                window.open(`/blogs/${blog._id}`, "_blank", "noopener,noreferrer")
+              }
               className="bg-white rounded-2xl shadow-md hover:shadow-2xl overflow-hidden transform hover:-translate-y-2 transition-all duration-300 cursor-pointer border border-transparent hover:border-orange-300"
-              onClick={() => navigate(`/blogs/${blog._id}`)}
               style={{
                 animation: `fadeInUp 0.5s ease ${index * 0.1}s forwards`,
                 opacity: 0,
@@ -123,15 +125,16 @@ const AllBlogs = () => {
         </div>
       )}
 
-       <div className="max-w-4xl mx-auto mt-8 flex justify-center">
-              <button
-                onClick={() => navigate("/#blogs")}
-                className="flex items-center gap-2 bg-orange-500 text-white font-semibold px-6 py-3 rounded-full shadow-md hover:bg-orange-600 transition-all duration-200"
-              >
-                <FaArrowLeft className="text-sm" />
-                Back 
-              </button>
-            </div>
+      {/* BACK BUTTON */}
+      <div className="max-w-4xl mx-auto mt-10 flex justify-center">
+        <button
+          onClick={() => navigate("/#blogs")}
+          className="flex items-center gap-2 bg-orange-500 text-white font-semibold px-6 py-3 rounded-full shadow-md hover:bg-orange-600 transition-all duration-200"
+        >
+          <FaArrowLeft className="text-sm" />
+          Back
+        </button>
+      </div>
     </section>
   );
 };

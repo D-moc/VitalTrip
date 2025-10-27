@@ -24,7 +24,6 @@ import api from "../utils/api";
 import { toast } from "react-toastify";
 import { AuthContext } from "../context/AuthContext";
 
-
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: markerIcon2x,
@@ -85,7 +84,9 @@ const PlanTrip = () => {
     try {
       setLoading(true);
       const prompt = `
-        Generate a detailed ${tripData.days}-day itinerary for a trip in Maharashtra.
+        Generate a detailed ${
+          tripData.days
+        }-day itinerary for a trip in Maharashtra.
         Starting point: ${tripData.startLocation}.
         Destination: ${tripData.destination}.
         Number of travellers: ${tripData.travellers}.
@@ -106,17 +107,35 @@ const PlanTrip = () => {
       setAiItinerary(text);
       formatItinerary(text);
 
-      // example (Mumbai to Pune)
-      setRouteData({
-        start: { lat: 19.076, lng: 72.8777, name: tripData.startLocation },
-        end: { lat: 18.5204, lng: 73.8567, name: tripData.destination },
-        path: [
-          [19.076, 72.8777],
-          [18.5204, 73.8567],
-        ],
-        distance: "150 km",
-        time: "3.5 hours",
-      });
+      const getCoords = async (place) => {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+            place
+          )}`
+        );
+        const data = await res.json();
+        if (!data.length) throw new Error(`Could not find location: ${place}`);
+        return {
+          lat: parseFloat(data[0].lat),
+          lng: parseFloat(data[0].lon),
+        };
+      };
+
+      try {
+        const startCoords = await getCoords(tripData.startLocation);
+        const endCoords = await getCoords(tripData.destination);
+
+        setRouteData({
+          start: { ...startCoords, name: tripData.startLocation },
+          end: { ...endCoords, name: tripData.destination },
+          path: [
+            [startCoords.lat, startCoords.lng],
+            [endCoords.lat, endCoords.lng],
+          ],
+        });
+      } catch (err) {
+        console.error("Error getting map coordinates:", err);
+      }
     } catch (err) {
       console.error("AI itinerary error:", err);
       alert("AI itinerary generation failed. Try again later!");
@@ -125,18 +144,15 @@ const PlanTrip = () => {
     }
   };
 
-  
   const handleSaveTrip = async () => {
-    
     if (!user) {
       alert("Please log in or register first!");
       return;
     }
 
-    
     const captainToken = localStorage.getItem("captainToken");
     if (captainToken) {
-      alert("Captains don’t have permission to save trips.");
+      alert("Admin don’t have permission to save trips.");
       return;
     }
 
@@ -144,11 +160,10 @@ const PlanTrip = () => {
       setSaving(true);
 
       const token =
-        localStorage.getItem("userToken") ||
-        localStorage.getItem("authToken");
+        localStorage.getItem("userToken") || localStorage.getItem("authToken");
 
       if (!token) {
-        toast.warn("You must be logged in as a user to save a trip!");
+        alert("You must be logged in as a user to save a trip!");
         return;
       }
 
@@ -158,9 +173,8 @@ const PlanTrip = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      toast.success("Your trip has been saved successfully!");
+      alert("Your trip has been saved successfully!");
 
-      
       setTripData({
         destination: "",
         startLocation: "",
@@ -176,12 +190,10 @@ const PlanTrip = () => {
       setRouteData(null);
     } catch (err) {
       console.error("Error saving trip:", err);
-      
     } finally {
       setSaving(false);
     }
   };
-
 
   const handleCancelTrip = () => {
     setTripData({
@@ -197,7 +209,7 @@ const PlanTrip = () => {
     setAiItinerary("");
     setParsedItinerary([]);
     setRouteData(null);
-    toast.info("Trip plan reset successfully.");
+    alert("Trip plan reset successfully.");
   };
 
   return (
@@ -371,7 +383,11 @@ const PlanTrip = () => {
                 <Marker position={[routeData.end.lat, routeData.end.lng]}>
                   <Popup>Destination: {routeData.end.name}</Popup>
                 </Marker>
-                <Polyline positions={routeData.path} color="orange" weight={4} />
+                <Polyline
+                  positions={routeData.path}
+                  color="orange"
+                  weight={4}
+                />
                 <MapViewFitBounds path={routeData.path} />
               </MapContainer>
             ) : (
@@ -412,9 +428,19 @@ const PlanTrip = () => {
                   </div>
 
                   {openDay === i && (
-                    <p className="mt-3 text-gray-700 whitespace-pre-wrap text-sm leading-relaxed">
-                      {day.replace(day.split("\n")[0], "").trim()}
-                    </p>
+                   
+                    <p
+                      className="mt-3 text-gray-700 whitespace-pre-wrap text-sm leading-relaxed"
+                      dangerouslySetInnerHTML={{
+                        __html: day
+                          .replace(day.split("\n")[0], "")
+                          .trim()
+                          // Convert **bold** markdown to real <strong> HTML tags
+                          .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+                          // Convert newlines into <br> for proper spacing
+                          .replace(/\n/g, "<br>"),
+                      }}
+                    ></p>
                   )}
                 </div>
               ))}
@@ -442,7 +468,6 @@ const PlanTrip = () => {
     </div>
   );
 };
-
 
 const MapViewFitBounds = ({ path }) => {
   const map = useMap();

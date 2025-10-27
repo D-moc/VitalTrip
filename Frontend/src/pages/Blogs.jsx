@@ -10,15 +10,13 @@ const Blogs = () => {
   const [blogs, setBlogs] = useState(localBlogs);
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
     sessionStorage.setItem("activeSection", "blogs");
     return () => sessionStorage.removeItem("activeSection");
   }, []);
 
-  
   const isFullPage = location.pathname === "/blogs";
-  const defaultPageSize = isFullPage ? 6 : 3; 
+  const defaultPageSize = isFullPage ? 6 : 3;
   const [pageSize] = useState(defaultPageSize);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -38,7 +36,6 @@ const Blogs = () => {
     fetchBlogs();
   }, []);
 
-  
   useEffect(() => {
     setCurrentPage(1);
   }, [blogs, pageSize]);
@@ -58,7 +55,6 @@ const Blogs = () => {
       </section>
     );
 
- 
   const totalItems = blogs.length;
   const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
   const startIndex = (currentPage - 1) * pageSize;
@@ -79,7 +75,8 @@ const Blogs = () => {
         Travel Stories & Blogs
       </h2>
       <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-        Dive into inspiring travel tales, destination guides, and hidden gems shared by our explorers.
+        Dive into inspiring travel tales, destination guides, and hidden gems
+        shared by our explorers.
       </p>
 
       {/* Blog Cards Grid */}
@@ -88,7 +85,9 @@ const Blogs = () => {
           <div
             key={blog._id}
             className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-transform hover:-translate-y-1 cursor-pointer"
-            onClick={() => navigate(`/blogs/${blog._id}`)}
+            onClick={() =>
+              window.open(`/blogs/${blog._id}`, "_blank", "noopener,noreferrer")
+            }
           >
             <img
               src={
@@ -107,15 +106,19 @@ const Blogs = () => {
                 {blog.title}
               </h3>
               <p className="text-sm text-gray-600 line-clamp-3 mb-4">
-                {blog.summary || (blog.content ? blog.content.slice(0, 150) + "..." : "")}
+                {blog.summary ||
+                  (blog.content ? blog.content.slice(0, 150) + "..." : "")}
               </p>
               <div className="flex items-center justify-between text-xs text-gray-500">
                 <span className="flex items-center gap-1">
-                  <FaUser className="text-orange-400" /> {blog.author || "VitalTrip Team"}
+                  <FaUser className="text-orange-400" />{" "}
+                  {blog.author || "VitalTrip Team"}
                 </span>
                 <span className="flex items-center gap-1">
                   <FaCalendarAlt className="text-orange-400" />{" "}
-                  {blog.createdAt ? new Date(blog.createdAt).toLocaleDateString() : "—"}
+                  {blog.createdAt
+                    ? new Date(blog.createdAt).toLocaleDateString()
+                    : "—"}
                 </span>
               </div>
             </div>
@@ -123,7 +126,6 @@ const Blogs = () => {
         ))}
       </div>
 
-      
       {totalPages > 1 && (
         <div className="mt-12 flex flex-col items-center gap-4">
           <div className="flex items-center gap-4">
