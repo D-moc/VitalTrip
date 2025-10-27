@@ -1,6 +1,3 @@
-
-
-
 import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -20,7 +17,7 @@ import TripDetails from "./pages/TripDetails";
 import UserResetPassword from "./pages/UserResetPassword";
 import CaptainResetPassword from "./pages/CaptainResetPassword";
 
-// ✅ Import your custom toast container
+
 import CustomToastContainer from "./components/CustomToastContainer";
 
 const App = () => {
@@ -59,8 +56,6 @@ const App = () => {
           element={<CaptainResetPassword />}
         />
       </Routes>
-
-      {/* ✅ Global Toast Container (shows on all pages) */}
       <CustomToastContainer />
     </>
   );

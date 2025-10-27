@@ -48,6 +48,7 @@ const UserDashboard = () => {
       ? profile.profileImage
       : `${BASE_URL}/${profile.profileImage.replace(/^\/+/, "")}`
     : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+    {/* https://www.cgg.gov.in/wp-content/uploads/2017/10/dummy-profile-pic-male1-300x300.jpg */}
 
   return (
     <div className="min-h-screen bg-linear-to-br from-orange-50 via-white to-teal-50 pt-24 pb-20 px-6">
@@ -132,7 +133,7 @@ const UserDashboard = () => {
         transition={{ delay: 0.3 }}
         className="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl p-6 overflow-x-auto border border-gray-100 max-w-6xl mx-auto"
       >
-        <h2 className="text-2xl font-bold text-gray-800 mb-6">✈️ My Planned Trips</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-6"> My Planned Trips</h2>
 
         {trips.length === 0 ? (
           <p className="text-center text-gray-500 py-10 text-lg">

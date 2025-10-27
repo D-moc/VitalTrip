@@ -72,7 +72,7 @@ const AuthModal = ({ isOpen, onClose }) => {
 
     try {
 
-      // Forgot Password Flow
+      // Forgot Password 
       if (isForgotPassword) {
         const endpoint = isCaptain
           ? "/captains/forgot-password"
@@ -89,7 +89,7 @@ const AuthModal = ({ isOpen, onClose }) => {
         return;
       }
 
-      // Login / Signup Flow
+      // Login or Signup
       const endpoint = isCaptain
         ? isLogin
           ? "/captains/login"
@@ -120,7 +120,7 @@ const AuthModal = ({ isOpen, onClose }) => {
 
       if (!token) throw new Error("Authentication failed");
 
-      // Save JWT token locally
+      //it saved token in  storage
       localStorage.setItem(isCaptain ? "captainToken" : "authToken", token);
 
       // Call global login context
@@ -178,7 +178,7 @@ const AuthModal = ({ isOpen, onClose }) => {
                 {isForgotPassword
                   ? "We’ll send you a reset link"
                   : isCaptain
-                  ? "Manage your destinations and trips"
+                  ? "Manage Users destinations and trips"
                   : "Start your journey with VitalTrip"}
               </p>
 
@@ -214,7 +214,7 @@ const AuthModal = ({ isOpen, onClose }) => {
                     onClick={() => setIsCaptain(!isCaptain)}
                     className="text-sm text-purple-600 font-medium hover:underline"
                   >
-                    {isCaptain ? "Switch to User Mode" : "Captain Access"}
+                    {isCaptain ? "Switch to User Mode" : "Admin Access"}
                   </button>
                 </div>
               )}
