@@ -3,7 +3,7 @@ import nodemailer from "nodemailer";
 
 export const sendResetEmail = async (email, resetLink) => {
   try {
-    console.log("📤 Attempting to send reset email...");
+    console.log("Attempting to send reset email...");
     console.log("SMTP user:", process.env.EMAIL_USER);
 
     const transporter = nodemailer.createTransport({
@@ -15,7 +15,7 @@ export const sendResetEmail = async (email, resetLink) => {
     });
 
     await transporter.verify();
-    console.log("✅ SMTP connection successful.");
+    console.log("SMTP connection successful.");
 
     const html = `
       <h2>VitalTrip Password Reset</h2>
@@ -30,9 +30,9 @@ export const sendResetEmail = async (email, resetLink) => {
       html,
     });
 
-    console.log(`✅ Reset email sent to ${email}`);
+    console.log(`Reset email sent to ${email}`);
   } catch (err) {
-    console.error("❌ Error sending reset email:", err);
+    console.error("Error sending reset email:", err);
     throw new Error("Email could not be sent");
   }
 };
