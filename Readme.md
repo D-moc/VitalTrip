@@ -36,7 +36,6 @@ It combines **destination discovery**, **health emergency support**, **AI-powere
 
 ## Project Structure
 VitalTrip/
-│
 ├── Backend/
 │ ├── controllers/
 │ ├── models/
@@ -59,13 +58,13 @@ VitalTrip/
 │ ├── vite.config.js
 │ └── package.json
 │
-├── .env
 ├── package.json
+├── .env
 └── README.md
 
 ---
 
-## 🧩 API Integrations
+## API Integrations
 
 - **Geoapify / ORS / Mapbox** → for map display and routing  
 - **Nodemailer** → to send user queries via email  
