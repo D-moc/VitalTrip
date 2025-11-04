@@ -33,7 +33,7 @@ It combines **destination discovery**, **health emergency support**, **AI-powere
 | **Environment** | .env | Stores sensitive credentials |
 
 ---
-
+```
 ## Project Structure
 VitalTrip/
 ├── Backend/
