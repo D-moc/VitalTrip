@@ -63,6 +63,7 @@ VitalTrip/
 ├── .env
 └── README.md
 
+```
 ---
 
 ## API Integrations
