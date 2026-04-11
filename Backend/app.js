@@ -16,12 +16,20 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173", 
+    origin: [
+      "http://localhost:5173",
+      "https://vital-trip.vercel.app/"
+    ],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
 app.use(express.json());
 app.use(cookieParser());
+
+app.get("/favicon.ico", (req, res) => res.status(204).end());
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -68,8 +76,10 @@ app.get("/", (req, res) => {
 // });
 
 
-app.use((req, res) => {
-  res.status(404).json({ success: false, message: "Route not found" });
+app.use((req, res, next) => {
+  const error = new Error("Route not found");
+  error.statusCode = 404;
+  next(error);
 });
 
 

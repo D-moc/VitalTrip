@@ -1,7 +1,7 @@
 import User from "../models/user.model.js";
 import ResetToken from "../models/resetToken.model.js";
 import blacklistTokenModel from "../models/blacklistToken.model.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import { validationResult } from "express-validator";
 import { sendResetEmail } from "../utils/mailer.js";
