@@ -12,7 +12,7 @@ connectDB();
 
 const app = express();
 
-/* 🔥 FORCE CORS (VERY IMPORTANT FOR VERCEL) */
+/* 🔥 FORCE CORS (VERCEL FIX) */
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -23,10 +23,16 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Headers",
     "Content-Type, Authorization"
   );
+
+  // 🔥 handle preflight requests
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+
   next();
 });
 
-/* 🔥 OPTIONAL CORS (kept for safety) */
+/* 🔥 OPTIONAL CORS */
 app.use(
   cors({
     origin: true,
