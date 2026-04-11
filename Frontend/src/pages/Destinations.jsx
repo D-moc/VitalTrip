@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import api from "../utils/api";
 
-import fortsImg from "../assets/destinations/forts.png";
-import beachesImg from "../assets/destinations/beaches.jpg";
-import waterfallsImg from "../assets/destinations/waterfalls.jpg";
-import templesImg from "../assets/destinations/temples.jpg";
-import lakesImg from "../assets/destinations/lakes.jpg";
-import gemsImg from "../assets/destinations/hiddengems.jpg";
+const fortsImg = "/destinations/forts.png";
+const beachesImg = "/destinations/beaches.jpg";
+const waterfallsImg = "/destinations/waterfalls.jpg";
+const templesImg = "/destinations/temples.jpg";
+const lakesImg = "/destinations/lakes.jpg";
+const gemsImg = "/destinations/hiddengems.jpg";
 
 const categories = [
   { title: "Historic Forts", count: "15+", image: fortsImg, tag: "fort" },
@@ -28,7 +28,9 @@ const Destinations = () => {
  
   const getImageUrl = (imgName) => {
     try {
-      return new URL(`../assets/destinations/${imgName}`, import.meta.url).href;
+      const getImageUrl = (imgName) => {
+  return `/destinations/${imgName}`;
+};
     } catch {
       return "https://via.placeholder.com/400x250";
     }

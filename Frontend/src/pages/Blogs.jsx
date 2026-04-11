@@ -42,7 +42,9 @@ const Blogs = () => {
 
   const getImageUrl = (imgName) => {
     try {
-      return new URL(`../assets/blogs/${imgName}`, import.meta.url).href;
+      const getImageUrl = (imgName) => {
+  return `/blogs/${imgName}`;
+};
     } catch {
       return "https://via.placeholder.com/400x250";
     }

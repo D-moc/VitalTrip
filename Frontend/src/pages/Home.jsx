@@ -3,12 +3,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import api from "../utils/api";
 
-import thoseghar from "../assets/destinations/thoseghar.jpg";
-import fortsImg from "../assets/destinations/forts.png";
-import beachesImg from "../assets/destinations/beaches.jpg";
-import waterfallsImg from "../assets/destinations/waterfalls.jpg";
-import templesImg from "../assets/destinations/temples.jpg";
-import lakesImg from "../assets/destinations/lakes.jpg";
+const thoseghar = "/destinations/thoseghar.jpg";
+const fortsImg = "/destinations/forts.png";
+const beachesImg = "/destinations/beaches.jpg";
+const waterfallsImg = "/destinations/waterfalls.jpg";
+const templesImg = "/destinations/temples.jpg";
+const lakesImg = "/destinations/lakes.jpg";
 
 const categories = [
   { title: "Historic Forts", count: "50+", image: fortsImg, tag: "fort" },
