@@ -45,6 +45,7 @@ const Home = () => {
         setDestinations(res.data.destinations || []);
       } catch (err) {
         console.error("Error fetching destinations:", err);
+        console.log("ENV:", import.meta.env.VITE_API_URL);
       }
     };
     fetchDestinations();
