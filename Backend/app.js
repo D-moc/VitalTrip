@@ -7,19 +7,29 @@ import { fileURLToPath } from "url";
 import { connectDB } from "./db/db.js";
 import { errorHandler } from "./middlewares/error.middleware.js";
 
-
 dotenv.config();
 connectDB();
 
-
 const app = express();
 
+/* 🔥 FORCE CORS (VERY IMPORTANT FOR VERCEL) */
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET,POST,PUT,DELETE,OPTIONS"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization"
+  );
+  next();
+});
+
+/* 🔥 OPTIONAL CORS (kept for safety) */
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      process.env.FRONTEND_URL,
-    ],
+    origin: true,
     credentials: true,
   })
 );
@@ -27,13 +37,15 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
+/* Prevent favicon error */
 app.get("/favicon.ico", (req, res) => res.status(204).end());
 
+/* Static uploads */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-
+/* Routes */
 import userRoutes from "./routes/user.routes.js";
 import captainRoutes from "./routes/captain.routes.js";
 import tripRoutes from "./routes/trip.routes.js";
@@ -56,31 +68,19 @@ app.use("/api/routes", routeRoutes);
 app.use("/api/blogs", blogRoutes);
 app.use("/api/ai", aiRoutes);
 
+/* Health check */
 app.get("/", (req, res) => {
   res.status(200).send("VitalTrip Backend Running Successfully!");
 });
 
-
-// app._router.stack.forEach((r) => {
-//   if (r.route && r.route.path) {
-//     console.log("Registered route:", r.route.path);
-//   } else if (r.name === "router") {
-//     r.handle.stack.forEach((layer) => {
-//       if (layer.route && layer.route.path) {
-//         console.log(`${r.regexp} -> ${layer.route.path}`);
-//       }
-//     });
-//   }
-// });
-
-
+/* 404 handler */
 app.use((req, res, next) => {
   const error = new Error("Route not found");
   error.statusCode = 404;
   next(error);
 });
 
-
+/* Error handler */
 app.use(errorHandler);
 
 export default app;
