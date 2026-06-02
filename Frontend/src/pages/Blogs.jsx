@@ -24,6 +24,7 @@ const Blogs = () => {
     const fetchBlogs = async () => {
       try {
         const res = await api.get("/blogs");
+
         if (res.data.blogs && res.data.blogs.length > 0) {
           setBlogs(res.data.blogs);
         }
@@ -33,6 +34,7 @@ const Blogs = () => {
         setLoading(false);
       }
     };
+
     fetchBlogs();
   }, []);
 
@@ -41,13 +43,10 @@ const Blogs = () => {
   }, [blogs, pageSize]);
 
   const getImageUrl = (imgName) => {
-    try {
-      const getImageUrl = (imgName) => {
-  return `/blogs/${imgName}`;
-};
-    } catch {
+    if (!imgName) {
       return "https://via.placeholder.com/400x250";
     }
+    return `/blogs/${imgName}`;
   };
 
   if (loading)
@@ -76,12 +75,12 @@ const Blogs = () => {
       <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 text-center mb-4">
         Travel Stories & Blogs
       </h2>
+
       <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
         Dive into inspiring travel tales, destination guides, and hidden gems
         shared by our explorers.
       </p>
 
-      {/* Blog Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {visibleBlogs.map((blog) => (
           <div
@@ -100,24 +99,29 @@ const Blogs = () => {
               alt={blog.title}
               className="w-full h-52 object-cover"
             />
+
             <div className="p-5 text-left">
               <span className="inline-block bg-teal-100 text-teal-600 text-xs font-semibold px-3 py-1 rounded-full mb-2">
                 {blog.category || "Travel"}
               </span>
+
               <h3 className="text-lg font-bold text-gray-800 mb-1 line-clamp-2">
                 {blog.title}
               </h3>
+
               <p className="text-sm text-gray-600 line-clamp-3 mb-4">
                 {blog.summary ||
                   (blog.content ? blog.content.slice(0, 150) + "..." : "")}
               </p>
+
               <div className="flex items-center justify-between text-xs text-gray-500">
                 <span className="flex items-center gap-1">
-                  <FaUser className="text-orange-400" />{" "}
+                  <FaUser className="text-orange-400" />
                   {blog.author || "VitalTrip Team"}
                 </span>
+
                 <span className="flex items-center gap-1">
-                  <FaCalendarAlt className="text-orange-400" />{" "}
+                  <FaCalendarAlt className="text-orange-400" />
                   {blog.createdAt
                     ? new Date(blog.createdAt).toLocaleDateString()
                     : "—"}

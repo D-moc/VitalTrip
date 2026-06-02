@@ -16,6 +16,7 @@ const TripDetails = () => {
         console.error("Error fetching destination:", err);
       }
     };
+
     if (id) fetchDestination();
   }, [id]);
 
@@ -26,23 +27,21 @@ const TripDetails = () => {
       </div>
     );
 
-  
   const getImageUrl = (imgName) => {
-    try {
-      return new URL(`../assets/destinations/${imgName}`, import.meta.url).href;
-    } catch {
-      return destination.image || "https://source.unsplash.com/1600x900/?travel";
+    if (!imgName) {
+      return "https://source.unsplash.com/1600x900/?travel";
     }
+    return `/destinations/${imgName}`;
   };
 
-  const imageUrl = getImageUrl(
-    destination.image ||
-      `${destination.name.replace(/\s+/g, "").toLowerCase()}.jpg`
-  );
+  const imageUrl =
+    destination.image && !destination.image.startsWith("http")
+      ? getImageUrl(destination.image)
+      : destination.image ||
+        "https://source.unsplash.com/1600x900/?travel";
 
   return (
     <div className="min-h-screen bg-linear-to-b from-white to-gray-50">
-      
       {/* Hero Section */}
       <div className="relative h-[75vh] bg-gray-200 overflow-hidden flex flex-col items-center justify-center text-center">
         <img
@@ -50,12 +49,14 @@ const TripDetails = () => {
           alt={destination.name}
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
+
         <div className="absolute inset-0 bg-linear-to-b from-black/70 via-black/40 to-transparent"></div>
 
         <div className="relative z-10 px-6 flex flex-col items-center">
           <h1 className="text-5xl md:text-6xl font-extrabold text-white drop-shadow-2xl">
             {destination.name}
           </h1>
+
           <p className="text-lg md:text-xl text-gray-200 mt-2">
             {destination.location}
           </p>
@@ -73,7 +74,10 @@ const TripDetails = () => {
             className="prose prose-lg max-w-none text-gray-800 leading-relaxed"
             dangerouslySetInnerHTML={{
               __html: destination.description
-                .replace(/\*\*(.*?)\*\*/g, "<strong class='text-orange-600'>$1</strong>")
+                .replace(
+                  /\*\*(.*?)\*\*/g,
+                  "<strong class='text-orange-600'>$1</strong>"
+                )
                 .replace(/\n/g, "<br />")
                 .replace(
                   /<strong class='text-orange-600'>(.*?)<\/strong>/g,

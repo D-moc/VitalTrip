@@ -9,11 +9,8 @@ const BlogDetails = () => {
   const navigate = useNavigate();
 
   const getImageUrl = (imgName) => {
-    try {
-      return new URL(`../assets/blogs/${imgName}`, import.meta.url).href;
-    } catch {
-      return "https://via.placeholder.com/800x400";
-    }
+    if (!imgName) return "https://via.placeholder.com/800x400";
+    return `/blogs/${imgName}`;
   };
 
   useEffect(() => {
@@ -38,11 +35,10 @@ const BlogDetails = () => {
   const imageUrl =
     blog.image && !blog.image.startsWith("http")
       ? getImageUrl(blog.image)
-      : blog.image;
+      : blog.image || "https://via.placeholder.com/800x400";
 
   return (
     <div className="min-h-screen bg-linear-to-b from-white to-orange-50 py-12 px-6 md:px-16 border-t-4 border-green-400">
-     
       <button
         onClick={() => navigate("/blogs")}
         className="flex items-center text-orange-600 hover:underline mb-6 font-semibold"
@@ -56,14 +52,16 @@ const BlogDetails = () => {
           alt={blog.title}
           className="w-full h-80 object-cover"
         />
+
         <div className="p-8">
           <div className="flex items-center justify-between mb-4 text-sm text-gray-500">
             <span className="flex items-center gap-1">
-              <FaUser className="text-orange-400" />{" "}
+              <FaUser className="text-orange-400" />
               {blog.author || "VitalTrip Team"}
             </span>
+
             <span className="flex items-center gap-1">
-              <FaCalendarAlt className="text-orange-400" />{" "}
+              <FaCalendarAlt className="text-orange-400" />
               {new Date(blog.createdAt).toLocaleDateString()}
             </span>
           </div>
@@ -78,7 +76,6 @@ const BlogDetails = () => {
         </div>
       </div>
 
-      
       <div className="max-w-4xl mx-auto mt-8 flex justify-center">
         <button
           onClick={() => navigate("/#blogs")}

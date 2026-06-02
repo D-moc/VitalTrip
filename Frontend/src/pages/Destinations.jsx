@@ -25,15 +25,11 @@ const Destinations = () => {
   const [activeCategory, setActiveCategory] = useState(null);
   const navigate = useNavigate();
 
- 
   const getImageUrl = (imgName) => {
-    try {
-      const getImageUrl = (imgName) => {
-  return `/destinations/${imgName}`;
-};
-    } catch {
+    if (!imgName) {
       return "https://via.placeholder.com/400x250";
     }
+    return `/destinations/${imgName}`;
   };
 
   useEffect(() => {
@@ -65,15 +61,14 @@ const Destinations = () => {
     <section
       id="destinations"
       className="min-h-screen bg-linear-to-b from-white to-gray-50 py-16 px-6 md:px-12 scroll-mt-20 border-t-4 border-orange-300"
-    >      
+    >
       <h1 className="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-3">
         Explore by Category
       </h1>
+
       <p className="text-center text-gray-500 mb-10">
         Choose from our curated collection of Maharashtra’s finest destinations
       </p>
-
-
 
       {!activeCategory && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
@@ -88,12 +83,18 @@ const Destinations = () => {
                 alt={cat.title}
                 className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500"
               />
+
               <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"></div>
+
               <div className="absolute bottom-4 left-4 text-white">
                 <span className="bg-white/30 text-xs px-2 py-1 rounded-full mb-1 inline-block backdrop-blur-md">
                   {cat.count} destinations
                 </span>
-                <h3 className="text-xl font-bold drop-shadow-md">{cat.title}</h3>
+
+                <h3 className="text-xl font-bold drop-shadow-md">
+                  {cat.title}
+                </h3>
+
                 <p className="mt-1 text-sm text-orange-400 font-semibold">
                   Explore →
                 </p>
@@ -103,10 +104,8 @@ const Destinations = () => {
         </div>
       )}
 
-      {/* When Category Selected */}
       {activeCategory && (
         <div>
-         
           <div className="flex flex-col items-center mb-10">
             <button
               onClick={resetCategories}
@@ -120,7 +119,6 @@ const Destinations = () => {
             </h2>
           </div>
 
-          {/* Destination Cards */}
           {filtered.length === 0 ? (
             <p className="text-gray-500 italic text-center mt-10">
               No destinations found for this category.
@@ -133,7 +131,6 @@ const Destinations = () => {
                   className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-transform hover:scale-[1.01]"
                 >
                   <div className="relative">
-        
                     <img
                       src={
                         dest.image && !dest.image.startsWith("http")
@@ -154,6 +151,7 @@ const Destinations = () => {
                       alt={dest.name}
                       className="w-full h-48 object-cover"
                     />
+
                     <span className="absolute top-3 right-3 bg-orange-100 text-orange-600 text-xs px-3 py-1 rounded-full capitalize shadow-sm">
                       {dest.category || "General"}
                     </span>
@@ -169,11 +167,8 @@ const Destinations = () => {
                     </p>
 
                     <p className="text-sm text-gray-600 mt-2 line-clamp-2">
-                     {
-                        "A beautiful destination worth exploring in Maharashtra."}
+                      {"A beautiful destination worth exploring in Maharashtra."}
                     </p>
-
-                    
 
                     <div className="mt-5">
                       <button

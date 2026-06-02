@@ -1,4 +1,5 @@
 // // ✅ src/pages/DestinationDetails.jsx
+
 // import React, { useEffect, useState } from "react";
 // import { useParams, useNavigate } from "react-router-dom";
 // import api from "../utils/api";
@@ -8,6 +9,13 @@
 //   const navigate = useNavigate();
 //   const [destination, setDestination] = useState(null);
 //   const [error, setError] = useState(null);
+
+//   const getImageUrl = (imgName) => {
+//     if (!imgName) {
+//       return "https://via.placeholder.com/1200x600";
+//     }
+//     return `/destinations/${imgName}`;
+//   };
 
 //   useEffect(() => {
 //     const fetchDestination = async () => {
@@ -20,6 +28,7 @@
 //         setError("Destination not found or server error.");
 //       }
 //     };
+
 //     if (id) fetchDestination();
 //   }, [id]);
 
@@ -31,32 +40,43 @@
 //     );
 //   }
 
-//   if (!destination)
+//   if (!destination) {
 //     return (
 //       <div className="flex items-center justify-center min-h-screen text-gray-600">
 //         Loading destination details...
 //       </div>
 //     );
+//   }
+
+//   const imageUrl =
+//     destination.image && !destination.image.startsWith("http")
+//       ? getImageUrl(destination.image)
+//       : destination.image || "https://via.placeholder.com/1200x600";
 
 //   return (
 //     <div className="min-h-screen bg-white">
 //       {/* ✅ Hero Section */}
 //       <div
 //         className="relative h-[60vh] bg-cover bg-center"
-//         style={{ backgroundImage: `url(${destination.image})` }}
+//         style={{ backgroundImage: `url(${imageUrl})` }}
 //       >
 //         <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-transparent"></div>
+
 //         <button
 //           onClick={() => navigate(-1)}
 //           className="absolute top-6 left-6 bg-white/80 hover:bg-white text-gray-700 px-4 py-2 rounded-full shadow"
 //         >
 //           ← Back
 //         </button>
+
 //         <div className="absolute bottom-10 left-10 text-white">
 //           <h1 className="text-4xl font-extrabold drop-shadow-md">
 //             {destination.name}
 //           </h1>
-//           <p className="text-lg text-gray-200 mt-1">{destination.location}</p>
+
+//           <p className="text-lg text-gray-200 mt-1">
+//             {destination.location}
+//           </p>
 //         </div>
 //       </div>
 
@@ -72,6 +92,7 @@
 //             <strong>Best Time to Visit:</strong>{" "}
 //             {destination.bestTimeToVisit || "All year round"}
 //           </p>
+
 //           <p>
 //             <strong>Average Budget:</strong>{" "}
 //             {destination.budget || "₹500 - ₹1500"}
@@ -86,10 +107,14 @@
 //           >
 //             ← Back to Categories
 //           </button>
+
 //           <button
 //             onClick={() =>
 //               navigate("/booking", {
-//                 state: { tripId: destination._id, amount: 1000 },
+//                 state: {
+//                   tripId: destination._id,
+//                   amount: 1000,
+//                 },
 //               })
 //             }
 //             className="bg-gradient-to-r from-orange-500 to-teal-500 text-white font-semibold px-6 py-3 rounded-full shadow hover:scale-105 transition-transform"
