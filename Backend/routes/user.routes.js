@@ -1,6 +1,6 @@
 import express from "express";
 import { body } from "express-validator";
-import upload from "../middlewares/temp.js";
+import upload from "../middlewares/upload.middleware.js";
 import { authUser } from "../middlewares/auth.middleware.js";
 
 import {
