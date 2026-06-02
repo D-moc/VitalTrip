@@ -1,5 +1,5 @@
 import express from "express";
-import upload from "../middlewares/Upload.middleware.js";
+import upload from "../middlewares/upload.middleware.js";
 import { authUser } from "../middlewares/auth.middleware.js";
 import { verifyCaptainAccess } from "../middlewares/roleAuth.middleware.js";
 import {
