@@ -8,7 +8,7 @@ import {
   getAllDestinations,
   getDestinationById,
 } from "../controllers/destination.controller.js";
-import { verifyCaptainAccess } from "../middlewares/roleAuth.middleware..js";
+import { verifyCaptainAccess } from "../middlewares/roleAuth.middleware.js";
 
 const router = express.Router();
 
