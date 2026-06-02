@@ -14,7 +14,7 @@ import {
   getAllUsersWithTrips,
   getUpcomingTrips,
 } from "../controllers/captainDashboard.controller.js";
-import { verifyCaptainAccess } from "../middlewares/roleAuth.middleware.js";
+import { verifyCaptainAccess } from "../middlewares/roleAuth.middleware..js";
 
 const router = express.Router();
 
