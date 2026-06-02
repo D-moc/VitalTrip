@@ -14,7 +14,7 @@ import {
 } from "../controllers/route.controller.js";
 
 import { authUser } from "../middlewares/auth.middleware.js";
-import { verifyCaptainAccess } from "../middlewares/roleAuth.middleware.js";
+import { verifyCaptainAccess } from "../middlewares/temp.js";
 
 const router = express.Router();
 

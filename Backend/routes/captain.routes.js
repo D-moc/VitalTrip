@@ -2,7 +2,7 @@ import express from "express";
 import { body } from "express-validator";
 import multer from "multer";
 import path from "path";
-import { verifyCaptainAccess } from "../middlewares/roleAuth.middleware.js";
+import { verifyCaptainAccess } from "../middlewares/temp.js";
 
 import {
   registerCaptain,
