@@ -1,7 +1,7 @@
 import express from "express";
 import upload from "../middlewares/upload.middleware.js";
 import { authUser } from "../middlewares/auth.middleware.js";
-import { verifyCaptainAccess } from "../middlewares/temp.js";
+import { verifyCaptainAccess } from "../middlewares/roleAuth.middleware..js";
 import {
   createBlog,
   getAllBlogs,
